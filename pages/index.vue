@@ -9,8 +9,11 @@
       <el-menu-item index="/">
         首页
       </el-menu-item>
+      <el-menu-item index="/about">
+        关于我们
+      </el-menu-item>
     </el-menu>
-    <nuxt />
+    <Nuxt />
   </div>
 </template>
 
@@ -23,7 +26,9 @@ export default {
     }
   },
   methods: {
-    handleSelect () {}
+    handleSelect (e) {
+      console.log(e)
+    }
   }
 }
 </script>

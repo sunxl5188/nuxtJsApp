@@ -1,20 +1,18 @@
 <template>
   <b-container class="bg-light p-5">
-    <b-button @click="showModal">
+    <b-button v-b-modal.modal>
       Launch demo modal
     </b-button>
-
     <b-modal
-      id="modal-1"
-      ref="my"
-      centered
-      static
+      id="modal"
       title="温馨提示"
       cancel-title="取消"
       ok-title="确定"
+      no-close-on-backdrop
+      scrollable
     >
-      <p class="my-4">
-        Hello from modal!
+      <p class="mb-0">
+        sdgdsfhdf
       </p>
     </b-modal>
   </b-container>

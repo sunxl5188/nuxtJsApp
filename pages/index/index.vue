@@ -1,20 +1,6 @@
 <template>
   <b-container class="bg-light p-5">
-    <b-button v-b-modal.modal>
-      Launch demo modal
-    </b-button>
-    <b-modal
-      id="modal"
-      title="温馨提示"
-      cancel-title="取消"
-      ok-title="确定"
-      no-close-on-backdrop
-      scrollable
-    >
-      <p class="mb-0">
-        sdgdsfhdf
-      </p>
-    </b-modal>
+    <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" use-router />
   </b-container>
 </template>
 
@@ -24,6 +10,7 @@ export default {
   data () {
     return {
       name: '',
+      currentPage: 1,
       mainProps: {
         center: true,
         fluidGrow: true,
@@ -36,6 +23,9 @@ export default {
   methods: {
     showModal () {
       this.$refs.my.show()
+    },
+    linkGen (pageNum) {
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
     }
   }
 }

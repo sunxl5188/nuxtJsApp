@@ -12,11 +12,18 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
-    "bootstrap": "^4.5.3",
+    "ant-design-vue": "^1.7.2",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.8.2",
+    "core-js": "^3.8.3",
     "element-ui": "^2.15.0",
-    "nuxt": "^2.14.12"
+    "layui-layer": "^1.0.9",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "nuxt": "^2.14.12",
+    "swiper": "^6.4.15",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-baidu-map": "^0.21.22",
+    "vue-cookies": "^1.7.4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",
@@ -24,6 +31,12 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.18.0",
     "eslint-plugin-nuxt": "^2.0.0",
-    "eslint-plugin-vue": "^7.4.1"
+    "eslint-plugin-vue": "^7.5.0"
+  },
+  "config": {
+    "nuxt": {
+      "host": "localhost",
+      "port": "3030"
+    }
   }
 }

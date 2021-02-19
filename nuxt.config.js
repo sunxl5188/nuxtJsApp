@@ -17,14 +17,22 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    'ant-design-vue/dist/antd.css',
     'element-ui/lib/theme-chalk/index.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/antd-ui',
+    '@/plugins/element-ui',
+    '@/plugins/axios',
+    // '@/plugins/BaiduMap',
+    '@/plugins/cookies',
+    { src: '@/plugins/layui', ssr: false },
+    '@/plugins/swiper',
+    '@/plugins/filter'
   ],
-
+  loading: { color: '#3b8070' },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -43,7 +51,7 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: { baseURL: 'http://www.api.me/index/index/' },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

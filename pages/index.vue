@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-    <el-button type="primary">
-      buttonCont
-    </el-button>
+    <b-button variant="danger" :to="{name: 'index'}">
+      首页
+    </b-button>
+    <div>
+      <nuxt-link :to="{name: 'index-detail'}">
+        详情列表页面
+      </nuxt-link>
+    </div>
+    <Nuxt />
   </div>
 </template>
 

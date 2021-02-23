@@ -1,8 +1,8 @@
 <template>
   <div class="pt-5">
-    <a-button type="dashed" size="large">
-      确定
-    </a-button>
+    <a-row>
+      <a-col :span="12"></a-col>
+    </a-row>
   </div>
 </template>
 
@@ -14,6 +14,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.ant-col{
+  background:#dedede;
+}
 </style>

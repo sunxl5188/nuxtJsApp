@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import * as _ from 'lodash'
 import moment from 'moment'
-import mZh from 'moment/locale/zh-cn'
+import 'moment/locale/zh-cn'
 import nation from '~/static/json/nation.json'
 import cityList from '~/static/json/cityjson.json'
+moment.locale('zh_cn')
 
-Vue.prototype.dateFormat = (datas, pattern = 'YYYY-MM-DD HH:mm:ss') => {
-  return moment(datas).local(mZh).format(pattern)
+Vue.prototype.dateFormat = (date, pattern = 'YYYY-MM-DD HH:mm:ss') => {
+  return moment(date).format(pattern)
 }
 
 Vue.prototype.currentTime = function (type, times) {

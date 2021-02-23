@@ -1,8 +1,20 @@
 <template>
-  <div>
+  <a-config-provider :locale="zhCN">
     <Nuxt />
-  </div>
+  </a-config-provider>
 </template>
+
+<script>
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
+
+export default {
+  data () {
+    return {
+      zhCN
+    }
+  }
+}
+</script>
 
 <style>
 html {

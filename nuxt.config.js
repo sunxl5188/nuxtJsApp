@@ -21,7 +21,7 @@ export default {
   css: [
     'ant-design-vue/dist/antd.css',
     'element-ui/lib/theme-chalk/index.css',
-    '~/assets/css/main.less'
+    '~/assets/css/admin.less'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

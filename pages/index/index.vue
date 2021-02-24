@@ -1,7 +1,12 @@
 <template>
   <div class="pt-5">
     <a-row>
-      <a-col :span="12"></a-col>
+      <a-col :span="12">
+        ,,,,,,,,,,,,,,
+      </a-col>
+      <a-col :span="12">
+        ,,,,,,,,,,,,,,
+      </a-col>
     </a-row>
   </div>
 </template>
@@ -14,8 +19,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .ant-col{
   background:#dedede;
+  font-size:12px;
 }
 </style>

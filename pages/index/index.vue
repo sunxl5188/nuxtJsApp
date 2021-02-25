@@ -1,13 +1,10 @@
 <template>
-  <div class="pt-5" style="height:2000px">
-    <a-row>
-      <a-col :span="12">
-        ,,,,,,,,,,,,,,
-      </a-col>
-      <a-col :span="12">
-        ,,,,,,,,,,,,,,
-      </a-col>
-    </a-row>
+  <div class="pt-5">
+    <a-affix :target="() => this.$refs.layoutContent">
+      <a-button type="primary">
+        Fixed at the top of container
+      </a-button>
+    </a-affix>
   </div>
 </template>
 

@@ -67,6 +67,11 @@ export default {
       collapsed: false
     }
   },
+  watch: {
+    $route (to, from) {
+      console.log(to)
+    }
+  },
   methods: {
     onSelect (e) {
       console.log(e)

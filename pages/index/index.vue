@@ -1,43 +1,34 @@
 <template>
   <div class="pt-5">
-    <a-auto-complete
-      v-model="value"
-      :data-source="dataSource"
-      size="large"
-      style="width: 200px"
-      placeholder="请输入"
-    >
-      <!--<template slot="dataSource">
-        <a-select-option v-for="item in dataSource" :key="item.category" :title="item.category">
-          Found {{ item.query }} on
-          <a
-              :href="`https://s.taobao.com/search?q=${item.query}`"
-              target="_blank"
-              rel="noopener noreferrer"
-          >
-            {{ item.category }}
-          </a>
-          <span className="global-search-item-count">{{ item.count }} results</span>
-        </a-select-option>
-      </template>-->
-      <a-input>
-        <!--<a-button
-          slot="suffix"
-          style="margin-right: -12px"
-          class="search-btn"
-          size="large"
-          type="primary"
+    <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+      <a-form-item label="Note">
+        <a-input
+          v-decorator="['note', { rules: [{ required: true, message: 'Please input your--note!' }] }]"
+        />
+      </a-form-item>
+      <a-form-item label="Gender">
+        <a-select
+          v-decorator="[
+            'gender',
+            { rules: [{ required: true, message: 'Please select your gender!' }] },
+          ]"
+          placeholder="Select a option and change input text above"
+          @change="handleSelectChange"
         >
-          <a-icon type="search" />
-        </a-button>-->
-        <el-button type="primary" :circle="false">
-          搜
-        </el-button>
-      </a-input>
-    </a-auto-complete>
-    <el-button type="primary" :round="false">
-      搜
-    </el-button>
+          <a-select-option value="male">
+            male
+          </a-select-option>
+          <a-select-option value="female">
+            female
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+        <a-button type="primary" html-type="submit">
+          Submit
+        </a-button>
+      </a-form-item>
+    </a-form>
   </div>
 </template>
 
@@ -46,26 +37,42 @@ export default {
   name: 'Index',
   data () {
     return {
-      value: '',
-      dataSource: ['Burns Bay Road', 'Downing Street', 'Wall Street']
+      formLayout: 'horizontal',
+      form: this.$form.createForm(this, { name: 'coordinated' })
     }
   },
-  watch: {
-  },
+  watch: {},
   mounted () {},
   methods: {
     onSelect (value) {
-      console.log('onSelect', value)
+      console.log('onSelect:---->', value)
     },
     onChange (value) {
-      console.log('onChange', value)
+      console.log('onChange---->', value)
+    },
+    onSearch (value) {
+      console.log('onSearch---->', value)
+    },
+    handleSubmit (e) {
+      e.preventDefault()
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+        }
+      })
+    },
+    handleSelectChange (value) {
+      console.log(value)
+      this.form.setFieldsValue({
+        note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`
+      })
     }
   }
 }
 </script>
 
 <style lang="scss">
-.ant-col{
+.ant-col {
   background:#dedede;
   font-size:12px;
 }

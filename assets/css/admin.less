@@ -4,6 +4,17 @@ html, body, #__nuxt, #__layout {
     width: 100%;
     height: 100%;
 }
+
+.loop-w(@i) when (@i>0) {
+    .loop-w(@i - 1);
+    @k: @i*5;
+    .w-@{k} {
+        width: unit(@k, %) !important;
+    }
+}
+
+.loop-w(20);
+
 .ant-steps-icon{
     display: inline-block;
     height: 16px;
@@ -12,6 +23,10 @@ html, body, #__nuxt, #__layout {
     & .anticon{
         vertical-align: top;
     }
+}
+
+.ant-transfer-operation .ant-btn .anticon{
+    margin-top: -5px;
 }
 
 #layout-custom-trigger {

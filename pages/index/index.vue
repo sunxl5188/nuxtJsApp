@@ -1,48 +1,64 @@
 <template>
   <div class="pt-5">
-    <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
-      <a-form-item label="Note">
-        <a-input
-          v-decorator="['note', { rules: [{ required: true, message: 'Please input your--note!' }] }]"
-        />
-      </a-form-item>
-      <a-form-item label="Gender">
-        <a-select
-          v-decorator="[
-            'gender',
-            { rules: [{ required: true, message: 'Please select your gender!' }] },
-          ]"
-          placeholder="Select a option and change input text above"
-          @change="handleSelectChange"
-        >
-          <a-select-option value="male">
-            male
-          </a-select-option>
-          <a-select-option value="female">
-            female
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-        <a-button type="primary" html-type="submit">
-          Submit
-        </a-button>
-      </a-form-item>
-    </a-form>
+    <a-tree-select
+      v-model="value"
+      show-search
+      style="width: 100%"
+      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+      placeholder="Please select"
+      allow-clear
+      tree-default-expand-all
+    >
+      <a-tree-select-node key="0-1" value="parent 1" title="parent 1">
+        <a-tree-select-node key="0-1-1" value="parent 1-0" title="parent 1-0">
+          <a-tree-select-node key="random" value="leaf1" title="my leaf" />
+          <a-tree-select-node key="random1" value="leaf2" title="your leaf" />
+        </a-tree-select-node>
+        <a-tree-select-node key="random2" value="parent 1-1" title="parent 1-1">
+          <a-tree-select-node key="random3" value="sss" title="sss" />
+        </a-tree-select-node>
+      </a-tree-select-node>
+    </a-tree-select>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'Index',
   data () {
     return {
-      formLayout: 'horizontal',
-      form: this.$form.createForm(this, { name: 'coordinated' })
+      moment,
+      data: [],
+      value: '',
+      list: [
+        {
+          label: '选择器1',
+          value: '1'
+        },
+        {
+          label: '选择器2',
+          value: '2'
+        },
+        {
+          label: '选择器3',
+          value: '3'
+        }
+      ],
+      mockData: [],
+      targetKeys: [],
+      listStyle: {
+        width: '45%',
+        minWidth: '200px',
+        minHeight: '300px'
+      }
     }
   },
   watch: {},
-  mounted () {},
+  mounted () {
+    this.getMock()
+  },
   methods: {
     onSelect (value) {
       console.log('onSelect:---->', value)
@@ -53,12 +69,9 @@ export default {
     onSearch (value) {
       console.log('onSearch---->', value)
     },
-    handleSubmit (e) {
-      e.preventDefault()
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
-        }
+    submitSave () {
+      this.$refs.myform.validate((valid) => {
+        console.log(valid)
       })
     },
     handleSelectChange (value) {
@@ -66,14 +79,41 @@ export default {
       this.form.setFieldsValue({
         note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`
       })
+    },
+    handleSearch2 (value) {
+      fetch(value, data => (this.data = data))
+    },
+    handleChange2 (value) {
+      this.value = value
+      fetch(value, data => (this.data = data))
+    },
+    getMock () {
+      const mockData = []
+      for (let i = 0; i < 20; i++) {
+        const data = {
+          key: i.toString(),
+          title: `content${i + 1}`,
+          description: `description of content${i + 1}`,
+          chosen: Math.random() * 2 > 1
+        }
+        mockData.push(data)
+      }
+      this.mockData = mockData
+    },
+    filterOption (inputValue, option) {
+      return option.description.includes(inputValue)
+    },
+    handleChange (targetKeys, direction, moveKeys) {
+      // console.log(targetKeys, direction, moveKeys)
+      this.targetKeys = targetKeys
+    },
+    handleSearch (dir, value) {
+      console.log('search:>>', dir, value)
     }
   }
 }
 </script>
 
 <style lang="scss">
-.ant-col {
-  background:#dedede;
-  font-size:12px;
-}
+
 </style>

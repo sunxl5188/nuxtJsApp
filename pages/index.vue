@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="p-3">
     <b-button variant="danger" :to="{name: 'index'}">
       首页
     </b-button>

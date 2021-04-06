@@ -1,12 +1,8 @@
 <template>
-  <div class="pt-5">
-    11-
+  <div class="pt-5" style="height: 3000px;">
+    ******************************************************************************
     <hr>
-    <a-tabs default-active-key="1" type="line" :hide-add="true">
-      <a-tab-pane v-for="(item, i) in [0,1,2,3,4,5,6,7,8,9]" :key="i" :tab="'Tab'+item">
-        Content of Tab Pane {{ item }}
-      </a-tab-pane>
-    </a-tabs>
+
   </div>
 </template>
 
@@ -17,15 +13,18 @@ export default {
   name: 'Index',
   data () {
     return {
-      moment
+      moment,
+      visible: false
     }
   },
   watch: {},
   beforeCreate () {
   },
   mounted () {
+
   },
-  methods: {}
+  methods: {
+  }
 }
 </script>
 

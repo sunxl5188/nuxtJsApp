@@ -1,30 +1,9 @@
 <template>
-  <div class="p-3">
-    <b-button variant="danger" :to="{name: 'index'}">
-      首页
-    </b-button>
-    <div>
-      <nuxt-link :to="{name: 'index-detail'}">
-        详情列表页面
-      </nuxt-link>
-    </div>
-    <Nuxt />
-  </div>
+  <Tutorial />
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-    }
-  },
-  mounted () {
-  },
-  methods: {
-  }
+  name: 'IndexPage',
 }
 </script>
-
-<style>
-
-</style>

@@ -1,0 +1,16 @@
+[
+  {
+    "name": "error-404",
+    "path": "/error/404",
+    "component": "D:\\\\mywww\\\\nuxtjs\\\\pages\\\\error\\\\404.vue",
+    "chunkName": "pages/error/404",
+    "_name": "_211a33be"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\mywww\\\\nuxtjs\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_ad9b981e"
+  }
+]

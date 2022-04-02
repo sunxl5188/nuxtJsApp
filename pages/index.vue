@@ -1,6 +1,7 @@
 <template>
   <div>
     ...................
+
   </div>
 </template>
 
@@ -9,8 +10,11 @@ export default {
   name: 'IndexPage',
   mounted () {
     this.$nextTick(() => {
-      this.$axios.$get('/1212')
+      console.log(this.$api)
     })
+  },
+  methods: {
+
   }
 }
 </script>

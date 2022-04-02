@@ -1,5 +1,5 @@
 const state = () => ({
-  token: '',
+  token: 'gratest_1326C18D9903C79B2CEC301BA740357D',
   user: {}
 })
 

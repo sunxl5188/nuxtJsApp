@@ -1,6 +1,6 @@
 <template>
   <div>
-    ...................
+    <a-button type="primary">确定</a-button>
 
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {
   name: 'IndexPage',
   mounted () {
     this.$nextTick(() => {
-      console.log(this.$api)
+
     })
   },
   methods: {

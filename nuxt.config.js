@@ -16,7 +16,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['ant-design-vue/dist/antd.css'],
+  // css: ['ant-design-vue/dist/antd.css'],
 
   loading: {
     color: 'blue',
@@ -79,7 +79,36 @@ export default {
   build: {
     analyze: true, // 分析并可视化构建后的打包文件
     extractCSS: true, // 使用 Vue 服务器端渲染指南启用常见 CSS 提取
-    transpile: [/^element-ui/],
-    vendor: ['axios'] // 为防止重复打包
+    transpile: [/ant-design-vue/],
+    vendor: ['axios'], // 为防止重复打包
+    styleResources: {
+      // less: './assets/theme-chalk/basics.less'
+    },
+    babel: {
+      plugins: [
+        [
+          "import",
+          {
+            libraryName: "ant-design-vue",
+            libraryDirectory: "es",
+            style: "css" // 如果需要使用 less 方式去按需加载的话，则需要改为 true ，并且添加下面loaders 配置
+          },
+          "ant-design-vue"
+        ]
+      ]
+    },
+    // 此处是 style 为 true 时所需添加的配置
+    loaders: {
+      less: {
+        lessOptions: {
+          modifyVars: {
+            'primary-color': '#1DA57A',
+            'link-color': '#1DA57A',
+            'border-radius-base': '2px',
+          },
+          javascriptEnabled: true,
+        }
+      }
+    }
   }
 }

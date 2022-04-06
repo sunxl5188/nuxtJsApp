@@ -1,11 +1,37 @@
 import Vue from 'vue'
-import { Button, Modal, message, ConfigProvider, Layout } from 'ant-design-vue'
-
-const components = [
+import {
+  message,
+  notification,
+  Modal,
+  Button,
   ConfigProvider,
   Layout,
-  Button,
-  Modal
+  Input,
+  Form,
+  DatePicker,
+  TimePicker,
+  Space,
+  Avatar,
+  Dropdown,
+  Breadcrumb,
+  Row,
+  Col,
+  Progress,
+  List,
+  Popconfirm,
+  Table,
+  FormModel,
+  Badge,
+  Tabs,
+  Tag,
+  Card,
+  Checkbox,
+  Radio,
+  Cascader
+} from 'ant-design-vue'
+
+const components = [
+  ConfigProvider, Layout, Button, Form, FormModel, Input, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader
 ]
 
 for (const component of components) {
@@ -15,5 +41,7 @@ for (const component of components) {
 Vue.prototype.$message = message
 
 export default ({ app }, inject) => {
-  inject("message", message)
+  inject('message', message)
+  inject('notification', notification)
+  inject('modal', Modal)
 }

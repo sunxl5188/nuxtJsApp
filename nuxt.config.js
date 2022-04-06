@@ -100,13 +100,10 @@ export default {
     // 此处是 style 为 true 时所需添加的配置
     loaders: {
       less: {
-        lessOptions: {
-          modifyVars: {
-            'primary-color': '#1DA57A',
-            'link-color': '#1DA57A',
-            'border-radius-base': '2px',
-          },
-          javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': '#1DA57A',
+          'link-color': '#1DA57A',
+          'border-radius-base': '2px',
         }
       }
     }

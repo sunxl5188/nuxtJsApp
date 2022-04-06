@@ -19,7 +19,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-
+      console.log(this.$api)
     })
   },
   methods: {

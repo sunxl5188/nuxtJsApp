@@ -1,6 +1,19 @@
 import Vue from 'vue'
-import home from './api/home'
-import article from './api/article'
+/**
+ * 自动引入当前文件夹下所有module
+ * require.context(directory, useSubdirectories = false, regExp = /^.//);
+ * @param {String} directory 读取文件的路径
+ * @param {Boolean} directory 匹配文件的正则表达式
+ * @param {regExp} regExp 读取文件的路径
+ */
+const modulesFiles = require.context('./api', true, /.js$/)
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  const moduleName = modulePath.replace(/^.\/(.*)\.js/, '$1')
+  const value = modulesFiles(modulePath)
+  modules[moduleName] = value.default
+  return modules
+}, {})
+
 const self = new Vue()
 
 export default function ({ store, redirect, req, router, app: { $axios } }, inject) {
@@ -37,7 +50,7 @@ export default function ({ store, redirect, req, router, app: { $axios } }, inje
         redirect('/error/401')
         break
     }
-    if(process.client && self){
+    if (process.client && self) {
       self.$nuxt.$loading.finish()
     }
     return response
@@ -56,7 +69,7 @@ export default function ({ store, redirect, req, router, app: { $axios } }, inje
         redirect('/error/500')
         break
     }
-    if(process.client && self){
+    if (process.client && self) {
       self.$nuxt.$loading.fail(error)
     }
     return error
@@ -117,7 +130,7 @@ export default function ({ store, redirect, req, router, app: { $axios } }, inje
      * @param params
      * @returns {Promise<unknown>}
      */
-    $put (url, params ={}) {
+    $put (url, params = {}) {
       return new Promise((resolve, reject) => {
         $axios.put(url, params)
           .then(response => onResponse(response, resolve))
@@ -153,8 +166,10 @@ export default function ({ store, redirect, req, router, app: { $axios } }, inje
 
   // ================================================
   const API_MODULES = {}
-  API_MODULES.home = home(http)
-  API_MODULES.article = article(http)
+  for (let i = 0; i < Object.keys(modules).length; i++) {
+    const key = Object.keys(modules)[i]
+    API_MODULES[key] = modules[key](http)
+  }
 
   inject('api', API_MODULES)
 }

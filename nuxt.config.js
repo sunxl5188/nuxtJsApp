@@ -30,7 +30,9 @@ export default {
     { src: '@/plugins/element-ui', mode: 'client' },
     '@/plugins/axios',
     '@/plugins/cookies',
-    { src: '@/plugins/BaiduMap', mode: 'client' }
+    '@/plugins/lodash',
+    { src: '@/plugins/BaiduMap', mode: 'client' },
+    { src: '@/plugins/mixins', mode: 'client' }
   ],
 
   // 自动导入组件: https://go.nuxtjs.dev/config-components

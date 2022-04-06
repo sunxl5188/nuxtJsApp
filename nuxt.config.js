@@ -26,7 +26,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/antd-ui',
+    // '@/plugins/antd-ui',
+    { src: '@/plugins/element-ui', mode: 'client' },
     '@/plugins/axios',
     '@/plugins/cookies',
     { src: '@/plugins/BaiduMap', mode: 'client' }
@@ -94,6 +95,13 @@ export default {
             style: "css" // 如果需要使用 less 方式去按需加载的话，则需要改为 true ，并且添加下面loaders 配置
           },
           "ant-design-vue"
+        ],
+        [
+          "component",
+          {
+            "libraryName": "element-ui",
+            "styleLibraryName": "theme-chalk"
+          }
         ]
       ]
     },

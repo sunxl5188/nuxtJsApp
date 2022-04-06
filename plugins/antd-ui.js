@@ -38,8 +38,6 @@ for (const component of components) {
   Vue.use(component)
 }
 
-Vue.prototype.$message = message
-
 export default ({ app }, inject) => {
   inject('message', message)
   inject('notification', notification)

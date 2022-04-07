@@ -7,7 +7,8 @@
 
 <script>
   export default {
-    name: 'LayoutsAdmin'
+    name: 'LayoutsAdmin',
+    middleware: 'auth'
   }
 </script>
 

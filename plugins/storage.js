@@ -1,17 +1,9 @@
-/**
- * @param {String} name [储存的名字]
- * @param {String} content [储存的值]
- */
+import { getPrefix } from '~/static/js/utils'
 /**
  * 存储localStorage
  */
 export default ({ app }, inject) => {
-  let PREFIX
-  if (process.env.NODE_ENV === 'development') {
-    PREFIX = process.env.NUXT_ENV_DEVELOPMENT_PREFIX
-  }else{
-    PREFIX = process.env.NUXT_ENV_PRODUCTION_PREFIX
-  }
+  const PREFIX = getPrefix()
   const setStorage = (name, content) => {
     if (!name) return
     if (typeof content !== 'string') {

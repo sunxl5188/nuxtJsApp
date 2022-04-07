@@ -1,6 +1,5 @@
 const state = () => ({
-  animates: 'ADMIN.animates',
-  homeToken: 'aaaaaaaaaaaaaaa'
+  homeToken: ''
 })
 
 export default {

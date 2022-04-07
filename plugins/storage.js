@@ -12,7 +12,7 @@ export default ({ app }, inject) => {
   }else{
     PREFIX = process.env.NUXT_ENV_PRODUCTION_PREFIX
   }
-  const setStore = (name, content) => {
+  const setStorage = (name, content) => {
     if (!name) return
     if (typeof content !== 'string') {
       content = JSON.stringify(content)
@@ -23,7 +23,7 @@ export default ({ app }, inject) => {
   /**
    * 获取localStorage
    */
-  const getStore = name => {
+  const getStorage = name => {
     if (!name) return
     let content = localStorage.getItem(PREFIX + name)
     if (content !== undefined) {
@@ -37,12 +37,12 @@ export default ({ app }, inject) => {
   /**
    * 删除localStorage
    */
-  const reStore = name => {
+  const remStorage = name => {
     if (!name) return
     localStorage.removeItem(PREFIX + name)
   }
 
-  inject('setStore', setStore)
-  inject('getStore', getStore)
-  inject('reStore', reStore)
+  inject('setStorage', setStorage)
+  inject('getStorage', getStorage)
+  inject('remStorage', remStorage)
 }

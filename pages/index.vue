@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>reStore</div>
 </template>
 
 <script>
@@ -12,7 +12,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-
+        console.log(this, 'reStore')
       })
     },
     methods: {}

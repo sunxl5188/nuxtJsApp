@@ -31,6 +31,7 @@ export default {
     '@/plugins/axios',
     '@/plugins/cookies',
     '@/plugins/lodash',
+    '@/plugins/storage',
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' }
   ],

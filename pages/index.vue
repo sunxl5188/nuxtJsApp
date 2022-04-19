@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <el-input v-model="input" placeholder="placeholder"></el-input>
-    <nuxt-link to="/admin">后台</nuxt-link>
-  </div>
+  <div>1111</div>
 </template>
 
 <script>
@@ -20,8 +17,6 @@
         // console.log(this.$cookies)
       })
     },
-    methods: {
-
-    }
+    methods: {}
   }
 </script>

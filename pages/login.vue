@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="signIn">登录</el-button>
+    <a-button type="primary" @click="signIn">登录</a-button>
   </div>
 </template>
 
@@ -12,7 +12,9 @@
     },
     methods: {
       signIn () {
-        console.log('登录中...')
+        this.$api.login.signIn().then(res=>{
+          console.log(res)
+        })
         const data = {
           user: {
             name: 'sxl',
@@ -22,15 +24,20 @@
           token: '1234567890~~~'
         }
         this.$store.dispatch('asySignIn', data)
-        this.$router.push('/')
+        _.delay(() => {
+          // this.$router.push('/')
+        }, 1000)
       }
     }
   }
 </script>
 
 <style scoped>
-  a{
-    background: #000000;color: #ffffff;padding: 1px 3px;border-radius: 4px;
+  a {
+    background: #000000;
+    color: #ffffff;
+    padding: 1px 3px;
+    border-radius: 4px;
     font-size: 12px;
   }
 </style>

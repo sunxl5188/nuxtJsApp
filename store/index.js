@@ -7,22 +7,7 @@ if (process.env.NODE_ENV === 'development') {
   PREFIX = process.env.NUXT_ENV_PRODUCTION_PREFIX
 }
 
-// 需要永久存储，且下次APP启动需要取出的，在state中的变量名
-const saveStateKeys = ['vuex_user', 'vuex_token']
-
-// 保存变量到本地存储中
-const saveLifeData = function (self, key, value) {
-  // 判断变量名是否在需要存储的数组中
-  if (saveStateKeys.includes(key)) {
-    // 获取本地存储的lifeData对象，将变量添加到对象中
-    let tmp = self.$getStorage('lifeData')
-    // 第一次打开APP，不存在lifeData变量，故放一个{}空对象
-    tmp = tmp || {}
-    tmp[key] = value
-    // 执行这一步后，所有需要存储的变量，都挂载在本地的lifeData对象中
-    self.$setStorage('lifeData', tmp)
-  }
-}
+const hasLogin = `${PREFIX}hasLogin`
 
 const state = () => ({
   vuex_token: '',
@@ -35,23 +20,20 @@ const mutations = {
    * @param state
    */
   initState (state) {
-    const lifeData = this.$getStorage('lifeData') || ''
-    if(lifeData){
-      state.vuex_token = lifeData.vuex_token ? lifeData.vuex_token : ''
-      state.vuex_user = lifeData.vuex_user ? lifeData.vuex_user : ''
-    }
+    state.vuex_token = this.$getStorage('vuex_token')
+    state.vuex_user = this.$getStorage('vuex_user')
   },
   // 用户登录
   signIn (state, data) {
-    this.$cookies.set(PREFIX + 'hasLogin', 1)
+    this.$cookies.set(hasLogin, 1, 60 * 30)
     state.vuex_token = data.token
     state.vuex_user = data.user
-    for (const dataKey in data) {
-      saveLifeData(this, 'vuex_' + dataKey, data[dataKey])
+    for (const key in data) {
+      this.$setStorage('vuex_' + key, data[key])
     }
   },
   signOut (state) {
-    this.$cookies.remove(PREFIX + 'hasLogin')
+    this.$cookies.remove(hasLogin)
     state.vuex_token = ''
     state.vuex_user = {}
   },
@@ -73,7 +55,7 @@ const mutations = {
       saveKey = payload.name
     }
     // 保存变量到本地，见顶部函数定义
-    saveLifeData(this, saveKey, state[saveKey])
+    this.$setStorage(saveKey, state[saveKey])
   }
 }
 

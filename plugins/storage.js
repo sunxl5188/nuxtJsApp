@@ -1,15 +1,32 @@
 import { getPrefix } from '~/static/js/utils'
+
 /**
  * 存储localStorage
  */
 export default ({ app }, inject) => {
   const PREFIX = getPrefix()
-  const setStorage = (name, content) => {
-    if (!name) return
-    if (typeof content !== 'string') {
-      content = JSON.stringify(content)
+  const lifeData = `${PREFIX}lifeData`
+
+  const getTemp = () => {
+    let temp = localStorage.getItem(lifeData)
+    if (Object.prototype.toString.call(temp) === '[object Null]') {
+      temp = {}
     }
-    localStorage.setItem(PREFIX + name, content)
+    if (Object.prototype.toString.call(temp) === '[object String]') {
+      temp = JSON.parse(temp)
+    }
+    return temp
+  }
+  /**
+   * 设置本地存储值
+   * @param name 需要存储的名称
+   * @param value 存储值
+   */
+  const setStorage = (name, value) => {
+    if (!name) return
+    const temp = getTemp()
+    temp[name] = value
+    localStorage.setItem(lifeData, JSON.stringify(temp))
   }
 
   /**
@@ -17,13 +34,8 @@ export default ({ app }, inject) => {
    */
   const getStorage = name => {
     if (!name) return
-    let content = localStorage.getItem(PREFIX + name)
-    if (content !== undefined) {
-      content = JSON.parse(content)
-    } else {
-      content = ''
-    }
-    return content
+    const temp = getTemp()
+    return temp === null || temp[name] === undefined ? '' : temp[name]
   }
 
   /**
@@ -31,7 +43,9 @@ export default ({ app }, inject) => {
    */
   const remStorage = name => {
     if (!name) return
-    localStorage.removeItem(PREFIX + name)
+    const temp = getTemp()
+    delete temp[name]
+    localStorage.setItem(lifeData, JSON.stringify(temp))
   }
 
   inject('setStorage', setStorage)

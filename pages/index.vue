@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <a-button type="primary" @click="$router.push('./login')">404</a-button>
     <a-button type="primary" @click="$router.push('/error/403')">403</a-button>
     <a-button type="primary" @click="$router.push('/error/500')">500</a-button>

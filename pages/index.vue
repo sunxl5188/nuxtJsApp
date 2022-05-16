@@ -39,20 +39,78 @@ id="triggerId" class="btn btn-secondary dropdown-toggle" type="button" data-togg
         </div>
       </div>
     </div>
+    <!--**************************-->
+    <section class="container">
+      <div>
+
+        <no-ssr>
+          <div v-masonry transition-duration="3s" item-selector=".item" class="masonry-container">
+            <div v-for="(item, index) in blocks" :key="index" v-masonry-tile class="item">
+              <p>{{item.title}} - {{index}}</p>
+              <img :src="item.image" alt="altText"/>
+            </div>
+          </div>
+        </no-ssr>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+  import NoSSR from 'vue-no-ssr'
+
   export default {
     name: 'IndexPage',
+    components: {
+      'no-ssr': NoSSR
+    },
     data () {
       return {
-        input: ''
+        input: '',
+        blocks: [
+          {
+            title: 'nice block',
+            image: require('@/assets/images/001.jpg')
+          },
+          {
+            title: 'another shiny block',
+            image: require('@/assets/images/003.jpg')
+          },
+          {
+            title: 'the last block',
+            image: require('@/assets/images/002.jpg')
+          },
+          {
+            title: 'the last block',
+            image: require('@/assets/images/004.jpg')
+          },
+          {
+            title: 'nice block',
+            image: require('@/assets/images/003.jpg')
+          },
+          {
+            title: 'another shiny block',
+            image: require('@/assets/images/001.jpg')
+          },
+          {
+            title: 'the last block',
+            image: require('@/assets/images/004.jpg')
+          },
+          {
+            title: 'the last block',
+            image: require('@/assets/images/002.jpg')
+          }
+        ]
       }
     },
     computed: {
     },
     mounted () {
+
+      if (typeof this.$redrawVueMasonry === 'function') {
+        this.$redrawVueMasonry()
+      }
+
       this.$nextTick(() => {
         // console.log(this.$cookies)
       })
@@ -60,3 +118,21 @@ id="triggerId" class="btn btn-secondary dropdown-toggle" type="button" data-togg
     methods: {}
   }
 </script>
+<style>
+  .container {
+
+  }
+
+  .item {
+    border: 1px solid #ac0;
+    width: 200px;
+  }
+  .item img{
+    width: 100%;
+  }
+  .masonry-container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+</style>

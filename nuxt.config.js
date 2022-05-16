@@ -40,9 +40,9 @@ export default {
     '@/plugins/cookies',
     '@/plugins/lodash',
     '@/plugins/storage',
-    '@/plugins/vue-masonry',
     { src: '@/plugins/BaiduMap', mode: 'client' },
-    { src: '@/plugins/mixins', mode: 'client' }
+    { src: '@/plugins/mixins', mode: 'client' },
+    { src: '@/plugins/vue-masonry', mode: 'client' }
   ],
 
   // 自动导入组件: https://go.nuxtjs.dev/config-components
@@ -90,7 +90,7 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    analyze: true, // 分析并可视化构建后的打包文件
+    analyze: false, // 分析并可视化构建后的打包文件
     extractCSS: true, // 使用 Vue 服务器端渲染指南启用常见 CSS 提取
     transpile: [/ant-design-vue/],
     vendor: ['axios'], // 为防止重复打包

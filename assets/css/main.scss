@@ -1,14 +1,58 @@
 @charset "utf-8";
-@import "functions";
-@import "variables";
 
-html{
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  font-size: $font-size-base;
+@function px2rem($px, $base-font-size: 16px){
+  @if (unitless($px)){
+    @return (($px+0px) / $base-font-size) * 1rem;
+  } @else{
+    @return ($px / $base-font-size) * 1rem;
+  }
 }
 
-@import "base";
-@import "error";
+html, body{
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 1rem;
+}
+
+@for $i from 1 through 51 {
+  $fontSize: 9 + $i;
+  .font-#{$fontSize} {
+    font-size: px2rem($fontSize);
+  }
+}
+
+@for $i from 1 through 10 {
+  $space: 5 * $i;
+  .m-#{$space} {
+    margin: px2rem($space);
+  }
+  .ml-#{$space} {
+    margin-left: px2rem($space);
+  }
+  .mt-#{$space} {
+    margin-top: px2rem($space);
+  }
+  .mr-#{$space} {
+    margin-right: px2rem($space);
+  }
+  .mb-#{$space} {
+    margin-bottom: px2rem($space);
+  }
+  .p-#{$space} {
+    padding: px2rem($space);
+  }
+  .pl-#{$space} {
+    padding-left: px2rem($space);
+  }
+  .pt-#{$space} {
+    padding-top: px2rem($space);
+  }
+  .pr-#{$space} {
+    padding-right: px2rem($space);
+  }
+  .pb-#{$space} {
+    padding-bottom: px2rem($space);
+  }
+}
 
 #__nuxt, #__layout {
   min-width: 100%;
@@ -18,3 +62,6 @@ html{
 #__layout {
   height: 100vh;
 }
+
+
+@import "error";

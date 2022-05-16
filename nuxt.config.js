@@ -13,10 +13,18 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      { src: 'js/jquery.js' },
+      { src: 'js/popper.min.js' },
+      { src: 'js/bootstrap.min.js' }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/css/main.scss'],
+  css: [
+    '~/assets/bootstrap/bootstrap.scss',
+    '~/assets/css/main.scss'
+  ],
 
   loading: {
     color: 'blue',
@@ -32,6 +40,7 @@ export default {
     '@/plugins/cookies',
     '@/plugins/lodash',
     '@/plugins/storage',
+    '@/plugins/vue-masonry',
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' }
   ],

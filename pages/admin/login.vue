@@ -91,7 +91,7 @@
               if (res.status === 1) {
                 this.$store.dispatch('asySignIn', res.data)
                 this.$nextTick(() => {
-                  this.$router.push('/')
+                  this.$router.push('/admin')
                 })
               }
               this.loading = false

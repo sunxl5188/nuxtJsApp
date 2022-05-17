@@ -41,5 +41,5 @@ for (const component of components) {
 export default ({ app }, inject) => {
   inject('message', message)
   inject('notification', notification)
-  inject('modal', Modal)
+  inject('confirm', Modal.confirm)
 }

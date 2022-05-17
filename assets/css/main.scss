@@ -1,14 +1,14 @@
 @charset "utf-8";
 
-@function px2rem($px, $base-font-size: 16px){
-  @if (unitless($px)){
+@function px2rem($px, $base-font-size: 16px) {
+  @if (unitless($px)) {
     @return (($px+0px) / $base-font-size) * 1rem;
-  } @else{
+  } @else {
     @return ($px / $base-font-size) * 1rem;
   }
 }
 
-html, body{
+html, body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 1rem;
 }
@@ -20,37 +20,53 @@ html, body{
   }
 }
 
-@for $i from 1 through 10 {
-  $space: 5 * $i;
-  .m-#{$space} {
+$spaceList: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50;
+@each $space in $spaceList {
+  .u-m-#{$space} {
     margin: px2rem($space);
   }
-  .ml-#{$space} {
+  .u-ml-#{$space} {
     margin-left: px2rem($space);
   }
-  .mt-#{$space} {
+  .u-mt-#{$space} {
     margin-top: px2rem($space);
   }
-  .mr-#{$space} {
+  .u-mr-#{$space} {
     margin-right: px2rem($space);
   }
-  .mb-#{$space} {
+  .u-mb-#{$space} {
     margin-bottom: px2rem($space);
   }
-  .p-#{$space} {
+  .u-my-#{$space} {
+    margin-top: px2rem($space);
+    margin-bottom: px2rem($space);
+  }
+  .u-mx-#{$space} {
+    margin-left: px2rem($space);
+    margin-right: px2rem($space);
+  }
+  .u-p-#{$space} {
     padding: px2rem($space);
   }
-  .pl-#{$space} {
+  .u-pl-#{$space} {
     padding-left: px2rem($space);
   }
-  .pt-#{$space} {
+  .u-pt-#{$space} {
     padding-top: px2rem($space);
   }
-  .pr-#{$space} {
+  .u-pr-#{$space} {
     padding-right: px2rem($space);
   }
-  .pb-#{$space} {
+  .u-pb-#{$space} {
     padding-bottom: px2rem($space);
+  }
+  .u-py-#{$space} {
+    padding-top: px2rem($space);
+    padding-bottom: px2rem($space);
+  }
+  .u-px-#{$space} {
+    padding-left: px2rem($space);
+    padding-right: px2rem($space);
   }
 }
 

@@ -1,12 +1,7 @@
 import modules from './modules'
+import { getPrefix } from '@/static/js/utils'
 
-let PREFIX = ''
-if (process.env.NODE_ENV === 'development') {
-  PREFIX = process.env.NUXT_ENV_DEVELOPMENT_PREFIX
-} else {
-  PREFIX = process.env.NUXT_ENV_PRODUCTION_PREFIX
-}
-
+const PREFIX = getPrefix()
 const hasLogin = `${PREFIX}hasLogin`
 
 const state = () => ({
@@ -20,8 +15,8 @@ const mutations = {
    * @param state
    */
   initState (state) {
-    state.vuex_token = this.$getStorage('vuex_token')
-    state.vuex_user = this.$getStorage('vuex_user')
+    state.vuex_token = this.$getStorage('token')
+    state.vuex_user = this.$getStorage('user')
   },
   // 用户登录
   signIn (state, data) {
@@ -29,13 +24,13 @@ const mutations = {
     state.vuex_token = data.token
     state.vuex_user = data.user
     for (const key in data) {
-      this.$setStorage('vuex_' + key, data[key])
+      this.$setStorage(key, data[key])
     }
   },
   signOut (state) {
     this.$cookies.remove(hasLogin)
     state.vuex_token = ''
-    state.vuex_user = {}
+    state.vuex_user = ''
   },
   $uStore (state, payload) {
     // 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
@@ -54,7 +49,7 @@ const mutations = {
       state[payload.name] = payload.value
       saveKey = payload.name
     }
-    // 保存变量到本地，见顶部函数定义
+    // 保存变量到本地
     this.$setStorage(saveKey, state[saveKey])
   }
 }

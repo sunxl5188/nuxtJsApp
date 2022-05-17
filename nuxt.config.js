@@ -14,9 +14,9 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
-      { src: 'js/jquery.js' },
-      { src: 'js/popper.min.js' },
-      { src: 'js/bootstrap.min.js' }
+      { src: '/js/jquery.js' },
+      { src: '/js/popper.min.js' },
+      { src: '/js/bootstrap.min.js' }
     ]
   },
 
@@ -40,6 +40,7 @@ export default {
     '@/plugins/cookies',
     '@/plugins/lodash',
     '@/plugins/storage',
+    '@/plugins/components',
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' },
     { src: '@/plugins/vue-masonry', mode: 'client' }

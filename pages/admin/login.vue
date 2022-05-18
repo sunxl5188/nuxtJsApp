@@ -68,7 +68,8 @@
         loading: false,
         myform: {
           username: '孙悟空',
-          password: '123456'
+          password: '123456',
+          avatar: require('@/assets/images/avatar.jpg')
         },
         rules: {
           username: [

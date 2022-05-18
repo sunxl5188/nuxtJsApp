@@ -43,7 +43,7 @@
             <a-dropdown>
               <div class="d-flex justify-content-between align-items-center">
                 <a-avatar
-                  :src="avatar"
+                  :src="vuex_user.avatarUrl"
                   class="bg-secondary"
                   :size="35"/>
                 <span class="u-px-5">{{vuex_user.username}}</span>
@@ -88,7 +88,6 @@
       return {
         loading: true,
         locale,
-        avatar: require('@/assets/images/avatar.jpg'),
         upSignInState: '',
         tipsOut: 0
       }
@@ -117,7 +116,7 @@
       ['click', 'mousemove'].forEach(item => {
         window.addEventListener(item, this.upSignInState)
       })
-
+      console.log(this.$router.getRoutes())
     },
     methods: {
       setCollapsed () {

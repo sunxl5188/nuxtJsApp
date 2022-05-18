@@ -8,7 +8,10 @@
 <script>
   export default {
     name: 'AdminList',
-    layout: 'admin'
+    layout: 'admin',
+    created(){
+      console.log(_)
+    }
   }
 </script>
 

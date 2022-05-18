@@ -38,9 +38,9 @@ export default {
     // '@/plugins/element-ui',
     '@/plugins/axios',
     '@/plugins/cookies',
-    '@/plugins/lodash',
     '@/plugins/storage',
     '@/plugins/components',
+    { src: '@/plugins/lodash', mode: 'client' },
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' },
     { src: '@/plugins/vue-masonry', mode: 'client' }

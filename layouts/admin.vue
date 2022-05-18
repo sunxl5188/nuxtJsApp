@@ -16,12 +16,12 @@
         >
           <a-menu-item key="1">
             <a-icon type="home"/>
-            <span>首页</span>
+            <span><nuxt-link to="/admin">首页</nuxt-link></span>
           </a-menu-item>
           <a-sub-menu key="sub1">
             <span slot="title"><a-icon type="mail"/><span>Navigation One</span></span>
             <a-menu-item key="5">
-              Option 5
+              <nuxt-link to="/admin/list">基础列表</nuxt-link>
             </a-menu-item>
             <a-menu-item key="6">
               Option 6
@@ -46,7 +46,7 @@
                   :src="avatar"
                   class="bg-secondary"
                   :size="35"/>
-                <span class="u-px-5">孙悟空</span>
+                <span class="u-px-5">{{vuex_user.username}}</span>
                 <a-icon type="down"/>
               </div>
               <a-menu slot="overlay">
@@ -65,8 +65,8 @@
         </a-layout-header>
         <!--内容-->
         <a-layout-content class="p-3">
-          <div class="bg-white p-3">111
-
+          <div class="bg-white p-3">
+            <Nuxt/>
           </div>
         </a-layout-content>
       </a-layout>
@@ -76,6 +76,10 @@
 
 <script>
   import locale from 'ant-design-vue/lib/locale-provider/zh_CN'
+  import { getPrefix } from '@/static/js/utils'
+
+  const PREFIX = getPrefix()
+  const hasLogin = `${PREFIX}hasLogin`
 
   export default {
     name: 'LayoutsAdmin',
@@ -84,7 +88,9 @@
       return {
         loading: true,
         locale,
-        avatar: require('@/assets/images/avatar.jpg')
+        avatar: require('@/assets/images/avatar.jpg'),
+        upSignInState: '',
+        tipsOut: 0
       }
     },
     async mounted () {
@@ -92,6 +98,26 @@
       this.loading = false
       // 同步登录信息
       this.$store.commit('initState')
+      // **************************************
+      this.upSignInState = _.debounce(() => {
+        if (this.$cookies.get(hasLogin)) {
+          this.$cookies.set(hasLogin, 1, '1h')
+        } else if (this.$route.path !== '/admin/login' && this.tipsOut === 0) {
+          this.tipsOut++
+          this.$info({
+            title: '温馨提示',
+            content: '登录信息已过期',
+            onOk: () => {
+              this.actionOut()
+            }
+          })
+        }
+      }, 3000);
+
+      ['click', 'mousemove'].forEach(item => {
+        window.addEventListener(item, this.upSignInState)
+      })
+
     },
     methods: {
       setCollapsed () {
@@ -99,7 +125,17 @@
       },
       loginOut () {
         this.$confirm({
-          title: '温馨提示'
+          title: '温馨提示',
+          content: '您确定要退出登录吗？',
+          onOk: () => {
+            this.actionOut()
+          }
+        })
+      },
+      actionOut () {
+        this.$store.dispatch('asySignOut')
+        this.$nextTick(() => {
+          this.$router.push('/admin/login')
         })
       }
     }
@@ -131,9 +167,13 @@
   }
 
   .ant-menu {
-
     ::v-deep svg {
       vertical-align: unset !important;
     }
+
+    .anticon + span a {
+      color: #fff;
+    }
   }
+
 </style>

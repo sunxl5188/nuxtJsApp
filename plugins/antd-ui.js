@@ -42,4 +42,8 @@ export default ({ app }, inject) => {
   inject('message', message)
   inject('notification', notification)
   inject('confirm', Modal.confirm)
+  inject('info', Modal.info)
+  inject('success', Modal.success)
+  inject('error', Modal.error)
+  inject('warning', Modal.warning)
 }

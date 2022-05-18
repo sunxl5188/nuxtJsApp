@@ -1,7 +1,7 @@
 export default http => ({
-  signIn (username, password) {
+  signIn (params) {
     return new Promise((resolve, reject) => {
-      http.$post('/index/index/login', {username, password}).then(res=>{
+      http.$post('/index/index/login', params).then(res=>{
         resolve(res)
       })
     })

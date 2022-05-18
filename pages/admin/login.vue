@@ -21,8 +21,8 @@
             class="pt-50"
             @submit.prevent="submitSave"
           >
-            <a-form-model-item prop="name">
-              <a-input v-model="myform.name" size="large" placeholder="请输入登录账号">
+            <a-form-model-item prop="username">
+              <a-input v-model="myform.username" size="large" placeholder="请输入登录账号">
                 <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
               </a-input>
             </a-form-model-item>
@@ -67,11 +67,11 @@
       return {
         loading: false,
         myform: {
-          name: '孙悟空',
+          username: '孙悟空',
           password: '123456'
         },
         rules: {
-          name: [
+          username: [
             { required: true, message: '请输入登录账号' },
             { min: 3, max: 15, message: '账号长度为3~15个字符' }
           ],
@@ -87,7 +87,7 @@
         this.loading = true
         this.$refs.myform.validate((valid) => {
           if (valid) {
-            this.$api.login.signIn().then(res => {
+            this.$api.login.signIn(this.myform).then(res => {
               if (res.status === 1) {
                 this.$store.dispatch('asySignIn', res.data)
                 this.$nextTick(() => {
@@ -152,7 +152,7 @@
           float: left;
           width: 55%;
           height: 100%;
-          background-image: url(@/assets/images/login_bg.png);
+          background-image: url('../../assets/images/login_bg.png');
           background-size: auto 100%;
           background-repeat: no-repeat;
           background-position: center center;

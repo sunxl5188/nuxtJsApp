@@ -1,74 +1,6 @@
 @charset "utf-8";
-
-@function px2rem($px, $base-font-size: 16px) {
-  @if (unitless($px)) {
-    @return (($px+0px) / $base-font-size) * 1rem;
-  } @else {
-    @return ($px / $base-font-size) * 1rem;
-  }
-}
-
-html, body {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  font-size: 1rem;
-}
-
-@for $i from 1 through 51 {
-  $fontSize: 9 + $i;
-  .font-#{$fontSize} {
-    font-size: px2rem($fontSize);
-  }
-}
-
-$spaceList: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50;
-@each $space in $spaceList {
-  .u-m-#{$space} {
-    margin: px2rem($space);
-  }
-  .u-ml-#{$space} {
-    margin-left: px2rem($space);
-  }
-  .u-mt-#{$space} {
-    margin-top: px2rem($space);
-  }
-  .u-mr-#{$space} {
-    margin-right: px2rem($space);
-  }
-  .u-mb-#{$space} {
-    margin-bottom: px2rem($space);
-  }
-  .u-my-#{$space} {
-    margin-top: px2rem($space);
-    margin-bottom: px2rem($space);
-  }
-  .u-mx-#{$space} {
-    margin-left: px2rem($space);
-    margin-right: px2rem($space);
-  }
-  .u-p-#{$space} {
-    padding: px2rem($space);
-  }
-  .u-pl-#{$space} {
-    padding-left: px2rem($space);
-  }
-  .u-pt-#{$space} {
-    padding-top: px2rem($space);
-  }
-  .u-pr-#{$space} {
-    padding-right: px2rem($space);
-  }
-  .u-pb-#{$space} {
-    padding-bottom: px2rem($space);
-  }
-  .u-py-#{$space} {
-    padding-top: px2rem($space);
-    padding-bottom: px2rem($space);
-  }
-  .u-px-#{$space} {
-    padding-left: px2rem($space);
-    padding-right: px2rem($space);
-  }
-}
+@import "base";
+@import "error";
 
 #__nuxt, #__layout {
   min-width: 100%;
@@ -79,5 +11,32 @@ $spaceList: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50;
   height: 100vh;
 }
 
+.page-enter,
+.page-leave,
+.page-enter-active,
+.page-leave-active {
+  transition: all .3s ease-out 0s;
+}
 
-@import "error";
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
+.page-enter-active {
+  transform: translateY(0);
+}
+
+.page-enter {
+  transform: translateY(50px);
+}
+
+.page-leave-active {
+  transform: translateY(-50px);
+}
+
+.ant-form{
+  label{
+    margin-bottom: 0;
+  }
+}

@@ -43,7 +43,7 @@
   import NoSSR from 'vue-no-ssr'
 
   export default {
-    name: 'VueMasonry',
+    name: 'MyMasonry',
     components: {
       'no-ssr': NoSSR
     },

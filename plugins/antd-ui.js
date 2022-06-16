@@ -6,8 +6,10 @@ import {
   Button,
   ConfigProvider,
   Layout,
-  Input,
   Form,
+  FormModel,
+  Input,
+  Select,
   DatePicker,
   TimePicker,
   Space,
@@ -20,7 +22,6 @@ import {
   List,
   Popconfirm,
   Table,
-  FormModel,
   Badge,
   Tabs,
   Tag,
@@ -31,7 +32,7 @@ import {
 } from 'ant-design-vue'
 
 const components = [
-  ConfigProvider, Layout, Button, Form, FormModel, Input, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader, Menu, Icon
+  ConfigProvider, Layout, Button, Form, FormModel, Input, Select, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader, Menu, Icon
 ]
 
 for (const component of components) {

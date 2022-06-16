@@ -662,13 +662,6 @@ html, body {
   padding-left: 3.125rem;
   padding-right: 3.125rem; }
 
-#__nuxt, #__layout {
-  min-width: 100%;
-  min-height: 100%; }
-
-#__layout {
-  height: 100vh; }
-
 .error-container {
   position: absolute;
   top: 40%;
@@ -809,5 +802,33 @@ html, body {
   100% {
     opacity: 1;
     transform: translateY(0); } }
+#__nuxt, #__layout {
+  min-width: 100%;
+  min-height: 100%; }
+
+#__layout {
+  height: 100vh; }
+
+.page-enter,
+.page-leave,
+.page-enter-active,
+.page-leave-active {
+  transition: all .3s ease-out 0s; }
+
+.page-enter,
+.page-leave-active {
+  opacity: 0; }
+
+.page-enter-active {
+  transform: translateY(0); }
+
+.page-enter {
+  transform: translateY(50px); }
+
+.page-leave-active {
+  transform: translateY(-50px); }
+
+.ant-form label {
+  margin-bottom: 0; }
 
 /*# sourceMappingURL=main.css.map */

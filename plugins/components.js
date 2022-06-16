@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import myModal from '@/components/my-modal'
+import MyModal from '@/components/MyModal'
 
-Vue.component('MyModal', myModal)
+Vue.component('MyModal', MyModal)

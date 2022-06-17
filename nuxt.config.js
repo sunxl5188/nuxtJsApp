@@ -43,7 +43,8 @@ export default {
     { src: '@/plugins/lodash', mode: 'client' },
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' },
-    { src: '@/plugins/vue-masonry', mode: 'client' }
+    { src: '@/plugins/vue-masonry', mode: 'client' },
+    { src: '@/plugins/moment', mode: 'client' }
   ],
 
   // 自动导入组件: https://go.nuxtjs.dev/config-components
@@ -131,6 +132,13 @@ export default {
   },
   router: {
     // 在每页渲染前运行 middleware/user-agent.js 中间件的逻辑
-    middleware: 'unknownRoute'
+    middleware: 'unknownRoute',
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '*',
+        component: resolve(__dirname, 'pages/error/404.vue')
+      })
+    }
   }
 }

@@ -44,7 +44,35 @@
             label: '日期选择',
             name: 'times',
             placeholder: '请选择日期选择!!!',
-            type: 'date'
+            type: 'date',
+            showTime: true
+          },
+          {
+            label: '日期范围',
+            name: 'rangeTime',
+            placeholder: '请选择日期范围!!!',
+            type: 'range',
+            showTime: true
+          },
+          {
+            label: '用户姓名1',
+            name: 'username1',
+            placeholder: '请输入用户姓名！！！'
+          },
+          {
+            label: '用户姓名2',
+            name: 'username2',
+            placeholder: '请输入用户姓名！！！'
+          },
+          {
+            label: '用户姓名3',
+            name: 'username3',
+            placeholder: '请输入用户姓名！！！'
+          },
+          {
+            label: '用户姓名4',
+            name: 'username4',
+            placeholder: '请输入用户姓名！！！'
           }
         ]
       }
@@ -52,7 +80,6 @@
     fetch (content) {},
     computed: {},
     mounted () {
-      console.log(this.moment().endOf('day'))
     },
     methods: {}
   }

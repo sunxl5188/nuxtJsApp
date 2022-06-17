@@ -16,6 +16,8 @@ module.exports = {
     'no-console': 'off'
   },
   globals: {
-    '_': true
+    '_': true,
+    '$moment': true,
+    '$lodash': true
   }
 }

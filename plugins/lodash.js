@@ -1,2 +1,7 @@
-// eslint-disable-next-line
-import * as _ from 'lodash'
+import lodash from 'lodash'
+
+export default ({ app }, inject) => {
+  inject('lodash', lodash)
+}
+
+

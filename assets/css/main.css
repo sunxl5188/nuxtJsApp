@@ -715,4 +715,7 @@ html, body {
 .anticon {
   vertical-align: text-top; }
 
+.ant-input-number {
+  width: auto; }
+
 /*# sourceMappingURL=main.css.map */

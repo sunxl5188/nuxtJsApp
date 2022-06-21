@@ -118,7 +118,7 @@
     },
     mounted () {
       for (const i in this.itemList) {
-        const type = this.itemList[i].type
+        const { type, name } = this.itemList[i]
         let val = ''
         if (type === 'select') {
           val = undefined
@@ -127,7 +127,7 @@
         } else {
           val = ''
         }
-        this.$set(this.myform, this.itemList[i].name, val)
+        this.$set(this.myform, name, val)
       }
       ['load', 'resize'].forEach(item => {
         window.addEventListener(item, this.calculation)

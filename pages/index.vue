@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <SearchFilter
-      :item-list="itemList"
-      @onSearch="onSearch"
-    />
+  <div class="container">
+    <BaseForm
+      :itemList="itemList"
+      />
   </div>
 </template>
 
 <script>
-  import SearchFilter from '~/components/SearchFilter'
 
+  import BaseForm from '~/components/BaseForm'
   const options = [
     {
       label: '产品一',
@@ -18,12 +17,42 @@
     {
       label: '产品二',
       value: 2
+    },
+    {
+      label: '产品3',
+      value: 3
+    },
+    {
+      label: '产品4',
+      value: 4
+    },
+    {
+      label: '产品5',
+      value: 5
+    },
+    {
+      label: '产品6',
+      value: 6
+    }
+  ]
+  const option = [
+    {
+      label: '产品|1',
+      value: 1
+    },
+    {
+      label: '产品|2',
+      value: 2
+    },
+    {
+      label: '产品|3',
+      value: 3
     }
   ]
 
   export default {
     name: 'IndexPage',
-    components: { SearchFilter },
+    components: { BaseForm },
     asyncData ({ query }) {
       return query
     },
@@ -43,6 +72,13 @@
             option: options
           },
           {
+            label: '产品类型二',
+            name: 'proTypeTow',
+            placeholder: '请选择产品类型',
+            type: 'select',
+            option
+          },
+          {
             label: '日期选择',
             name: 'times',
             placeholder: '请选择日期选择!!!',
@@ -52,28 +88,40 @@
             label: '日期范围',
             name: 'rangeTime',
             placeholder: '请选择日期范围!!!',
-            type: 'range',
-            showTime: true
+            type: 'range'
           },
           {
-            label: '用户姓名1',
-            name: 'username1',
-            placeholder: '请输入用户姓名！！！'
+            label: '备注',
+            name: 'remarks',
+            type: 'textarea',
+            placeholder: '请输入备注信息！'
           },
           {
-            label: '用户姓名2',
-            name: 'username2',
-            placeholder: '请输入用户姓名！！！'
+            label: '权重',
+            name: 'weights',
+            type: 'number',
+            min: 1,
+            max: 100
           },
           {
-            label: '用户姓名3',
-            name: 'username3',
-            placeholder: '请输入用户姓名！！！'
+            label: '单选',
+            name: 'radios',
+            type: 'radio',
+            option: [
+              {label: '单选一', value: 1},
+              {label: '单选二', value: 2},
+              {label: '单选三', value: 3}
+            ]
           },
           {
-            label: '用户姓名4',
-            name: 'username4',
-            placeholder: '请输入用户姓名！！！'
+            label: '多选项',
+            name: 'checks',
+            type: 'checked',
+            option: [
+              {label: '蓝球', value: 1},
+              {label: '足球', value: 2},
+              {label: '高尔夫', value: 3}
+            ]
           }
         ]
       }

@@ -28,11 +28,11 @@ import {
   Card,
   Checkbox,
   Radio,
-  Cascader, Menu, Icon
+  Cascader, Menu, Icon, Spin
 } from 'ant-design-vue'
 
 const components = [
-  ConfigProvider, Layout, Button, Form, FormModel, Input, Select, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader, Menu, Icon
+  ConfigProvider, Layout, Button, Form, FormModel, Input, Select, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader, Menu, Icon, Spin
 ]
 
 for (const component of components) {

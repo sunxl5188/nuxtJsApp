@@ -2,16 +2,18 @@
   <div>
     <SearchFilter
       :item-list="itemList"
+      @onSearch="onSearch"
     />
   </div>
 </template>
 
 <script>
   import SearchFilter from '~/components/SearchFilter'
+
   const options = [
     {
       label: '产品一',
-      value : 1
+      value: 1
     },
     {
       label: '产品二',
@@ -44,8 +46,7 @@
             label: '日期选择',
             name: 'times',
             placeholder: '请选择日期选择!!!',
-            type: 'date',
-            showTime: true
+            type: 'date'
           },
           {
             label: '日期范围',
@@ -81,7 +82,11 @@
     computed: {},
     mounted () {
     },
-    methods: {}
+    methods: {
+      onSearch (data) {
+        console.log(data)
+      }
+    }
   }
 </script>
 <style lang="scss">

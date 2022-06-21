@@ -23,48 +23,62 @@ $spaceList: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50;
 @each $space in $spaceList {
   .u-m-#{$space} {
     margin: px2rem($space);
+
+    &-l-#{$space} {
+      margin-left: px2rem($space);
+    }
+
+    &-t-#{$space} {
+      margin-top: px2rem($space);
+    }
+
+    &-r-#{$space} {
+      margin-right: px2rem($space);
+    }
+
+    &-b-#{$space} {
+      margin-bottom: px2rem($space);
+    }
+
+    &-y-#{$space} {
+      margin-top: px2rem($space);
+      margin-bottom: px2rem($space);
+    }
+
+    &-x-#{$space} {
+      margin-left: px2rem($space);
+      margin-right: px2rem($space);
+    }
   }
-  .u-ml-#{$space} {
-    margin-left: px2rem($space);
-  }
-  .u-mt-#{$space} {
-    margin-top: px2rem($space);
-  }
-  .u-mr-#{$space} {
-    margin-right: px2rem($space);
-  }
-  .u-mb-#{$space} {
-    margin-bottom: px2rem($space);
-  }
-  .u-my-#{$space} {
-    margin-top: px2rem($space);
-    margin-bottom: px2rem($space);
-  }
-  .u-mx-#{$space} {
-    margin-left: px2rem($space);
-    margin-right: px2rem($space);
-  }
+
+
   .u-p-#{$space} {
     padding: px2rem($space);
-  }
-  .u-pl-#{$space} {
-    padding-left: px2rem($space);
-  }
-  .u-pt-#{$space} {
-    padding-top: px2rem($space);
-  }
-  .u-pr-#{$space} {
-    padding-right: px2rem($space);
-  }
-  .u-pb-#{$space} {
-    padding-bottom: px2rem($space);
-  }
-  .u-py-#{$space} {
-    padding-top: px2rem($space);
-    padding-bottom: px2rem($space);
-  }
-  .u-px-#{$space} {
-    padding-left: px2rem($space);
-    padding-right: px2rem($space);
+
+    &-l-#{$space} {
+      padding-left: px2rem($space);
+    }
+
+    &-t-#{$space} {
+      padding-top: px2rem($space);
+    }
+
+    &-r-#{$space} {
+      padding-right: px2rem($space);
+    }
+
+    &-b-#{$space} {
+      padding-bottom: px2rem($space);
+    }
+
+    &-y-#{$space} {
+      padding-top: px2rem($space);
+      padding-bottom: px2rem($space);
+    }
+
+    &-x-#{$space} {
+      padding-left: px2rem($space);
+      padding-right: px2rem($space);
+    }
   }
 }

@@ -1,81 +1,87 @@
 <template>
-  <a-form-model
-    ref="myform"
-    layout="horizontal"
-    :model="myform"
-    :label-col="{span:labelCol}"
-    :wrapper-col="{span:24-labelCol}"
-    @submit.prevent="submitSave"
-  >
-    <div
-      class="searchWrap"
-      :style="collapse ? `height:${collHeight}px` : clientWidth < 576 ? 'height:79px':'height:50px'">
+  <div>
+    <MyLoading :visible="loading" />
+    <a-form-model
+      v-if="!loading"
+      ref="myform"
+      layout="horizontal"
+      :model="myform"
+      :label-col="{span:labelCol}"
+      :wrapper-col="{span:24-labelCol}"
+      @submit.prevent="submitSave"
+    >
+      <div
+        class="searchWrap"
+        :style="searchFold ? `height:${collHeight}px` : clientWidth < 576 ? 'height:79px':'height:50px'"
+      >
+        <a-row>
+          <a-col
+            v-for="(item, index) in itemList"
+            :key="item.name+index"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="8"
+            :xl="6"
+            :xxl="4"
+          >
+            <a-form-model-item :label="item.label" :prop="item.name">
+              <!--文本-->
+              <template v-if="item.type===undefined || item.type==='text'">
+                <a-input v-model="myform[item.name]" :placeholder="item.placeholder || `请输入${item.label}`"/>
+              </template>
+              <!--选择-->
+              <template v-else-if="item.type === 'select'">
+                <a-select
+                  v-model="myform[item.name]" :placeholder="item.placeholder || `请输入${item.label}`"
+                  allow-clear
+                  :mode="item.mode || 'default'"
+                >
+                  <a-select-option v-for="(d, n) in item.option" :key="d.value.toString() + n" :value="d.value">
+                    {{d.label}}
+                  </a-select-option>
+                </a-select>
+              </template>
+              <!--日历-->
+              <template v-else-if="item.type==='date'">
+                <a-date-picker
+                  v-model="myform[item.name]"
+                  :format="item.valueFormat || 'yyyy-MM-DD'"
+                  :value-format="item.valueFormat || 'yyyy-MM-DD'"
+                  :placeholder="item.placeholder || `请输入${item.label}`"
+                  :input-read-only="true"
+                  :disabled-date="item.disabledDate === undefined ? () => false : item.disabledDate"
+                  :show-time="item.showTime||false"
+                />
+              </template>
+              <!--日期范围-->
+              <template v-else-if="item.type === 'range'">
+                <a-range-picker
+                  v-model="myform[item.name]"
+                  class="w-100"
+                  :value-format="item.valueFormat || 'yyyy-MM-DD'"
+                  :show-time="item.showTime || false"
+                  :disabled-time="item.disabledTime === undefined ? () => false : item.disabledTime"
+                />
+              </template>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </div>
       <a-row>
-        <a-col
-          v-for="(item, index) in itemList"
-          :key="item.name+index"
-          :xs="24"
-          :sm="12"
-          :md="8"
-          :lg="8"
-          :xl="6"
-          :xxl="4"
-        >
-          <a-form-model-item :label="item.label">
-            <!--文本-->
-            <template v-if="item.type===undefined || item.type==='text'">
-              <a-input v-model="myform[item.name]" :placeholder="item.placeholder || `请输入${item.label}`"/>
-            </template>
-            <!--选择-->
-            <template v-else-if="item.type === 'select'">
-              <a-select
-                v-model="myform[item.name]" :placeholder="item.placeholder || `请输入${item.label}`"
-                allow-clear
-                :mode="item.mode || 'default'"
-              >
-                <a-select-option v-for="(d, n) in item.option" :key="d.value.toString() + n" :value="d.value">
-                  {{d.label}}
-                </a-select-option>
-              </a-select>
-            </template>
-            <!--日历-->
-            <template v-else-if="item.type==='date'">
-              <a-date-picker
-                v-model="myform[item.name]"
-                :format="item.valueFormat || 'yyyy-MM-DD'"
-                :value-format="item.valueFormat || 'yyyy-MM-DD'"
-                :placeholder="item.placeholder || `请输入${item.label}`"
-                :input-read-only="true"
-                :disabled-date="item.disabledDate === undefined ? () => false : item.disabledDate"
-                :show-time="item.showTime||false"
-              />
-            </template>
-            <!--日期范围-->
-            <template v-else-if="item.type === 'range'">
-              <a-range-picker
-                v-model="myform[item.name]"
-                class="w-100"
-                :value-format="item.valueFormat || 'yyyy-MM-DD'"
-                :show-time="item.showTime || false"
-                :disabled-time="item.disabledTime === undefined ? () => false : item.disabledTime"
-              />
-            </template>
-          </a-form-model-item>
+        <a-col :span="24" class="d-flex justify-content-end">
+          <a-space align="center" direction="horizontal" size="large">
+            <a-button type="primary" ghost html-type="submit">搜索</a-button>
+            <a-button type="default" @click="onClear">清空</a-button>
+            <a-button type="link" @click="onClickOpen">
+              {{searchFold?'收起':'展开'}}
+              <i class="iconfont">{{searchFold?'&#xe745;':'&#xe7b2;'}}</i>
+            </a-button>
+          </a-space>
         </a-col>
       </a-row>
-    </div>
-    <a-row>
-      <a-col :span="24" class="d-flex justify-content-end">
-        <a-space align="center" direction="horizontal" size="large">
-          <a-button type="primary" ghost html-type="submit">搜索</a-button>
-          <a-button type="default">清空</a-button>
-          <a-button type="link" @click="onClickOpen">展开
-            <i class="iconfont">{{collapse?'&#xe745;':'&#xe7b2;'}}</i>
-          </a-button>
-        </a-space>
-      </a-col>
-    </a-row>
-  </a-form-model>
+    </a-form-model>
+  </div>
 </template>
 
 <script>
@@ -86,8 +92,10 @@
         return d < startDate || d > endDate
       }
    */
+  import MyLoading from '~/components/MyLoading'
   export default {
     name: 'SearchFilter',
+    components: { MyLoading },
     props: {
       itemList: {
         type: Array,
@@ -102,8 +110,8 @@
     },
     data () {
       return {
+        loading: true,
         myform: {},
-        collapse: false,
         collHeight: 0,
         clientWidth: 1000
       }
@@ -123,6 +131,10 @@
       }
       ['load', 'resize'].forEach(item => {
         window.addEventListener(item, this.calculation)
+      })
+
+      this.$nextTick(() => {
+        this.loading = false
       })
     },
     methods: {
@@ -152,7 +164,7 @@
         }
       },
       onClickOpen () {
-        this.collapse = !this.collapse
+        this.$vuexAdmin('searchFold', !this.searchFold)
       },
       submitSave () {
         const data = this.$lodash.cloneDeep(this.myform)
@@ -165,6 +177,10 @@
           }
         }
         this.$emit('onSearch', data)
+      },
+      onClear(){
+        this.$refs.myform.resetFields()
+        this.submitSave()
       }
     }
   }

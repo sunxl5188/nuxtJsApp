@@ -4,7 +4,8 @@ const state = () => ({
     openKeys: [],
     selectedKeys: [],
     list: []
-  }
+  },
+  searchFold: false // 表格筛选展开收起状态
 })
 
 export default {

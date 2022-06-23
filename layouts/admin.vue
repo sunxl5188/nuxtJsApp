@@ -14,23 +14,15 @@
           theme="dark"
           :inline-collapsed="vuex_menu.collapsed"
         >
-          <a-menu-item key="1">
-            <a-icon type="home"/>
-            <span><nuxt-link to="/admin">首页</nuxt-link></span>
-          </a-menu-item>
-          <a-sub-menu key="sub1">
-            <span slot="title"><a-icon type="mail"/><span>Navigation One</span></span>
-            <a-menu-item key="5">
-              <nuxt-link to="/admin/list">基础列表</nuxt-link>
-            </a-menu-item>
-            <a-menu-item key="6">
-              Option 6
-            </a-menu-item>
-            <a-menu-item key="7">
-              Option 7
-            </a-menu-item>
-            <a-menu-item key="8">
-              Option 8
+          <a-sub-menu v-for="(subMenu, index) in menuList" :key="`sub${index}`">
+            <span slot="title">
+              <a-icon :type="subMenu.icon"/>
+              <span>{{subMenu.title}}</span>
+            </span>
+            <a-menu-item v-for="(item, i) in subMenu.children" :key="`sub${index}-menuItem${i}`">
+              <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path">
+                {{item.title}}
+              </nuxt-link>
             </a-menu-item>
           </a-sub-menu>
         </a-menu>
@@ -89,7 +81,43 @@
         loading: true,
         locale,
         upSignInState: '',
-        tipsOut: 0
+        tipsOut: 0,
+        menuList: [
+          {
+            title: '仪表板',
+            path: 'dashboard',
+            icon: 'dashboard',
+            children: [
+              {
+                title: '工作台',
+                path: 'workplace',
+              },
+              {
+                title: '分析页',
+                path: 'analysis',
+              }
+            ]
+          },
+          {
+            title: '表单页',
+            path: 'form',
+            icon: 'form',
+            children: [
+              {
+                title: '基础表单',
+                path: 'baseForm',
+              },
+              {
+                title: '分步表单',
+                path: 'stepForm',
+              },
+              {
+                title: '高级表单',
+                path: 'advanced',
+              }
+            ]
+          }
+        ]
       }
     },
     async mounted () {

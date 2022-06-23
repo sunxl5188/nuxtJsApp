@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="clearfix border-bottom">
+    <div v-if="showAll" class="clearfix border-bottom">
       <a-checkbox :indeterminate="indeterminate" :checked="checkAll" @change="onCheckAllChange">
         全选
       </a-checkbox>
@@ -25,6 +25,10 @@
           return []
         }
       },
+      showAll: {
+        type: Boolean,
+        default: false
+      }
     },
     data () {
       return {
@@ -41,13 +45,13 @@
       this.$nextTick(() => {
         const dLen = this.checkedValueArray.length
         const cLen = this.checkedList.length
-        if(dLen === cLen){
+        if (dLen === cLen) {
           this.checkAll = true
           this.indeterminate = false
-        } else if(dLen > cLen && cLen > 0){
+        } else if (dLen > cLen && cLen > 0) {
           this.checkAll = false
           this.indeterminate = true
-        } else if(cLen === 0){
+        } else if (cLen === 0) {
           this.checkAll = false
           this.indeterminate = false
         }
@@ -57,14 +61,18 @@
       onChange (checkedList) {
         this.indeterminate = !!checkedList.length && checkedList.length < this.options.length
         this.checkAll = checkedList.length === this.options.length
+        this.$emit('update:value', this.checkedList)
       },
       onCheckAllChange (e) {
-        console.log(e.target.checked)
         Object.assign(this, {
           checkedList: e.target.checked ? this.checkedValueArray : [],
           indeterminate: false,
           checkAll: e.target.checked,
         })
+        this.$emit('update:value', this.checkedList)
+      },
+      resetFields () {
+        this.checkedList = []
       }
     }
   }

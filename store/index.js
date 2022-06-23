@@ -1,5 +1,5 @@
 import modules from './modules'
-import { getPrefix } from '@/static/js/utils'
+import { getPrefix } from '@/assets/js/utils'
 
 const PREFIX = getPrefix()
 const hasLogin = `${PREFIX}hasLogin`

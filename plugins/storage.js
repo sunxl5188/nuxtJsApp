@@ -1,4 +1,4 @@
-import { getPrefix } from '~/static/js/utils'
+import { getPrefix } from '@/assets/js/utils'
 
 /**
  * 存储localStorage

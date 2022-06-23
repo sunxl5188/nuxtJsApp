@@ -1,4 +1,4 @@
-import { getCookiesInServer, getPrefix } from '~/static/js/utils'
+import { getCookiesInServer, getPrefix } from '@/assets/js/utils'
 
 export default function ({ route, req, res, redirect, app }) {
   const isClient = process.client

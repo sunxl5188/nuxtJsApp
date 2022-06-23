@@ -140,6 +140,12 @@
             name: 'password',
             type: 'password',
             placeholder: '请输入密码！'
+          },
+          {
+            label: '自定义输入',
+            name: 'custom',
+            type: 'custom',
+            placeholder: '请输入自定义内容'
           }
         ],
         rules: {

@@ -10,6 +10,7 @@
   >
     <template v-for="(item, i) in itemList">
       <a-form-model-item
+        v-if="item.type!=='custom'"
         :key="i"
         :label="item.label"
         :prop="item.name"
@@ -104,6 +105,30 @@
         </template>
 
       </a-form-model-item>
+
+      <!--自定义输入框-->
+      <template v-if="item.type==='custom'">
+        <a-form-model-item :key="i" :label="item.label">
+          <div
+            v-for="(items, k) in myform[item.name]"
+            :key="k"
+            class="d-flex justify-content-between align-items-center u-p-t-4 u-m-b-11"
+          >
+            <a-input
+              v-model="items.value"
+              :placeholder="item.placeholder || `请输入${item.label}`"
+              autocomplete="off"
+            />
+            <a-button v-if="k === 0" type="link" @click="onCustomAdd(item.name)">
+              <a-icon type="plus-circle"/>
+            </a-button>
+            <a-button v-else type="link" @click="onCustomDel(item.name, items.id)">
+              <a-icon type="minus-circle" class="text-danger"/>
+            </a-button>
+          </div>
+        </a-form-model-item>
+      </template>
+
       <!--如果有子级-->
       <template v-if="item.children">
         <MyFormItem
@@ -126,6 +151,7 @@
 
 <script>
   import MyFormItem from '~/components/MyFormItem'
+  import { guid } from '~/assets/js/utils'
 
   export default {
     name: 'MyBaseForm',
@@ -167,10 +193,12 @@
         let val = ''
         if (type === 'select') {
           val = undefined
-        } else if (type === 'range' || type === 'checked') {
+        }
+        if (['range', 'checked'].includes(type)) {
           val = []
-        } else {
-          val = ''
+        }
+        if (['custom'].includes(type)) {
+          val = [{ id: guid(), value: '' }]
         }
         this.$set(this.myform, name, val)
       }
@@ -209,6 +237,15 @@
         return (
           option.componentOptions.children[0].text.toLowerCase().includes(input.toLowerCase())
         )
+      },
+      // 添加自定义
+      onCustomAdd (name) {
+        this.myform[name].push({ id: guid(), value: '' })
+      },
+      onCustomDel (name, id) {
+        const arr = this.$lodash.cloneDeep(this.myform[name])
+        this.$lodash.remove(arr, o => o.id === id)
+        this.myform[name] = arr
       }
     }
   }

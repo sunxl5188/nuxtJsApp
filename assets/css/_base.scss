@@ -18,11 +18,14 @@ html, body {
   }
 }
 
-$spaceList: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50;
+@for $i from 0 through 50 {
+  $space: $i;
 
-@each $space in $spaceList {
-  .u-m-#{$space} {
-    margin: px2rem($space);
+  .u-m {
+
+    &-#{$space}{
+      margin: px2rem($space);
+    }
 
     &-l-#{$space} {
       margin-left: px2rem($space);
@@ -51,9 +54,11 @@ $spaceList: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50;
     }
   }
 
+  .u-p{
 
-  .u-p-#{$space} {
-    padding: px2rem($space);
+    &-#{$space}{
+      padding: px2rem($space);
+    }
 
     &-l-#{$space} {
       padding-left: px2rem($space);

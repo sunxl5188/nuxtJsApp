@@ -14,6 +14,7 @@
             <a-menu
               mode="inline"
               theme="dark"
+              :inline-indent="15"
               :inline-collapsed="vuex_menu.collapsed"
             >
               <a-sub-menu v-for="(subMenu, index) in menuList" :key="`sub${index}`">

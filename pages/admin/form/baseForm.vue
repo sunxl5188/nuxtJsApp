@@ -1,13 +1,16 @@
 <template>
-  <div>
+  <MyCard
+    title="基础表单"
+  >
     <MyBaseForm
       :item-list="itemList"
       :rules="rules"
     />
-  </div>
+  </MyCard>
 </template>
 
 <script>
+  import MyCard from '~/components/MyCard'
   import MyBaseForm from '~/components/MyBaseForm'
   const options = [
     {
@@ -61,7 +64,7 @@
   }
   export default {
     name: 'BaseForm',
-    components: { MyBaseForm },
+    components: { MyCard, MyBaseForm },
     layout: 'admin',
     data () {
       return {

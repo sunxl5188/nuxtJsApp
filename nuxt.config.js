@@ -16,14 +16,16 @@ export default {
     script: [
       { src: '/js/jquery.js' },
       { src: '/js/popper.min.js' },
-      { src: '/js/bootstrap.min.js' }
+      { src: '/js/bootstrap.min.js' },
+      { src: '/js/mCustomScrollbar/jquery.mCustomScrollbar.js' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/bootstrap/bootstrap.scss',
-    '~/assets/css/main.scss'
+    { src: '~/assets/bootstrap/bootstrap.scss', lang: 'scss' },
+    { src: '~/assets/css/main.scss', lang: 'scss' },
+    { src: '~/static/js/mCustomScrollbar/jquery.mCustomScrollbar.css', lang: 'css' }
   ],
 
   loading: {
@@ -60,7 +62,11 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    // scss: '~/assets/css/_variables.scss'
+  },
   buildDir: 'nuxt-dist',
   server: {
     host: '0.0.0.0', // 默认: localhost
@@ -97,7 +103,7 @@ export default {
     transpile: [/ant-design-vue/],
     vendor: ['axios'], // 为防止重复打包
     styleResources: {
-      // less: './assets/theme-chalk/basics.less'
+      scss: '~/assets/css/_variables.scss'
     },
     babel: {
       plugins: [

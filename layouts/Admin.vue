@@ -4,43 +4,49 @@
       <!--菜单-->
       <div :style="vuex_menu.collapsed ? 'width:80px' : 'width:200px'" class="layoutSider">
         <a-layout-sider :collapsed="vuex_menu.collapsed">
-          <div style="width:200px;">
-            <div class="logo">
-              <nuxt-link to="/admin" class="d-flex justify-content-center align-items-center">
-                <img src="@/assets/images/logo.png" alt="">
-                <h1 v-if="!vuex_menu.collapsed" class="m-2">Ant Design</h1>
-              </nuxt-link>
-            </div>
-            <a-menu
-              mode="inline"
-              theme="dark"
-              :inline-indent="15"
-              :inline-collapsed="vuex_menu.collapsed"
+          <div class="logo">
+            <nuxt-link to="/admin" class="d-flex justify-content-center align-items-center">
+              <img src="@/assets/images/logo.png" alt="">
+              <h1 v-if="!vuex_menu.collapsed" class="m-2">Ant Design</h1>
+            </nuxt-link>
+          </div>
+          <a-menu
+            v-model="selectedKeys"
+            :open-keys.sync="openKeys"
+            mode="inline"
+            theme="dark"
+            :inline-indent="15"
+            :inline-collapsed="vuex_menu.collapsed"
+            @openChange="onMenuChange"
+            @select="onMenuSelect"
+          >
+            <a-sub-menu
+              v-for="(subMenu, index) in menuList"
+              :key="`sub${index}`"
             >
-              <a-sub-menu v-for="(subMenu, index) in menuList" :key="`sub${index}`">
             <span slot="title">
               <a-icon :type="subMenu.icon"/>
               <span>{{subMenu.title}}</span>
             </span>
-                <template v-for="(item, i) in subMenu.children">
-                  <a-menu-item
-                    v-if="!Object.prototype.hasOwnProperty.call(item, 'children')"
-                    :key="`sub${index}-menuItem${i}`">
-                    <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path">
-                      {{item.title}}
+              <template v-for="(item, i) in subMenu.children">
+                <a-menu-item
+                  v-if="!Object.prototype.hasOwnProperty.call(item, 'children')"
+                  :key="`sub${index}-menu${i}`"
+                >
+                  <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path">
+                    {{item.title}}
+                  </nuxt-link>
+                </a-menu-item>
+                <a-sub-menu v-else :key="`sub${index}-menu${i}`" :title="item.title">
+                  <a-menu-item v-for="(itemTow, k) in item.children" :key="`sub${index}-menu${i}-child${k}`">
+                    <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path + '/' + itemTow.path">
+                      {{itemTow.title}}
                     </nuxt-link>
                   </a-menu-item>
-                  <a-sub-menu v-else :key="`sub${index}-menuItem${i}`" :title="item.title">
-                    <a-menu-item v-for="(itemTow, k) in item.children" :key="`sub${index}-menuItem${i}-${k}`">
-                      <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path + '/' + itemTow.path">
-                        {{itemTow.title}}
-                      </nuxt-link>
-                    </a-menu-item>
-                  </a-sub-menu>
-                </template>
-              </a-sub-menu>
-            </a-menu>
-          </div>
+                </a-sub-menu>
+              </template>
+            </a-sub-menu>
+          </a-menu>
         </a-layout-sider>
       </div>
 
@@ -48,7 +54,10 @@
         <a-layout>
           <!--头部-->
           <a-layout-header class="bg-white u-px-15 d-flex justify-content-between align-items-center pl-4 pr-4">
-            <a-icon :type="!vuex_menu.collapsed?'menu-fold':'menu-unfold'" @click="setCollapsed"/>
+            <div class="d-flex justify-content-start align-content-center">
+              <a-icon :type="!vuex_menu.collapsed?'menu-fold':'menu-unfold'" class="mr-3" @click="setCollapsed"/>
+              <MyBreadcrumb/>
+            </div>
             <div class="header-right">
               <a-dropdown>
                 <div class="d-flex justify-content-between align-items-center">
@@ -88,13 +97,14 @@
 <script>
   import locale from 'ant-design-vue/lib/locale-provider/zh_CN'
   import { getPrefix } from '@/assets/js/utils'
+  import MyBreadcrumb from '~/components/MyBreadcrumb'
 
   const PREFIX = getPrefix()
   const hasLogin = `${PREFIX}hasLogin`
 
   export default {
     name: 'LayoutsAdmin',
-    components: {},
+    components: { MyBreadcrumb },
     middleware: 'auth',
     data () {
       return {
@@ -102,6 +112,8 @@
         locale,
         upSignInState: '',
         tipsOut: 0,
+        selectedKeys: [],
+        openKeys: [],
         menuList: [
           {
             title: '仪表板',
@@ -173,8 +185,11 @@
         ]
       }
     },
+    watch: {},
     async mounted () {
       await this.$nextTick()
+      this.selectedKeys = this.$getStorage('selectedKeys')
+      this.openKeys = this.$getStorage('openKeys')
       this.loading = false
       // 同步登录信息
       this.$store.commit('initState')
@@ -198,8 +213,6 @@
         window.addEventListener(item, this.upSignInState)
       })
 
-      console.log(this.$router.getRoutes())
-
       _.delay(() => {
         // http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html
         $('.ant-layout-sider-children').mCustomScrollbar({
@@ -210,10 +223,19 @@
         $('#layoutScroll').mCustomScrollbar({
           theme: 'minimal-dark'
         })
+
+        console.log(this.$router.getRoutes())
+
       }, 500)
 
     },
     methods: {
+      onMenuSelect ({ item, selectedKeys}) {
+        this.$setStorage('selectedKeys', selectedKeys)
+      },
+      onMenuChange (openKeys) {
+        this.$setStorage('openKeys', openKeys)
+      },
       setCollapsed () {
         this.$vuexAdmin('vuex_menu.collapsed', !this.vuex_menu.collapsed)
       },
@@ -229,7 +251,7 @@
       actionOut () {
         this.$store.dispatch('asySignOut')
         this.$nextTick(() => {
-          this.$router.push('/admin/login')
+          this.$router.push('/login')
         })
       }
     }

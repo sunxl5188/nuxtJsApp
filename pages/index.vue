@@ -1,26 +1,25 @@
 <template>
   <div class="container">
-      <nuxt-link to="admin">进入后台</nuxt-link>
+    <nuxt-link to="/article/1">新闻</nuxt-link>
+    <nuxt-link to="admin">进入后台</nuxt-link>
   </div>
 </template>
 
 <script>
   export default {
     name: 'IndexPage',
-    components: { },
+    components: {},
     asyncData ({ query }) {
       return query
     },
     data () {
-      return {
-      }
+      return {}
     },
     fetch (content) {},
     computed: {},
     mounted () {
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 <style lang="scss">

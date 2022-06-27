@@ -1,11 +1,11 @@
 <template>
-    <div>StepForm</div>
+  <div>cardlist</div>
 </template>
 
 <script>
   export default {
-    name: 'StepForm',
-    layout: 'admin'
+    name: 'CardList',
+    meta: {title: '卡片列表'}
   }
 </script>
 

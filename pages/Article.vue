@@ -1,11 +1,10 @@
 <template>
-    <div>AdvancedDetail</div>
+  <Nuxt />
 </template>
 
 <script>
   export default {
-    name: 'AdvancedDetail',
-    layout: 'admin'
+    name: 'ArticlePage'
   }
 </script>
 

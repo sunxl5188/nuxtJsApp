@@ -1,11 +1,11 @@
 <template>
-    <div>workplace</div>
+    <div>StepForm</div>
 </template>
 
 <script>
   export default {
-    name: 'WorkPlace',
-    layout: 'admin'
+    name: 'StepForm',
+    meta: {title: '分步表单'}
   }
 </script>
 

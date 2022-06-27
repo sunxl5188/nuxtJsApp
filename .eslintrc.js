@@ -18,6 +18,9 @@ module.exports = {
   globals: {
     '_': true,
     '$moment': true,
-    '$lodash': true
+    '$lodash': true,
+    '$getStorage': true,
+    '$setStorage': true,
+    '$remStorage': true
   }
 }

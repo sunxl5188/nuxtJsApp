@@ -65,7 +65,7 @@
   export default {
     name: 'BaseForm',
     components: { MyCard, MyBaseForm },
-    layout: 'admin',
+    meta: {title: '基础表单'},
     data () {
       return {
         itemList: [
@@ -175,6 +175,10 @@
         }
 
       }
+    },
+    mounted () {
+    },
+    methods: {
     }
   }
 </script>

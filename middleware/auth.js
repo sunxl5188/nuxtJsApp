@@ -21,6 +21,6 @@ export default function ({ route, req, res, redirect, app }) {
   // 判断是否获取到token
   // 未获取到，重定向到登陆页面
   if (!+hasLogin) {
-    redirect('/admin/login')
+    redirect('/login')
   }
 }

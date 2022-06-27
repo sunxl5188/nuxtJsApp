@@ -153,7 +153,7 @@
           float: left;
           width: 55%;
           height: 100%;
-          background-image: url('../../assets/images/login_bg.png');
+          background-image: url('../assets/images/login_bg.png');
           background-size: auto 100%;
           background-repeat: no-repeat;
           background-position: center center;

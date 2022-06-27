@@ -1,11 +1,11 @@
 <template>
-    <div>basicdetail</div>
+  <Nuxt />
 </template>
 
 <script>
   export default {
-    name: 'BasicDetail',
-    layout: 'admin'
+    name: 'FormPage',
+    meta: {title: '表单页'}
   }
 </script>
 

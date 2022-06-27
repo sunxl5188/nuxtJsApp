@@ -13,6 +13,11 @@
       return {
         locale
       }
+    },
+    watch: {
+      $route (to, from) {
+        console.log(this.$route.matched, '----------------')
+      }
     }
   }
 </script>

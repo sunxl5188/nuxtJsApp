@@ -36,12 +36,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/antd-ui',
     // '@/plugins/element-ui',
-    '@/plugins/axios',
-    '@/plugins/cookies',
-    '@/plugins/storage',
-    '@/plugins/components',
+    { src: '@/plugins/antd-ui', mode: 'client' },
+    { src: '@/plugins/axios', mode: 'client' },
+    { src: '@/plugins/cookies', mode: 'client' },
+    { src: '@/plugins/storage', mode: 'client' },
+    { src: '@/plugins/components', mode: 'client' },
     { src: '@/plugins/lodash', mode: 'client' },
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' },
@@ -137,14 +137,23 @@ export default {
     }
   },
   router: {
-    // 在每页渲染前运行 middleware/user-agent.js 中间件的逻辑
+    // 在每页渲染前运行 middleware/unknownRoute.js 中间件的逻辑
     middleware: 'unknownRoute',
+    routeNameSplitter: '-',
     extendRoutes(routes, resolve) {
-      routes.push({
+      routes.push(
+        // {
+        //   name: 'admin-dashboard-WorkPlace',
+        //   path: '/admin/dashboard/workplace',
+        //   component: resolve(__dirname, 'pages/admin/dashboard/WorkPlace.vue'),
+        //   alias: '/admin'
+        // },
+        {
         name: 'custom',
         path: '*',
         component: resolve(__dirname, 'pages/error/404.vue')
-      })
+      }
+      )
     }
   }
 }

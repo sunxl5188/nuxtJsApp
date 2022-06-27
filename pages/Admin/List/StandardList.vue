@@ -1,11 +1,11 @@
 <template>
-  <div>cardlist</div>
+    <div>StandardList</div>
 </template>
 
 <script>
   export default {
-    name: 'CardList',
-    layout: 'admin'
+    name: 'StandardList',
+    meta: {title: '标准列表'}
   }
 </script>
 

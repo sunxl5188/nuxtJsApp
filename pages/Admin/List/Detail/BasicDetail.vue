@@ -1,11 +1,11 @@
 <template>
-    <div>StandardList</div>
+    <div>basicdetail</div>
 </template>
 
 <script>
   export default {
-    name: 'StandardList',
-    layout: 'admin'
+    name: 'BasicDetail',
+    meta: {title: '基础详情页'}
   }
 </script>
 

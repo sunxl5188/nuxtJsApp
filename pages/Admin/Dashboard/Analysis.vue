@@ -5,7 +5,7 @@
 <script>
   export default {
     name: 'AnalysisComponent',
-    layout: 'admin'
+    meta: {title: '分析页'}
   }
 </script>
 

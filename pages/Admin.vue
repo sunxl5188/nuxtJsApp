@@ -1,11 +1,12 @@
 <template>
-    <div>AdvancedForm</div>
+  <Nuxt/>
 </template>
 
 <script>
   export default {
-    name: 'AdvancedForm',
-    layout: 'admin'
+    name: 'AdminPage',
+    layout: 'Admin',
+    meta: { title: '首页' }
   }
 </script>
 

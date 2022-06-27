@@ -1,11 +1,11 @@
 <template>
-    <div>QueryList</div>
+    <Nuxt />
 </template>
 
 <script>
   export default {
-    name: 'QueryList',
-    layout: 'admin'
+    name: 'DetailPage',
+    meta: {title: '详细页'}
   }
 </script>
 

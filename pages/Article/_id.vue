@@ -12,6 +12,8 @@
     data () {
       return {}
     },
+    watch: {
+    },
     mounted () {
     }
   }

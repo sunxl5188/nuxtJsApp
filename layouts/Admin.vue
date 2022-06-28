@@ -188,8 +188,8 @@
     watch: {},
     async mounted () {
       await this.$nextTick()
-      this.selectedKeys = this.$getStorage('selectedKeys')
-      this.openKeys = this.$getStorage('openKeys')
+      this.selectedKeys = this.$getStorage('selectedKeys') || []
+      this.openKeys = this.$getStorage('openKeys') || []
       this.loading = false
       // 同步登录信息
       this.$store.commit('initState')
@@ -224,7 +224,8 @@
           theme: 'minimal-dark'
         })
 
-        console.log(this.$router.getRoutes())
+        const routerList = this.$router.getRoutes()
+        console.log(routerList)
 
       }, 500)
 

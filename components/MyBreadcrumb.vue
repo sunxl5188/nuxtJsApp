@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MyLoading :loading="loading" />
+    <MyLoading :loading="loading"/>
     <a-breadcrumb v-if="!loading" :routes="routes">
       <template slot="itemRender" slot-scope="{ route }">
         <span v-if="routes.indexOf(route) === routes.length - 1">
@@ -16,6 +16,7 @@
 
 <script>
   import MyLoading from '~/components/MyLoading'
+
   export default {
     name: 'MyBreadcrumb',
     components: { MyLoading },
@@ -29,7 +30,6 @@
       $route: {
         handler () {
           const routeArr = this.$route.matched
-          console.log(routeArr)
           this.routes = []
           routeArr.forEach(item => {
             this.routes.push({
@@ -38,10 +38,16 @@
             })
           })
         },
-        immediate: true
+        deep: true
+      },
+      routes (val, oldVal) {
+        if (val) {
+          this.$setStorage('breadcrumb', val)
+        }
       }
     },
     async mounted () {
+      this.routes = this.$getStorage('breadcrumb') || []
       await this.$nextTick()
       this.loading = false
     }

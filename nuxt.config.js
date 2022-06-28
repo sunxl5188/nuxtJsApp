@@ -7,7 +7,10 @@ export default {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no' },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
+      },
       { hid: 'description', name: 'description', content: '网站描述' },
       { hid: 'keywords', name: 'keywords', content: '网站关键字' },
       { name: 'format-detection', content: 'telephone=no' }
@@ -76,7 +79,7 @@ export default {
     bannerColor: 'yellow'
   },
   env: {
-    baseUrl: process.env['NUXT_ENV_'+process.env.NODE_ENV.toUpperCase()+'_BASE_URL']
+    baseUrl: process.env['NUXT_ENV_' + process.env.NODE_ENV.toUpperCase() + '_BASE_URL']
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -88,7 +91,7 @@ export default {
   },
   proxy: {
     '/api': {
-      target: process.env['NUXT_ENV_'+process.env.NODE_ENV.toUpperCase()+'_PROXY'],
+      target: process.env['NUXT_ENV_' + process.env.NODE_ENV.toUpperCase() + '_PROXY'],
       pathRewrite:
         {
           '^/api': '',
@@ -108,19 +111,19 @@ export default {
     babel: {
       plugins: [
         [
-          "import",
+          'import',
           {
-            libraryName: "ant-design-vue",
-            libraryDirectory: "es",
-            style: "css" // 如果需要使用 less 方式去按需加载的话，则需要改为 true ，并且添加下面loaders 配置
+            libraryName: 'ant-design-vue',
+            libraryDirectory: 'es',
+            style: 'css' // 如果需要使用 less 方式去按需加载的话，则需要改为 true ，并且添加下面loaders 配置
           },
-          "ant-design-vue"
+          'ant-design-vue'
         ],
         [
-          "component",
+          'component',
           {
-            "libraryName": "element-ui",
-            "styleLibraryName": "theme-chalk"
+            'libraryName': 'element-ui',
+            'styleLibraryName': 'theme-chalk'
           }
         ]
       ]
@@ -140,20 +143,12 @@ export default {
     // 在每页渲染前运行 middleware/unknownRoute.js 中间件的逻辑
     middleware: 'unknownRoute',
     routeNameSplitter: '-',
-    extendRoutes(routes, resolve) {
-      routes.push(
-        // {
-        //   name: 'admin-dashboard-WorkPlace',
-        //   path: '/admin/dashboard/workplace',
-        //   component: resolve(__dirname, 'pages/admin/dashboard/WorkPlace.vue'),
-        //   alias: '/admin'
-        // },
-        {
-        name: 'custom',
-        path: '*',
-        component: resolve(__dirname, 'pages/error/404.vue')
-      }
-      )
+    extendRoutes (routes, resolve) {
+      routes.push({
+          name: 'error',
+          path: '*',
+          component: resolve(__dirname, 'pages/error/404.vue')
+        })
     }
   }
 }

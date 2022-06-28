@@ -1,8 +1,8 @@
 const state = () => ({
   vuex_menu: {
     collapsed: false,
-    openKeys: [],
     selectedKeys: [],
+    openKeys: [],
     list: []
   },
   searchFold: false // 表格筛选展开收起状态

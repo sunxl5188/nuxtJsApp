@@ -5,7 +5,7 @@
 <script>
   export default {
     name: 'DetailPage',
-    meta: {title: '详细页'}
+    meta: {title: '详细页', redirect: '/admin/List/Detail/BasicDetail'}
   }
 </script>
 

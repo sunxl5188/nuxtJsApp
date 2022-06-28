@@ -11,8 +11,8 @@
             </nuxt-link>
           </div>
           <a-menu
-            v-model="selectedKeys"
-            :open-keys.sync="openKeys"
+            v-model="vuex_menu.selectedKeys"
+            :open-keys="vuex_menu.openKeys"
             mode="inline"
             theme="dark"
             :inline-indent="15"
@@ -117,66 +117,66 @@
         menuList: [
           {
             title: '仪表板',
-            path: 'dashboard',
+            path: 'Dashboard',
             icon: 'dashboard',
             children: [
               {
                 title: '工作台',
-                path: 'workplace',
+                path: 'WorkPlace',
               },
               {
                 title: '分析页',
-                path: 'analysis',
+                path: 'Analysis',
               }
             ]
           },
           {
             title: '表单页',
-            path: 'form',
+            path: 'Form',
             icon: 'form',
             children: [
               {
                 title: '基础表单',
-                path: 'baseForm',
+                path: 'BaseForm',
               },
               {
                 title: '分步表单',
-                path: 'stepForm',
+                path: 'StepForm',
               },
               {
                 title: '高级表单',
-                path: 'advancedform',
+                path: 'AdvancedForm',
               }
             ]
           },
           {
             title: '列表页',
-            path: 'list',
+            path: 'List',
             icon: 'table',
             children: [
               {
                 title: '查询表格',
-                path: 'querylist'
+                path: 'QueryList'
               },
               {
                 title: '标准列表',
-                path: 'standardlist'
+                path: 'StandardList'
               },
               {
                 title: '卡片列表',
-                path: 'cardlist'
+                path: 'CardList'
               },
               {
                 title: '详细页',
-                path: 'detail',
+                path: 'Detail',
                 children: [
                   {
                     title: '基础详情页',
-                    path: 'basicdetail'
+                    path: 'BasicDetail'
                   },
                   {
                     title: '高级详情页',
-                    path: 'advanceddetail'
+                    path: 'AdvancedDetail'
                   }
                 ]
               }
@@ -188,11 +188,12 @@
     watch: {},
     async mounted () {
       await this.$nextTick()
-      this.selectedKeys = this.$getStorage('selectedKeys') || []
-      this.openKeys = this.$getStorage('openKeys') || []
       this.loading = false
       // 同步登录信息
       this.$store.commit('initState')
+      console.log(this.$getStorage('vuex_menu.selectedKeys'))
+      // this.$vuexAdmin('vuex_menu.selectedKeys', this.$getStorage('selectedKeys') || [])
+      // this.$vuexAdmin('vuex_menu.openKeys', this.$getStorage('openKeys') || [])
       // **************************************
       this.upSignInState = _.debounce(() => {
         if (this.$cookies.get(hasLogin)) {
@@ -224,18 +225,15 @@
           theme: 'minimal-dark'
         })
 
-        const routerList = this.$router.getRoutes()
-        console.log(routerList)
-
       }, 500)
 
     },
     methods: {
       onMenuSelect ({ item, selectedKeys}) {
-        this.$setStorage('selectedKeys', selectedKeys)
+        this.$vuexAdmin('vuex_menu.selectedKeys', selectedKeys)
       },
       onMenuChange (openKeys) {
-        this.$setStorage('openKeys', openKeys)
+        this.$vuexAdmin('vuex_menu.openKeys', openKeys)
       },
       setCollapsed () {
         this.$vuexAdmin('vuex_menu.collapsed', !this.vuex_menu.collapsed)

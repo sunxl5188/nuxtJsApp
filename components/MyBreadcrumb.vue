@@ -7,7 +7,7 @@
           {{ route.breadcrumbName }}
         </span>
         <router-link v-else :to="{path: route.path}">
-          {{ route.breadcrumbName }}
+          <span @click="nuxtLink(route.breadcrumbName)">{{ route.breadcrumbName }}</span>
         </router-link>
       </template>
     </a-breadcrumb>
@@ -50,6 +50,22 @@
       this.routes = this.$getStorage('breadcrumb') || []
       await this.$nextTick()
       this.loading = false
+    },
+    methods: {
+      nuxtLink (name) {
+        /* if (name === '仪表板') {
+          this.$setStorage('selectedKeys', ['sub0-menu0'])
+        }
+        if (name === '表单页') {
+          this.$setStorage('selectedKeys', ['sub1-menu0'])
+        }
+        if (name === '列表页') {
+          this.$setStorage('selectedKeys', ['sub2-menu0'])
+        }
+        if (name === '详细页') {
+          this.$setStorage('selectedKeys', ['sub2-menu3-child0'])
+        } */
+      }
     }
   }
 </script>

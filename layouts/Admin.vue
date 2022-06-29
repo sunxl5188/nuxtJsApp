@@ -187,8 +187,8 @@
     },
     watch: {},
     async mounted () {
-      const openKeys = this.$getStorage('vuex_menu.openKeys')
-      const selectedKeys = this.$getStorage('vuex_menu.selectedKeys')
+      const openKeys = this.$getStorage('vuex_menu.openKeys') || []
+      const selectedKeys = this.$getStorage('vuex_menu.selectedKeys') || []
 
       await this.$nextTick()
       this.loading = false

@@ -6,7 +6,8 @@
   import WorkPlace from '~/pages/Admin/Dashboard/WorkPlace'
   export default {
     name: 'AdminIndex',
-    components: { WorkPlace }
+    components: { WorkPlace },
+    meta: {title: '工作台'}
   }
 </script>
 

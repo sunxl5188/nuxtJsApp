@@ -1,6 +1,5 @@
 <template>
-  <a-config-provider :locale="locale">
-    <a-layout v-if="!loading" style="min-height: 100vh">
+  <a-layout v-if="!loading" style="min-height: 100vh">
       <!--菜单-->
       <div :style="vuex_menu.collapsed ? 'width:80px' : 'width:200px'" class="layoutSider">
         <a-layout-sider :collapsed="vuex_menu.collapsed">
@@ -85,13 +84,14 @@
           </a-layout-header>
           <!--内容-->
           <a-layout-content class="p-3">
-            <Nuxt/>
+            <a-config-provider :locale="locale">
+              <Nuxt/>
+            </a-config-provider>
           </a-layout-content>
         </a-layout>
       </div>
 
-    </a-layout>
-  </a-config-provider>
+  </a-layout>
 </template>
 
 <script>
@@ -187,18 +187,20 @@
     },
     watch: {},
     async mounted () {
+      const openKeys = this.$getStorage('vuex_menu.openKeys')
+      const selectedKeys = this.$getStorage('vuex_menu.selectedKeys')
+
       await this.$nextTick()
       this.loading = false
       // 同步登录信息
       this.$store.commit('initState')
-      console.log(this.$getStorage('vuex_menu.selectedKeys'))
-      // this.$vuexAdmin('vuex_menu.selectedKeys', this.$getStorage('selectedKeys') || [])
-      // this.$vuexAdmin('vuex_menu.openKeys', this.$getStorage('openKeys') || [])
+      this.$vuexAdmin('vuex_menu.openKeys', openKeys)
+      this.$vuexAdmin('vuex_menu.selectedKeys', selectedKeys)
       // **************************************
       this.upSignInState = _.debounce(() => {
         if (this.$cookies.get(hasLogin)) {
           this.$cookies.set(hasLogin, 1, '1h')
-        } else if (this.$route.path !== '/admin/login' && this.tipsOut === 0) {
+        } else if (this.tipsOut === 0) {
           this.tipsOut++
           this.$info({
             title: '温馨提示',
@@ -229,7 +231,7 @@
 
     },
     methods: {
-      onMenuSelect ({ item, selectedKeys}) {
+      onMenuSelect ({ item, selectedKeys }) {
         this.$vuexAdmin('vuex_menu.selectedKeys', selectedKeys)
       },
       onMenuChange (openKeys) {

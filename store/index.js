@@ -21,7 +21,7 @@ const mutations = {
   // 用户登录
   signIn (state, data) {
     // y年    m月    d天    h时    min分    s秒
-    this.$cookies.set(hasLogin, 1, '1d')
+    this.$cookies.set(hasLogin, 1, '1h')
     state.vuex_token = data.token
     state.vuex_user = data.user
     for (const key in data) {

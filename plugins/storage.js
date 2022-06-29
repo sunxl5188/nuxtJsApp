@@ -30,12 +30,24 @@ export default ({ app }, inject) => {
   }
 
   /**
-   * 获取localStorage
+   * @获取本地缓存
+   * @param name 需要获取的名称，支持多级 如user.info.score
+   * @returns {string}
    */
   const getStorage = name => {
     if (!name) return
-    const temp = getTemp()
-    return temp === null || temp[name] === undefined ? '' : temp[name]
+
+    let temp = getTemp()
+    const nameArr = name.split('.')
+    const len = nameArr.length
+    if (len >= 2) {
+      for (const i in nameArr) {
+        temp = temp[nameArr[i]] || ""
+      }
+    } else {
+      temp = temp[name] || ""
+    }
+    return temp
   }
 
   /**

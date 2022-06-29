@@ -1,7 +1,9 @@
 <template>
-  <a-config-provider :locale="locale">
-    <Nuxt/>
-  </a-config-provider>
+  <client-only>
+    <a-config-provider :locale="locale">
+      <Nuxt/>
+    </a-config-provider>
+  </client-only>
 </template>
 
 <script>

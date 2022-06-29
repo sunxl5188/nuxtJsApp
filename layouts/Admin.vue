@@ -1,97 +1,98 @@
 <template>
-  <a-layout v-if="!loading" style="min-height: 100vh">
-      <!--菜单-->
-      <div :style="vuex_menu.collapsed ? 'width:80px' : 'width:200px'" class="layoutSider">
-        <a-layout-sider :collapsed="vuex_menu.collapsed">
-          <div class="logo">
-            <nuxt-link to="/admin" class="d-flex justify-content-center align-items-center">
-              <img src="@/assets/images/logo.png" alt="">
-              <h1 v-if="!vuex_menu.collapsed" class="m-2">Ant Design</h1>
-            </nuxt-link>
-          </div>
-          <a-menu
-            v-model="vuex_menu.selectedKeys"
-            :open-keys="vuex_menu.openKeys"
-            mode="inline"
-            theme="dark"
-            :inline-indent="15"
-            :inline-collapsed="vuex_menu.collapsed"
-            @openChange="onMenuChange"
-            @select="onMenuSelect"
-          >
-            <a-sub-menu
-              v-for="(subMenu, index) in menuList"
-              :key="`sub${index}`"
+  <client-only>
+    <a-config-provider :locale="locale">
+      <a-layout v-if="!loading" style="min-height: 100vh">
+        <!--菜单-->
+        <div :style="vuex_menu.collapsed ? 'width:80px' : 'width:200px'" class="layoutSider">
+          <a-layout-sider :collapsed="vuex_menu.collapsed">
+            <div class="logo">
+              <nuxt-link to="/admin" class="d-flex justify-content-center align-items-center">
+                <img src="@/assets/images/logo.png" alt="">
+                <h1 v-if="!vuex_menu.collapsed" class="m-2">Ant Design</h1>
+              </nuxt-link>
+            </div>
+            <a-menu
+              v-model="vuex_menu.selectedKeys"
+              :open-keys="vuex_menu.openKeys"
+              mode="inline"
+              theme="dark"
+              :inline-indent="15"
+              :inline-collapsed="vuex_menu.collapsed"
+              @openChange="onMenuChange"
+              @select="onMenuSelect"
             >
+              <a-sub-menu
+                v-for="(subMenu, index) in menuList"
+                :key="`sub${index}`"
+              >
             <span slot="title">
               <a-icon :type="subMenu.icon"/>
               <span>{{subMenu.title}}</span>
             </span>
-              <template v-for="(item, i) in subMenu.children">
-                <a-menu-item
-                  v-if="!Object.prototype.hasOwnProperty.call(item, 'children')"
-                  :key="`sub${index}-menu${i}`"
-                >
-                  <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path">
-                    {{item.title}}
-                  </nuxt-link>
-                </a-menu-item>
-                <a-sub-menu v-else :key="`sub${index}-menu${i}`" :title="item.title">
-                  <a-menu-item v-for="(itemTow, k) in item.children" :key="`sub${index}-menu${i}-child${k}`">
-                    <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path + '/' + itemTow.path">
-                      {{itemTow.title}}
+                <template v-for="(item, i) in subMenu.children">
+                  <a-menu-item
+                    v-if="!Object.prototype.hasOwnProperty.call(item, 'children')"
+                    :key="`sub${index}-menu${i}`"
+                  >
+                    <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path">
+                      {{item.title}}
                     </nuxt-link>
                   </a-menu-item>
-                </a-sub-menu>
-              </template>
-            </a-sub-menu>
-          </a-menu>
-        </a-layout-sider>
-      </div>
+                  <a-sub-menu v-else :key="`sub${index}-menu${i}`" :title="item.title">
+                    <a-menu-item v-for="(itemTow, k) in item.children" :key="`sub${index}-menu${i}-child${k}`">
+                      <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path + '/' + itemTow.path">
+                        {{itemTow.title}}
+                      </nuxt-link>
+                    </a-menu-item>
+                  </a-sub-menu>
+                </template>
+              </a-sub-menu>
+            </a-menu>
+          </a-layout-sider>
+        </div>
 
-      <div id="layoutScroll">
-        <a-layout>
-          <!--头部-->
-          <a-layout-header class="bg-white u-px-15 d-flex justify-content-between align-items-center pl-4 pr-4">
-            <div class="d-flex justify-content-start align-content-center">
-              <a-icon :type="!vuex_menu.collapsed?'menu-fold':'menu-unfold'" class="mr-3" @click="setCollapsed"/>
-              <MyBreadcrumb/>
-            </div>
-            <div class="header-right">
-              <a-dropdown>
-                <div class="d-flex justify-content-between align-items-center">
-                  <a-avatar
-                    :src="vuex_user.avatarUrl"
-                    class="bg-secondary mr-2"
-                    :size="30"
-                  />
-                  <span class="u-px-5">{{vuex_user.username}}</span>
-                  <a-icon type="down"/>
-                </div>
-                <a-menu slot="overlay">
-                  <a-menu-item key="0">
-                    <a-button type="link">修改密码</a-button>
-                  </a-menu-item>
-                  <a-menu-item key="1">
-                    <a-button type="link">个人中心</a-button>
-                  </a-menu-item>
-                  <a-menu-item key="2">
-                    <a-button type="link" @click="loginOut">退出登录</a-button>
-                  </a-menu-item>
-                </a-menu>
-              </a-dropdown>
-            </div>
-          </a-layout-header>
-          <!--内容-->
-          <a-layout-content class="p-3">
-            <a-config-provider :locale="locale">
+        <div id="layoutScroll">
+          <a-layout>
+            <!--头部-->
+            <a-layout-header class="bg-white u-px-15 d-flex justify-content-between align-items-center pl-4 pr-4">
+              <div class="d-flex justify-content-start align-content-center">
+                <a-icon :type="!vuex_menu.collapsed?'menu-fold':'menu-unfold'" class="mr-3" @click="setCollapsed"/>
+                <MyBreadcrumb/>
+              </div>
+              <div class="header-right">
+                <a-dropdown>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <a-avatar
+                      :src="vuex_user.avatarUrl"
+                      class="bg-secondary mr-2"
+                      :size="30"
+                    />
+                    <span class="u-px-5">{{vuex_user.username}}</span>
+                    <a-icon type="down"/>
+                  </div>
+                  <a-menu slot="overlay">
+                    <a-menu-item key="0">
+                      <a-button type="link">修改密码</a-button>
+                    </a-menu-item>
+                    <a-menu-item key="1">
+                      <a-button type="link">个人中心</a-button>
+                    </a-menu-item>
+                    <a-menu-item key="2">
+                      <a-button type="link" @click="loginOut">退出登录</a-button>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </div>
+            </a-layout-header>
+            <!--内容-->
+            <a-layout-content class="p-3">
               <Nuxt/>
-            </a-config-provider>
-          </a-layout-content>
-        </a-layout>
-      </div>
-
-  </a-layout>
+            </a-layout-content>
+          </a-layout>
+        </div>
+      </a-layout>
+    </a-config-provider>
+  </client-only>
 </template>
 
 <script>

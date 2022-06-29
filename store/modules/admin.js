@@ -5,7 +5,14 @@ const state = () => ({
     openKeys: [],
     list: []
   },
-  searchFold: false // 表格筛选展开收起状态
+  searchFold: false, // 表格筛选展开收起状态
+  user: {
+    info: {
+      data: {
+        status: 1
+      }
+    }
+  }
 })
 
 export default {

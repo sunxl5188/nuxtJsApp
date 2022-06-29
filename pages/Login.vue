@@ -1,63 +1,65 @@
 <template>
-  <a-layout class="login">
-    <a-layout-header>
-      <div class="logo">
-        <router-link to='/'>
-          <img src="@/assets/images/logo.jpg" alt="logo"/>
-        </router-link>
-      </div>
-      <div></div>
-    </a-layout-header>
-    <a-layout-content>
-      <div class="loginTable">
-        <div class="loginTableLeft"></div>
-        <div class="loginTableRight">
-          <h4>后台管理系统</h4>
-          <a-form-model
-            ref="myform"
-            layout="horizontal"
-            :model="myform"
-            :rules="rules"
-            class="pt-50"
-            @submit.prevent="submitSave"
-          >
-            <a-form-model-item prop="username">
-              <a-input v-model="myform.username" size="large" placeholder="请输入登录账号">
-                <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
-              </a-input>
-            </a-form-model-item>
-            <a-form-model-item prop="password">
-              <a-input-password v-model="myform.password" size="large" allow-clear placeholder="请输入登录密码">
-                <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
-              </a-input-password>
-            </a-form-model-item>
-            <a-form-model-item>
-              <a-button type="primary" size="large" :loading="loading" block html-type="submit">登录</a-button>
-            </a-form-model-item>
-          </a-form-model>
+  <client-only>
+    <a-layout class="login">
+      <a-layout-header>
+        <div class="logo">
+          <router-link to='/'>
+            <img src="@/assets/images/logo.jpg" alt="logo"/>
+          </router-link>
         </div>
-      </div>
-    </a-layout-content>
-    <a-layout-footer>
-      <div class="footer-nav">
-        <a href="javascript:void(0);">关于我们</a>
-        <span class="pl-10 pr-10">|</span>
-        <a href="javascript:void(0);">联系我们</a>
-        <span class="pl-10 pr-10">|</span>
-        <a href="javascript:void(0);">人才招聘</a>
-        <span class="pl-10 pr-10">|</span>
-        <a href="javascript:void(0);">商家入驻</a>
-        <span class="pl-10 pr-10">|</span>
-        <a href="javascript:void(0);">广告服务</a>
-        <span class="pl-10 pr-10">|</span>
-        <a href="javascript:void(0);">友情链接</a>
-        <span class="pl-10 pr-10">|</span>
-        <a href="javascript:void(0);">销售联盟</a>
-      </div>
-      <div><small>浙ICP备11003236号 浙公网安备 33010602010533号 已通过 ISO27001:2013 信息安全认证</small></div>
-      <div><small>违法和不良信息举报 举报邮箱：admin@XXX.com</small></div>
-    </a-layout-footer>
-  </a-layout>
+        <div></div>
+      </a-layout-header>
+      <a-layout-content>
+        <div class="loginTable">
+          <div class="loginTableLeft"></div>
+          <div class="loginTableRight">
+            <h4>后台管理系统</h4>
+            <a-form-model
+              ref="myform"
+              layout="horizontal"
+              :model="myform"
+              :rules="rules"
+              class="pt-50"
+              @submit.prevent="submitSave"
+            >
+              <a-form-model-item prop="username">
+                <a-input v-model="myform.username" size="large" placeholder="请输入登录账号">
+                  <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
+                </a-input>
+              </a-form-model-item>
+              <a-form-model-item prop="password">
+                <a-input-password v-model="myform.password" size="large" allow-clear placeholder="请输入登录密码">
+                  <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
+                </a-input-password>
+              </a-form-model-item>
+              <a-form-model-item>
+                <a-button type="primary" size="large" :loading="loading" block html-type="submit">登录</a-button>
+              </a-form-model-item>
+            </a-form-model>
+          </div>
+        </div>
+      </a-layout-content>
+      <a-layout-footer>
+        <div class="footer-nav">
+          <a href="javascript:void(0);">关于我们</a>
+          <span class="pl-10 pr-10">|</span>
+          <a href="javascript:void(0);">联系我们</a>
+          <span class="pl-10 pr-10">|</span>
+          <a href="javascript:void(0);">人才招聘</a>
+          <span class="pl-10 pr-10">|</span>
+          <a href="javascript:void(0);">商家入驻</a>
+          <span class="pl-10 pr-10">|</span>
+          <a href="javascript:void(0);">广告服务</a>
+          <span class="pl-10 pr-10">|</span>
+          <a href="javascript:void(0);">友情链接</a>
+          <span class="pl-10 pr-10">|</span>
+          <a href="javascript:void(0);">销售联盟</a>
+        </div>
+        <div><small>浙ICP备11003236号 浙公网安备 33010602010533号 已通过 ISO27001:2013 信息安全认证</small></div>
+        <div><small>违法和不良信息举报 举报邮箱：admin@XXX.com</small></div>
+      </a-layout-footer>
+    </a-layout>
+  </client-only>
 </template>
 
 <script>

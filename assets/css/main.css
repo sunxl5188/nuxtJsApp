@@ -2083,4 +2083,19 @@ html, body {
 .happy-scroll-strip:hover .happy-scroll-bar, .happy-scroll-strip.active .happy-scroll-bar {
   opacity: 1 !important; }
 
+.ant-btn-success {
+  background-color: #28a745;
+  color: #fff; }
+  .ant-btn-success.ant-btn-background-ghost {
+    color: #28a745;
+    border-color: #28a745; }
+.ant-btn-secondary {
+  background-color: #6c757d;
+  color: #fff; }
+  .ant-btn-secondary.ant-btn-background-ghost {
+    color: #6c757d;
+    border-color: #6c757d; }
+  .ant-btn-secondary:hover {
+    background-color: #fff; }
+
 /*# sourceMappingURL=main.css.map */

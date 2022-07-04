@@ -75,3 +75,32 @@
     }
   }
 }
+
+.ant-btn{
+  &-success{
+    background-color: $success;
+    color: $white;
+
+
+
+    &.ant-btn-background-ghost{
+      color: $success;
+      border-color: $success;
+    }
+  }
+
+  &-secondary{
+    background-color: $secondary;
+    color: $white;
+
+    &.ant-btn-background-ghost{
+      color: $secondary;
+      border-color: $secondary;
+    }
+
+    &:hover{
+      background-color: color-yiq($secondary);
+    }
+
+  }
+}

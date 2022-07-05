@@ -60,47 +60,60 @@
   vertical-align: text-top;
 }
 
-.ant-input-number{
+.ant-input-number {
   width: auto;
 }
 
-.happy-scroll-strip{
-  & .happy-scroll-bar{
+.happy-scroll-strip {
+  & .happy-scroll-bar {
     opacity: .5 !important;
     cursor: pointer;
   }
-  &:hover, &.active{
-    & .happy-scroll-bar{
+
+  &:hover, &.active {
+    & .happy-scroll-bar {
       opacity: 1 !important;
     }
   }
 }
 
-.ant-btn{
-  &-success{
-    background-color: $success;
-    color: $white;
+.ant-btn-background-ghost {
+  border-color: inherit;
+  color: inherit;
+}
 
+@mixin btn_background_hover($color) {
+  background-color: $color;
+  border-color: $color;
+  color: $white;
 
+  &.ant-btn-background-ghost {
+    color: $color;
+    border-color: $color;
 
-    &.ant-btn-background-ghost{
-      color: $success;
-      border-color: $success;
+    &:hover {
+      color: $color;
     }
   }
 
-  &-secondary{
-    background-color: $secondary;
+  &:hover {
+    background-color: scale-color($color, $lightness: 30%);
+    border-color: scale-color($color, $lightness: 30%);
     color: $white;
+  }
+}
 
-    &.ant-btn-background-ghost{
-      color: $secondary;
-      border-color: $secondary;
-    }
+.ant-btn {
 
-    &:hover{
-      background-color: color-yiq($secondary);
-    }
+  &-success {
+    @include btn_background_hover($success);
+  }
 
+  &-secondary {
+    @include btn_background_hover($secondary);
+  }
+
+  &-warning {
+    @include btn_background_hover($warning);
   }
 }

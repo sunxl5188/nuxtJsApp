@@ -1,16 +1,14 @@
 <template>
   <a-card
+    :title="title"
     :size="size"
     :bordered="bordered"
+    :loading="loading"
+    :body-style="bodyStyle"
   >
-    <span slot="title">
-      <span class="line"></span>
-      <span class="ml-2">{{title}}</span>
-    </span>
-    <span slot="extra"><slot name="extra"/></span>
+    <span v-if="extra" slot="extra"><slot name="extra"/></span>
     <span slot="default"><slot name="default"/></span>
     <span slot="cover"><slot name="cover"/></span>
-    <span slot="actions"><slot name="actions"/></span>
   </a-card>
 </template>
 
@@ -18,9 +16,17 @@
   export default {
     name: 'MyCard',
     props: {
+      loading: {
+        type: Boolean,
+        default: false
+      },
       title: {
         type: String,
         default: ''
+      },
+      extra: {
+        type: Boolean,
+        default: false
       },
       bordered: {
         type: Boolean,
@@ -29,23 +35,17 @@
       size: {
         type: String,
         default: 'default'
+      },
+      bodyStyle: {
+        type: Object,
+        default () {
+          return {}
+        }
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
-  .line {
-    display: inline-block;
-    width: 4px;
-    height: 16px;
-    background-color: $primary;
-    border-radius: 4px;
-    vertical-align: middle;
-  }
 
-  .line + span {
-    vertical-align: middle;
-    color: $primary;
-  }
 </style>

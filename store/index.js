@@ -10,14 +10,6 @@ const state = () => ({
 })
 
 const mutations = {
-  /**
-   * 页面刷新后初始化信息，读取本地存储
-   * @param state
-   */
-  initState (state) {
-    state.vuex_token = this.$getStorage('token')
-    state.vuex_user = this.$getStorage('user')
-  },
   // 用户登录
   signIn (state, data) {
     // y年    m月    d天    h时    min分    s秒
@@ -25,15 +17,17 @@ const mutations = {
     state.vuex_token = data.token
     state.vuex_user = data.user
     for (const key in data) {
-      this.$setStorage(key, data[key])
+      if (Object.toString.hasOwnProperty.call(data, key)) {
+        this.$setStorage(key, data[key])
+      }
     }
   },
   signOut (state) {
+    const lifeData = `${PREFIX}lifeData`
     this.$cookies.remove(hasLogin)
     state.vuex_token = ''
     state.vuex_user = ''
-    this.$remStorage('openKeys')
-    this.$remStorage('selectedKeys')
+    localStorage.removeItem(lifeData)
   },
   $uStore (state, payload) {
     // 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1

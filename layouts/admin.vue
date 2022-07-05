@@ -186,19 +186,20 @@
         ]
       }
     },
-    watch: {},
     async mounted () {
-      const openKeys = this.$getStorage('vuex_menu.openKeys') || []
-      const selectedKeys = this.$getStorage('vuex_menu.selectedKeys') || []
+      // vuex~同步登录信息start
+      this.$vuex('vuex_token', this.$getStorage('token'))
+      this.$vuex('vuex_user', this.$getStorage('user'))
+      if(this.$getStorage('vuex_menu')!==''){
+        this.$vuexAdmin('vuex_menu', this.$getStorage('vuex_menu'))
+      }
+      // vuex~同步登录信息end
 
       await this.$nextTick()
       this.loading = false
-      // 同步登录信息
-      this.$store.commit('initState')
-      this.$vuexAdmin('vuex_menu.openKeys', openKeys)
-      this.$vuexAdmin('vuex_menu.selectedKeys', selectedKeys)
+
       // **************************************
-      this.upSignInState = _.debounce(() => {
+      this.upSignInState = function () {
         if (this.$cookies.get(hasLogin)) {
           this.$cookies.set(hasLogin, 1, '1h')
         } else if (this.tipsOut === 0) {
@@ -211,11 +212,10 @@
             }
           })
         }
-      }, 3000);
+      }
 
-      ['click', 'mousemove'].forEach(item => {
-        window.addEventListener(item, this.upSignInState)
-      })
+      window.addEventListener('click', this.upSignInState, false)
+      window.addEventListener('mousemove', this.upSignInState, false)
 
       _.delay(() => {
         // http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html
@@ -230,6 +230,10 @@
 
       }, 500)
 
+    },
+    beforeDestroy(){
+      window.removeEventListener('click', this.upSignInState, false)
+      window.removeEventListener('mousemove', this.upSignInState, false)
     },
     methods: {
       onMenuSelect ({ item, selectedKeys }) {

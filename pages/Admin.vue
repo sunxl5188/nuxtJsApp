@@ -5,7 +5,7 @@
 <script>
   export default {
     name: 'AdminPage',
-    layout: 'Admin',
+    layout: 'admin',
     meta: { title: '首页' }
   }
 </script>

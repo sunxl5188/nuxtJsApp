@@ -2083,19 +2083,48 @@ html, body {
 .happy-scroll-strip:hover .happy-scroll-bar, .happy-scroll-strip.active .happy-scroll-bar {
   opacity: 1 !important; }
 
+.ant-btn-background-ghost {
+  border-color: inherit;
+  color: inherit; }
+
 .ant-btn-success {
   background-color: #28a745;
+  border-color: #28a745;
   color: #fff; }
   .ant-btn-success.ant-btn-background-ghost {
     color: #28a745;
     border-color: #28a745; }
+    .ant-btn-success.ant-btn-background-ghost:hover {
+      color: #28a745; }
+  .ant-btn-success:hover {
+    background-color: #54d672;
+    border-color: #54d672;
+    color: #fff; }
 .ant-btn-secondary {
   background-color: #6c757d;
+  border-color: #6c757d;
   color: #fff; }
   .ant-btn-secondary.ant-btn-background-ghost {
     color: #6c757d;
     border-color: #6c757d; }
+    .ant-btn-secondary.ant-btn-background-ghost:hover {
+      color: #6c757d; }
   .ant-btn-secondary:hover {
-    background-color: #fff; }
+    background-color: #979ea5;
+    border-color: #979ea5;
+    color: #fff; }
+.ant-btn-warning {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: #fff; }
+  .ant-btn-warning.ant-btn-background-ghost {
+    color: #fd7e14;
+    border-color: #fd7e14; }
+    .ant-btn-warning.ant-btn-background-ghost:hover {
+      color: #fd7e14; }
+  .ant-btn-warning:hover {
+    background-color: #fea55b;
+    border-color: #fea55b;
+    color: #fff; }
 
 /*# sourceMappingURL=main.css.map */

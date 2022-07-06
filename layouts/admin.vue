@@ -190,7 +190,7 @@
       // vuex~同步登录信息start
       this.$vuex('vuex_token', this.$getStorage('token'))
       this.$vuex('vuex_user', this.$getStorage('user'))
-      if(this.$getStorage('vuex_menu')!==''){
+      if (this.$getStorage('vuex_menu') !== '') {
         this.$vuexAdmin('vuex_menu', this.$getStorage('vuex_menu'))
       }
       // vuex~同步登录信息end
@@ -221,17 +221,19 @@
         // http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html
         $('.ant-layout-sider-children').mCustomScrollbar({
           theme: 'minimal',
+          scrollInertia: 0,
           axis: 'y'
         })
 
         $('#layoutScroll').mCustomScrollbar({
-          theme: 'minimal-dark'
+          theme: 'minimal-dark',
+          scrollInertia: 0
         })
 
       }, 500)
 
     },
-    beforeDestroy(){
+    beforeDestroy () {
       window.removeEventListener('click', this.upSignInState, false)
       window.removeEventListener('mousemove', this.upSignInState, false)
     },

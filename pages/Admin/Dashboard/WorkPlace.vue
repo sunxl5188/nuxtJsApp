@@ -28,7 +28,7 @@
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
         <MyCard title="产品指数" class="u-m-b-20">
-
+          <ChartHistogram />
         </MyCard>
         <MyCard title="团队">
 
@@ -41,10 +41,11 @@
 <script>
   import MyCard from '~/components/MyCard'
   import MyList from '~/components/MyList'
+  import ChartHistogram from '~/components/chart/Histogram'
 
   export default {
     name: 'WorkPlace',
-    components: { MyList, MyCard },
+    components: { ChartHistogram, MyList, MyCard },
     meta: { title: '工作台' },
     data () {
       return {

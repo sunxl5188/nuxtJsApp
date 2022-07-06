@@ -49,7 +49,8 @@ export default {
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' },
     { src: '@/plugins/vue-masonry', mode: 'client' },
-    { src: '@/plugins/moment', mode: 'client' }
+    { src: '@/plugins/moment', mode: 'client' },
+    { src: '@/plugins/charts', mode: 'client' }
   ],
 
   // 自动导入组件: https://go.nuxtjs.dev/config-components

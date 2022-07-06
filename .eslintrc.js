@@ -21,6 +21,8 @@ module.exports = {
     '$lodash': true,
     '$getStorage': true,
     '$setStorage': true,
-    '$remStorage': true
+    '$remStorage': true,
+    '$utils': true,
+    '$charts': true
   }
 }

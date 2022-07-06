@@ -28,7 +28,7 @@
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
         <MyCard title="产品指数" class="u-m-b-20">
-          <ChartHistogram />
+          <ChartHistogram :data-source="dataSource" />
         </MyCard>
         <MyCard title="团队">
 
@@ -104,7 +104,11 @@
             desc: '7小时前',
             avatar: 'https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png',
             title: '勒个 将 <span class="text-success">项目进展</span> 更新至已发布状态'
-          }]
+          }],
+        dataSource: [
+          { name: '售出额', value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] },
+          { name: '总利润', value: [32000, 21000, 9000, 9800, 17000, 13000, 14800, 17500] }
+        ]
       }
     },
   }

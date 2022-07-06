@@ -1,7 +1,3 @@
-const item = {
-  date: function () {
-    console.log(111)
-  }
-}
+const item = function(){}
 
-console.log(typeof item.date)
+console.log(Object.prototype.toString.call(item))

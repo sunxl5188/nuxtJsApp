@@ -56,6 +56,20 @@
         option: {}
       }
     },
+    watch: {
+      xData: {
+        handler () {
+          this.initChart()
+        },
+        deep: true
+      },
+      dataSource: {
+        handler () {
+          this.initChart()
+        },
+        deep: true
+      }
+    },
     created () {
       const series = []
       const legendData = []
@@ -109,15 +123,19 @@
       await this.$nextTick()
       this.loading = false
       await this.$nextTick()
-
-      // 初始化图表，设置配置项
-      const myChart = this.$charts.init(document.getElementById(this.id))
-      myChart.setOption(this.option)
-      window.addEventListener('resize', _.debounce(() => {
-        myChart.resize()
-      }, 100))
+      this.initChart()
     },
     methods: {
+      initChart () {
+        console.log(11)
+        // 初始化图表，设置配置项
+        const myCharts = this.$charts.init(document.getElementById(this.id))
+        myCharts.setOption(this.option)
+        myCharts.resize()
+        window.addEventListener('resize', _.debounce(() => {
+          myCharts.resize()
+        }, 100))
+      },
       generateData (data) {
         const arr = []
         data.forEach(item => {

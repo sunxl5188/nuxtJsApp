@@ -51,43 +51,28 @@
     },
     data () {
       return {
-        id: this.$utils.guid(32, true),
+        id: this.$utils.guid(32),
         loading: true,
-        option: {}
+        option: {},
+        myCharts: null
       }
     },
     watch: {
       xData: {
         handler () {
-          this.initChart()
+          this.refreshData()
         },
         deep: true
       },
       dataSource: {
         handler () {
-          this.initChart()
+          this.refreshData()
         },
         deep: true
       }
     },
-    created () {
-      const series = []
-      const legendData = []
-      for (let i = 0; i < this.dataSource.length; i++) {
-        series.push({
-          name: this.dataSource[i].name,
-          data: this.generateData(this.dataSource[i].value),
-          type: 'bar',
-          barMaxWidth: '40%',
-          barMinWidth: '10%',
-          barMinHeight: 0,
-          showBackground: true,
-          backgroundStyle: {
-            color: 'rgba(198,198,198,0.1)'
-          }
-        })
-        legendData.push(this.dataSource[i].name)
-      }
+    async created () {
+      const { series, legendData } = await this.createData()
       this.option = {
         tooltip: {
           trigger: 'axis',
@@ -127,14 +112,42 @@
     },
     methods: {
       initChart () {
-        console.log(11)
         // 初始化图表，设置配置项
-        const myCharts = this.$charts.init(document.getElementById(this.id))
-        myCharts.setOption(this.option)
-        myCharts.resize()
+        this.myCharts = this.$charts.init(document.getElementById(this.id))
+        this.myCharts.setOption(this.option, true)
+        this.myCharts.resize()
         window.addEventListener('resize', _.debounce(() => {
-          myCharts.resize()
+          this.myCharts.resize()
         }, 100))
+      },
+      createData () {
+        return new Promise((resolve, reject) => {
+          const series = []
+          const legendData = []
+          for (let i = 0; i < this.dataSource.length; i++) {
+            series.push({
+              name: this.dataSource[i].name,
+              data: this.generateData(this.dataSource[i].value),
+              type: 'bar',
+              barMaxWidth: '40%',
+              barMinWidth: '10%',
+              barMinHeight: 0,
+              showBackground: true,
+              backgroundStyle: {
+                color: 'rgba(198,198,198,0.1)'
+              }
+            })
+            legendData.push(this.dataSource[i].name)
+          }
+          resolve({ series, legendData })
+        })
+      },
+      async refreshData () {
+        const { series } = await this.createData()
+        // 更新数据
+        const option = this.myCharts.getOption()
+        option.series = series
+        this.myCharts.setOption(option, true)
       },
       generateData (data) {
         const arr = []

@@ -28,7 +28,7 @@
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
         <MyCard title="产品指数" class="u-m-b-20">
-          <ChartHistogram :data-source="dataSource" />
+          <RadarChart :data-source="dataSource" :radar="radar" :color="['#f60']" height="275" />
         </MyCard>
         <MyCard title="团队">
 
@@ -41,11 +41,11 @@
 <script>
   import MyCard from '~/components/MyCard'
   import MyList from '~/components/MyList'
-  import ChartHistogram from '~/components/chart/Histogram'
+  import RadarChart from '~/components/chart/RadarChart'
 
   export default {
     name: 'WorkPlace',
-    components: { ChartHistogram, MyList, MyCard },
+    components: { RadarChart, MyList, MyCard },
     meta: { title: '工作台' },
     data () {
       return {
@@ -106,18 +106,25 @@
             title: '勒个 将 <span class="text-success">项目进展</span> 更新至已发布状态'
           }],
         dataSource: [
-          { name: '售出额', value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] },
-          { name: '总利润', value: [32000, 21000, 9000, 9800, 17000, 13000, 14800, 17500] }
-        ]
+          {
+            value: [42, 90, 88, 65, 50, 100],
+            name: '已分配预算'
+          }
+        ],
+        radar: {
+          indicator: [
+            { name: '销售', max: 100 },
+            { name: '管理', max: 100 },
+            { name: '信息技术', max: 100 },
+            { name: '客服', max: 100 },
+            { name: '研发', max: 100 },
+            { name: '市场', max: 100 }
+          ]
+        }
       }
     },
     mounted () {
-      setTimeout(()=>{
-        this.dataSource = [
-          { name: '售出额', value: [800, 25000, 11000, 9000, 7000, 6000, 4800, 7500] },
-          { name: '总利润', value: [60, 21000, 9000, 9800, 17000, 13000, 14800, 17500] }
-        ]
-      }, 5000)
+
     }
   }
 </script>

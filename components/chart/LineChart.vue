@@ -3,18 +3,13 @@
 </template>
 
 <script>
+
   export default {
-    name: 'HistogramChart',
+    name: 'LineChart',
     props: {
       height: {
-        type: [String, Number],
+        type: [Number, String],
         default: 400
-      },
-      borderRadius: {
-        type: [Array, String],
-        default: () => {
-          return [4, 4, 0, 0]
-        }
       },
       grid: {
         type: Object,
@@ -30,31 +25,44 @@
       xData: {
         type: Array,
         default: () => {
-          return ['家具家电', '粮油副食', '生鲜水果', '美容洗护', '母婴用品', '进口食品', '食品饮料', '家庭清洁']
+          return ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
         }
       },
       dataSource: {
         type: Array,
         default: () => {
           return [
-            { name: '售出额', value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] },
-            { name: '总利润', value: [32000, 21000, 9000, 9800, 17000, 13000, 14800, 17500] }
+            { name: '意向', value: [150, 230, 224, 218, 135, 147, 260] },
+            { name: '预购', value: [120, 132, 101, 134, 90, 230, 210] },
+            { name: '成交', value: [220, 182, 191, 234, 290, 330, 310] }
           ]
         }
+      },
+      smooth: { // 折线是否光滑，曲线
+        type: Boolean,
+        default: false
       },
       color: {
         type: Array,
         default: () => {
           return ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
         }
+      },
+      seriesLabel: {
+        type: Object,
+        default(){
+          return {
+            show: false
+          }
+        }
       }
     },
     data () {
       return {
-        id: this.$utils.guid(32),
+        id: this.$utils.guid(),
         loading: true,
         option: {},
-        myCharts: null
+        myChart: null
       }
     },
     watch: {
@@ -72,7 +80,7 @@
       }
     },
     async created () {
-      const { series, legendData } = await this.createData()
+      const { legendData, series } = await this.createData()
       this.option = {
         tooltip: {
           trigger: 'axis',
@@ -112,11 +120,10 @@
     },
     methods: {
       initChart () {
-        // 初始化图表，设置配置项
-        this.myCharts = this.$charts.init(document.getElementById(this.id))
-        this.myCharts.setOption(this.option, true)
+        this.myChart = this.$charts.init(document.getElementById(this.id))
+        this.myChart.setOption(this.option)
         window.addEventListener('resize', _.debounce(() => {
-          this.myCharts.resize()
+          this.myChart.resize()
         }, 100))
       },
       createData () {
@@ -126,15 +133,11 @@
           for (let i = 0; i < this.dataSource.length; i++) {
             series.push({
               name: this.dataSource[i].name,
-              data: this.generateData(this.dataSource[i].value),
-              type: 'bar',
-              barMaxWidth: '40%',
-              barMinWidth: '10%',
-              barMinHeight: 0,
-              showBackground: true,
-              backgroundStyle: {
-                color: 'rgba(198,198,198,0.1)'
-              }
+              type: 'line',
+              stack: 'Total',
+              smooth: this.smooth,
+              data: this.dataSource[i].value,
+              label: this.seriesLabel
             })
             legendData.push(this.dataSource[i].name)
           }
@@ -143,22 +146,9 @@
       },
       async refreshData () {
         const { series } = await this.createData()
-        // 更新数据
-        const option = this.myCharts.getOption()
+        const option = this.myChart.getOption()
         option.series = series
-        this.myCharts.setOption(option, true)
-      },
-      generateData (data) {
-        const arr = []
-        data.forEach(item => {
-          arr.push({
-            value: item,
-            itemStyle: {
-              borderRadius: this.borderRadius
-            }
-          })
-        })
-        return arr
+        this.myChart.setOption(option, true)
       }
     }
   }

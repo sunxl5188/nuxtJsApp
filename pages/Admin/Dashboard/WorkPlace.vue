@@ -2,7 +2,7 @@
   <div>
     <a-row :gutter="20">
       <a-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16" :xxl="16">
-        <MyCard title="进行中的项目" extra class="u-m-b-20" :body-style="{padding:0}">
+        <MyCard title="进行中的项目" extra :body-style="{padding:0}">
           <template #extra>
             <a-button type="link" size="small">全部项目</a-button>
           </template>
@@ -27,11 +27,21 @@
         </MyCard>
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
-        <MyCard title="产品指数" class="u-m-b-20">
-          <RadarChart :data-source="dataSource" :radar="radar" :color="['#f60']" height="275" />
+        <MyCard title="产品指数">
+          <RadarChart :data-source="dataSource" :radar="radar" height="275"/>
         </MyCard>
         <MyCard title="团队">
-
+          <a-row>
+            <a-col v-for="(item, index) in teams" :key="index" :span="12" class="u-p-t-12 u-p-b-12">
+              <nuxt-link to="/">
+                <a-avatar size="small" :src="item.avatar"/>
+                <span class="member">{{item.name}}</span>
+              </nuxt-link>
+            </a-col>
+          </a-row>
+        </MyCard>
+        <MyCard :key.sync="key" :tab-list="tabList">
+          {{ key }}
         </MyCard>
       </a-col>
     </a-row>
@@ -105,10 +115,33 @@
             avatar: 'https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png',
             title: '勒个 将 <span class="text-success">项目进展</span> 更新至已发布状态'
           }],
+        teams: [
+          {
+            'name': '高逼格设计天团',
+            'avatar': 'https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png'
+          },
+          {
+            'name': '中二少女团',
+            'avatar': 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
+          },
+          {
+            'name': '科学搬砖组',
+            'avatar': 'https://gw.alipayobjects.com/zos/rmsportal/gaOngJwsRYRaVAuXXcmB.png'
+          },
+          {
+            'name': '骗你学计算机',
+            'avatar': 'https://gw.alipayobjects.com/zos/rmsportal/WhxKECPNujWoWEFNdnJE.png'
+          },
+          { 'name': '程序员日常', 'avatar': 'https://gw.alipayobjects.com/zos/rmsportal/ubnKSIfAJTxIgXOKlciN.png' }
+        ],
         dataSource: [
           {
             value: [42, 90, 88, 65, 50, 100],
             name: '已分配预算'
+          },
+          {
+            value: [99, 80, 78, 65, 80, 95],
+            name: '实际支出'
           }
         ],
         radar: {
@@ -116,15 +149,28 @@
             { name: '销售', max: 100 },
             { name: '管理', max: 100 },
             { name: '信息技术', max: 100 },
-            { name: '客服', max: 100 },
+            { name: '客服', max: 100, color: '#f00' },
             { name: '研发', max: 100 },
-            { name: '市场', max: 100 }
+            { name: '市场', max: 100, color: '#f60' }
           ]
-        }
+        },
+        tabList: [
+          {
+            key: 'tab1',
+            tab: 'tab1'
+          },
+          {
+            key: 'tab2',
+            tab: 'tab2',
+          }
+        ],
+        key: 'tab1'
       }
     },
     mounted () {
 
+    },
+    methods: {
     }
   }
 </script>

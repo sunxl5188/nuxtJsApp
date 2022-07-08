@@ -95,7 +95,7 @@
         name: this.name,
         type: 'radar',
         symbol: 'circle', // 标记的图形
-        areaStyle: { opacity: 0.2 }, // 区域填充样式
+        areaStyle: { opacity: 0.4 }, // 区域填充样式
         data: this.dataSource
       }, this.series)
 

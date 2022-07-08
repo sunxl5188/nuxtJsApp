@@ -1,15 +1,25 @@
 <template>
-  <a-card
-    :title="title"
-    :size="size"
-    :bordered="bordered"
-    :loading="loading"
-    :body-style="bodyStyle"
-  >
-    <span v-if="extra" slot="extra"><slot name="extra"/></span>
-    <span slot="default"><slot name="default"/></span>
-    <span slot="cover"><slot name="cover"/></span>
-  </a-card>
+  <div :class="cardClass">
+    <a-card
+      :title="title"
+      :size="size"
+      :bordered="bordered"
+      :loading="loading"
+      :body-style="bodyStyle"
+      :tab-list="tabList"
+      @tabChange="key => $emit('update:key', key)"
+    >
+      <span v-if="extra" slot="extra"><slot name="extra"/></span>
+      <span slot="default"><slot name="default"/></span>
+      <span slot="cover"><slot name="cover"/></span>
+      <template v-if="actions" slot="actions">
+        <slot name="actions"></slot>
+      </template>
+    </a-card>
+    <div class="card-footer">
+      1111
+    </div>
+  </div>
 </template>
 
 <script>
@@ -28,6 +38,10 @@
         type: Boolean,
         default: false
       },
+      actions: {
+        type: Boolean,
+        default: false
+      },
       bordered: {
         type: Boolean,
         default: false
@@ -41,6 +55,16 @@
         default () {
           return {}
         }
+      },
+      tabList: {
+        type: Array,
+        default () {
+          return []
+        }
+      },
+      cardClass: {
+        type: String,
+        default: 'u-m-b-20'
       }
     }
   }

@@ -16,8 +16,8 @@
         <slot name="actions"></slot>
       </template>
     </a-card>
-    <div class="card-footer">
-      1111
+    <div v-if="footer" class="card-footer">
+      <slot name="footer"></slot>
     </div>
   </div>
 </template>
@@ -65,11 +65,18 @@
       cardClass: {
         type: String,
         default: 'u-m-b-20'
+      },
+      footer: {
+        type: Boolean,
+        default: false
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
-
+  .card-footer {
+    border-top: 1px solid #e8e8e8;
+    background-color: #fff;
+  }
 </style>

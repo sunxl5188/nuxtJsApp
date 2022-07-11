@@ -27,6 +27,7 @@
     "vue": "^2.6.14",
     "vue-baidu-map": "^0.21.22",
     "vue-cookies": "^1.7.4",
+    "vue-count-to": "^1.0.13",
     "vue-infinite-scroll": "^2.0.2",
     "vue-masonry": "^0.11.8",
     "vue-no-ssr": "^1.1.1",

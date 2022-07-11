@@ -28,12 +28,12 @@ import {
   Card,
   Checkbox,
   Radio,
-  Cascader, Menu, Icon, Spin, InputNumber
+  Cascader, Menu, Icon, Spin, InputNumber, Tooltip
 } from 'ant-design-vue'
 import { guid } from '~/assets/js/utils'
 
 const components = [
-  ConfigProvider, Layout, Button, Form, FormModel, Input, Select, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader, Menu, Icon, Spin, InputNumber
+  ConfigProvider, Layout, Button, Form, FormModel, Input, Select, Modal, DatePicker, TimePicker, Space, Avatar, Dropdown, Breadcrumb, Row, Col, Progress, List, Popconfirm, Table, Badge, Tabs, Tag, Card, Checkbox, Radio, Cascader, Menu, Icon, Spin, InputNumber, Tooltip
 ]
 
 for (const component of components) {

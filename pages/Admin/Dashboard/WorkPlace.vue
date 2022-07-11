@@ -40,9 +40,6 @@
             </a-col>
           </a-row>
         </MyCard>
-        <MyCard :key.sync="key" :tab-list="tabList">
-          {{ key }}
-        </MyCard>
       </a-col>
     </a-row>
   </div>

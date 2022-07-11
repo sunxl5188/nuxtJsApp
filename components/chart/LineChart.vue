@@ -3,30 +3,12 @@
 </template>
 
 <script>
-
   export default {
     name: 'LineChart',
     props: {
       height: {
         type: [Number, String],
         default: 400
-      },
-      grid: {
-        type: Object,
-        default: () => {
-          return {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top: '15%'
-          }
-        }
-      },
-      xData: {
-        type: Array,
-        default: () => {
-          return ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-        }
       },
       dataSource: {
         type: Array,
@@ -38,22 +20,10 @@
           ]
         }
       },
-      smooth: { // 折线是否光滑，曲线
-        type: Boolean,
-        default: false
-      },
-      color: {
-        type: Array,
-        default: () => {
-          return ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
-        }
-      },
-      seriesLabel: {
+      option: {
         type: Object,
-        default(){
-          return {
-            show: false
-          }
+        default () {
+          return {}
         }
       }
     },
@@ -61,17 +31,72 @@
       return {
         id: this.$utils.guid(),
         loading: true,
-        option: {},
-        myChart: null
+        myChart: null,
+        myOpt: {
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            top: '15%',
+            containLabel: true
+          },
+          xAxis: {
+            show: true,
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          },
+          yAxis: {
+            show: true,
+            type: 'value'
+          },
+          color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+          series: [
+            {
+              smooth: true, // 折线是否光滑，曲线,
+              type: 'line',
+              stack: 'Total',
+              label: {},
+              lineStyle: {
+                width: 1
+              },
+              showSymbol: true,
+              symbol: 'emptyCircle', // emptyCircle 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+              emphasis: {
+                focus: 'series'
+              }
+              /* areaStyle: {
+                opacity: 0.8,
+                color: new this.$charts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgb(128, 255, 165)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgb(1, 191, 236)'
+                  }
+                ])
+              } */
+            }
+          ],
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            },
+            valueFormatter: (params) => {
+              return params
+            }
+          },
+          legend: {
+            show: true,
+            data: []
+          }
+        }
       }
     },
     watch: {
-      xData: {
-        handler () {
-          this.refreshData()
-        },
-        deep: true
-      },
       dataSource: {
         handler () {
           this.refreshData()
@@ -79,49 +104,50 @@
         deep: true
       }
     },
-    async created () {
-      const { legendData, series } = await this.createData()
-      this.option = {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
-          },
-          valueFormatter: (params) => {
-            return params
-          }
-        },
-        color: this.color,
-        grid: {
-          left: this.grid.left,
-          right: this.grid.right,
-          bottom: this.grid.bottom,
-          top: this.grid.top,
-          containLabel: true
-        },
-        legend: {
-          data: legendData
-        },
-        xAxis: {
-          type: 'category',
-          data: this.xData
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series
-      }
-    },
     async mounted () {
+      for (const key in this.option) {
+        if (Object.prototype.hasOwnProperty.call(this.option, key)) {
+          if (key === 'series') {
+            for (let i = 0; i < this.option[key].length; i++) {
+              const obj = this.option[key][i]
+              for (const k in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                  if (typeof this.option[key][i][k] === 'object') {
+                    if (typeof this.myOpt[key][i][k] === 'undefined') {
+                      this.myOpt[key][i][k] = obj[k]
+                    } else {
+                      Object.assign(this.myOpt[key][i][k], obj[k])
+                    }
+                  } else {
+                    this.myOpt[key][i][k] = obj[k]
+                  }
+                }
+              }
+            }
+          } else {
+            Object.assign(this.myOpt[key], this.option[key])
+          }
+        }
+      }
+
       await this.$nextTick()
       this.loading = false
       await this.$nextTick()
-      this.initChart()
+      await this.initChart()
     },
     methods: {
-      initChart () {
+      async initChart () {
+        const { legendData, series } = await this.createData()
+        const option = {
+          legend: {
+            data: legendData
+          },
+          series
+        }
+        const opt = Object.assign({}, option, this.myOpt)
         this.myChart = this.$charts.init(document.getElementById(this.id))
-        this.myChart.setOption(this.option)
+        // console.log(opt)
+        this.myChart.setOption(opt)
         window.addEventListener('resize', _.debounce(() => {
           this.myChart.resize()
         }, 100))
@@ -131,14 +157,10 @@
           const series = []
           const legendData = []
           for (let i = 0; i < this.dataSource.length; i++) {
-            series.push({
+            series.push(Object.assign(this.myOpt.series[i], {
               name: this.dataSource[i].name,
-              type: 'line',
-              stack: 'Total',
-              smooth: this.smooth,
               data: this.dataSource[i].value,
-              label: this.seriesLabel
-            })
+            }))
             legendData.push(this.dataSource[i].name)
           }
           resolve({ series, legendData })

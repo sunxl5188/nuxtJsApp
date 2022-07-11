@@ -19,12 +19,19 @@ html, body {
   }
 }
 
+@for $i from 1 through 43 {
+  $line: 17 + $i;
+  .line-#{$line} {
+    line-height: px2rem($line);
+  }
+}
+
 @for $i from 0 through 50 {
   $space: $i;
 
   .u-m {
 
-    &-#{$space}{
+    &-#{$space} {
       margin: px2rem($space);
     }
 
@@ -55,9 +62,9 @@ html, body {
     }
   }
 
-  .u-p{
+  .u-p {
 
-    &-#{$space}{
+    &-#{$space} {
       padding: px2rem($space);
     }
 

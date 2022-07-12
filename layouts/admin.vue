@@ -32,14 +32,16 @@
                 <template v-for="(item, i) in subMenu.children">
                   <a-menu-item
                     v-if="!Object.prototype.hasOwnProperty.call(item, 'children')"
-                    :key="`sub${index}-menu${i}`"
+                    :key="'/admin/'+subMenu.path + '/' + item.path"
                   >
                     <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path">
                       {{item.title}}
                     </nuxt-link>
                   </a-menu-item>
                   <a-sub-menu v-else :key="`sub${index}-menu${i}`" :title="item.title">
-                    <a-menu-item v-for="(itemTow, k) in item.children" :key="`sub${index}-menu${i}-child${k}`">
+                    <a-menu-item
+                      v-for="itemTow in item.children"
+                      :key="'/admin/'+subMenu.path + '/' + item.path + '/' + itemTow.path">
                       <nuxt-link :to="'/admin/'+subMenu.path + '/' + item.path + '/' + itemTow.path">
                         {{itemTow.title}}
                       </nuxt-link>
@@ -238,7 +240,7 @@
       window.removeEventListener('mousemove', this.upSignInState, false)
     },
     methods: {
-      onMenuSelect ({ item, selectedKeys }) {
+      onMenuSelect ({ selectedKeys }) {
         this.$vuexAdmin('vuex_menu.selectedKeys', selectedKeys)
       },
       onMenuChange (openKeys) {
@@ -258,6 +260,7 @@
       },
       actionOut () {
         this.$store.dispatch('asySignOut')
+        this.$store.commit('admin/aClear')
         this.$nextTick(() => {
           this.$router.push('/login')
         })

@@ -147,7 +147,7 @@
         const opt = Object.assign({}, option, this.myOpt)
         this.myChart = this.$charts.init(document.getElementById(this.id))
         // console.log(opt)
-        this.myChart.setOption(opt)
+        this.myChart.setOption(opt, true)
         window.addEventListener('resize', _.debounce(() => {
           this.myChart.resize()
         }, 100))

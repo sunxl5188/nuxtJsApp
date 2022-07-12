@@ -35,7 +35,7 @@
             <countTo :start-val='0' :end-val='189345' prefix="￥"></countTo>
           </div>
           <div class="card-chart">
-            <LineChart :data-source="lineDataSource" :option="lineOption" height="100"></LineChart>
+            <LineChart :data-source="lineDataSource" :option="lineOption" height="90"></LineChart>
           </div>
           <div class="border-top pt-2">日均访问量 123,4</div>
         </MyCard>
@@ -52,7 +52,7 @@
             <countTo :start-val='0' :end-val='89835' prefix="￥"></countTo>
           </div>
           <div class="card-chart">
-            <HistogramChart height="100"></HistogramChart>
+            <HistogramChart :data-source="histDataSource" :option="histOption" height="90"></HistogramChart>
           </div>
           <div class="border-top pt-2">转化率 60%</div>
         </MyCard>
@@ -69,7 +69,17 @@
             <countTo :start-val='0' :end-val='78' suffix="%"></countTo>
           </div>
           <div class="card-chart">
-
+              <a-progress
+                :percent="70"
+                type="line"
+                :show-info="false"
+                status="active"
+                :stroke-width="10"
+                :stroke-color="{
+                  '0%': '#108ee9',
+                  '100%': '#87d068'
+                }"
+              />
           </div>
           <div class="border-top pt-2">
             <div class="d-flex justify-content-start align-items-center">
@@ -100,12 +110,12 @@
         lineDataSource: [{ name: '', value: [150, 23, 224, 2, 135, 10, 260] }],
         lineOption: {
           grid: {
-            left: 'auto',
-            right: '1%',
-            bottom: '1%',
-            top: '15%'
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '10%'
           },
-          xAxis: {show: false},
+          xAxis: {show: false,axisLabel: { show: false }},
           yAxis: {
             show: false,
             axisLine: { show: false },
@@ -134,6 +144,23 @@
               }
             }
           ]
+        },
+        histDataSource: [{ name: '', value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] }],
+        histOption: {
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '10%'
+          },
+          xAxis: {show: false, axisLabel: { show: false }},
+          yAxis: {
+            show: false,
+            axisLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            splitLine: { show: false }
+          },
         }
       }
     },

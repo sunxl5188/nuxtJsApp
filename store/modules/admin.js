@@ -13,6 +13,15 @@ export default {
   state,
   getters: {},
   mutations: {
+    aClear (state) {
+      state.vuex_menu = {
+        collapsed: false,
+        selectedKeys: [],
+        openKeys: [],
+        list: []
+      }
+      state.searchFold = false
+    },
     $aStore (state, payload) {
       // 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
       const nameArr = payload.name.split('.')

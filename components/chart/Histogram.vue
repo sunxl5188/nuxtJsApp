@@ -182,7 +182,7 @@
         const opt = Object.assign({}, this.myOpt, option)
         // 初始化图表，设置配置项
         this.myCharts = this.$charts.init(document.getElementById(this.id))
-        console.log(opt)
+        // console.log(opt)
         this.myCharts.setOption(opt, true)
         window.addEventListener('resize', _.debounce(() => {
           this.myCharts.resize()

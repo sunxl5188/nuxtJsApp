@@ -69,17 +69,17 @@
             <countTo :start-val='0' :end-val='78' suffix="%"></countTo>
           </div>
           <div class="card-chart">
-              <a-progress
-                :percent="70"
-                type="line"
-                :show-info="false"
-                status="active"
-                :stroke-width="10"
-                :stroke-color="{
+            <a-progress
+              :percent="70"
+              type="line"
+              :show-info="false"
+              status="active"
+              :stroke-width="10"
+              :stroke-color="{
                   '0%': '#108ee9',
                   '100%': '#87d068'
                 }"
-              />
+            />
           </div>
           <div class="border-top pt-2">
             <div class="d-flex justify-content-start align-items-center">
@@ -92,6 +92,17 @@
         </MyCard>
       </a-col>
     </a-row>
+
+    <MyTabs :tabs-list="tabsList">
+      <div slot="tabBarExtra">12222</div>
+      <a-row :gutter="20">
+        <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
+          <HistogramChart></HistogramChart>
+        </a-col>
+        <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">2222222222</a-col>
+      </a-row>
+    </MyTabs>
+    <HistogramChart></HistogramChart>
   </div>
 </template>
 
@@ -100,10 +111,11 @@
   import MyCard from '~/components/MyCard'
   import LineChart from '~/components/chart/LineChart'
   import HistogramChart from '~/components/chart/Histogram'
+  import MyTabs from '~/components/MyTabs'
 
   export default {
     name: 'AnalysisComponent',
-    components: { HistogramChart, LineChart, MyCard, countTo },
+    components: { MyTabs, HistogramChart, LineChart, MyCard, countTo },
     meta: { title: '分析页' },
     data () {
       return {
@@ -115,7 +127,7 @@
             bottom: '0',
             top: '10%'
           },
-          xAxis: {show: false,axisLabel: { show: false }},
+          xAxis: { show: false, axisLabel: { show: false } },
           yAxis: {
             show: false,
             axisLine: { show: false },
@@ -153,7 +165,7 @@
             bottom: '0',
             top: '10%'
           },
-          xAxis: {show: false, axisLabel: { show: false }},
+          xAxis: { show: false, axisLabel: { show: false } },
           yAxis: {
             show: false,
             axisLine: { show: false },
@@ -161,9 +173,11 @@
             axisTick: { show: false },
             splitLine: { show: false }
           },
-        }
+        },
+        tabsList: [{ label: '销售额', value: 1 }, { label: '访问量', value: 2 }],
+        tabKey: 1
       }
-    },
+    }
   }
 </script>
 

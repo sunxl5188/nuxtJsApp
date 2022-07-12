@@ -7,7 +7,8 @@
       :loading="loading"
       :body-style="bodyStyle"
       :tab-list="tabList"
-      @tabChange="key => $emit('update:key', key)"
+      :active-tab-key="value"
+      @tabChange="key => $emit('input', key)"
     >
       <span v-if="extra" slot="extra"><slot name="extra"/></span>
       <span slot="default"><slot name="default"/></span>
@@ -25,6 +26,10 @@
 <script>
   export default {
     name: 'MyCard',
+    model: {
+      prop: 'value',
+      event: 'input'
+    },
     props: {
       loading: {
         type: Boolean,
@@ -69,6 +74,10 @@
       footer: {
         type: Boolean,
         default: false
+      },
+      value: {
+        type: [String, Number],
+        default: ''
       }
     }
   }

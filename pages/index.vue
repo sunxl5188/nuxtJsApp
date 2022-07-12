@@ -8,12 +8,14 @@
 <script>
   export default {
     name: 'IndexPage',
-    components: {},
+    components: { },
     asyncData ({ query }) {
       return query
     },
     data () {
-      return {}
+      return {
+
+      }
     },
     fetch (content) {},
     computed: {},

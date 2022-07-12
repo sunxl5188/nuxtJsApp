@@ -10,55 +10,63 @@
         type: [String, Number],
         default: 400
       },
-      name: {
-        type: String,
-        default: '预算与支出'
-      },
-      color: {
-        type: Array,
-        default () {
-          return ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
-        }
-      },
       dataSource: {
         type: Array,
         default: () => {
-          return [
-            {
-              value: [42, 90, 88, 65, 50, 100],
-              name: '已分配预算'
-            },
-            {
-              value: [32, 88, 80, 60, 40, 80],
-              name: '实际支出'
-            }
-          ]
+          return []
         }
       },
-      legend: {
+      option: {
         type: Object,
         default () {
           return {}
         }
-      },
-      radar: {
-        type: Object,
-        default () {
-          return {}
-        }
-      },
-      series: {
-        type: Object,
-        default () {
-          return {}
-        }
-      },
+      }
     },
     data () {
       return {
         id: this.$utils.guid(),
         loading: true,
-        option: {},
+        myOpt: {
+          name: '预算与支出',
+          color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+          tooltip: {show:true},
+          legend: {
+            show: true,
+            data: ['已分配预算', '实际支出']
+          },
+          radar: {
+            center: ['50%', '50%'],
+            radius: '60%',
+            splitNumber: 5,
+            indicator: [
+              { name: '销售', max: 6500, color: '#ff0000' },
+              { name: '管理', max: 16000 },
+              { name: '信息技术', max: 30000 },
+              { name: '客服', max: 38000 },
+              { name: '研发', max: 52000 },
+              { name: '市场', max: 25000 }
+            ]
+          },
+          series: [
+            {
+              name: '预算与支出',
+              type: 'radar',
+              symbol: 'circle', // 标记的图形
+              // areaStyle: { opacity: 0.4 }, // 区域填充样式
+              data: [
+                {
+                  value: [4200, 3000, 20000, 35000, 50000, 18000],
+                  name: '已分配预算'
+                },
+                {
+                  value: [5000, 14000, 28000, 26000, 42000, 21000],
+                  name: '实际支出'
+                }
+              ]
+            }
+          ],
+        },
         myChart: null
       }
     },
@@ -70,50 +78,34 @@
         deep: true
       }
     },
-    created () {
-      const legendData = []
-      this.dataSource.forEach(item => {
-        legendData.push(item.name)
-      })
-      // radar ****************************************
-      const radar = Object.assign({
-        center: ['50%', '50%'],
-        radius: '60%',
-        splitNumber: 5,
-        indicator: [
-          { name: '销售', max: 100 },
-          { name: '管理', max: 100 },
-          { name: '信息技术', max: 100 },
-          { name: '客服', max: 100 },
-          { name: '研发', max: 100 },
-          { name: '市场', max: 100 }
-        ]
-      }, this.radar)
-
-      // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-      const series = Object.assign({
-        name: this.name,
-        type: 'radar',
-        symbol: 'circle', // 标记的图形
-        areaStyle: { opacity: 0.4 }, // 区域填充样式
-        data: this.dataSource
-      }, this.series)
-
-      // option*****************************************
-      this.option = {
-        legend: Object.assign(
-          {
-            show: false,
-            data: legendData
-          },
-          this.legend
-        ),
-        color: this.color,
-        radar,
-        series
-      }
-    },
     async mounted () {
+      for (const key in this.option) {
+        if (Object.prototype.hasOwnProperty.call(this.option, key)) {
+          if (key === 'series') {
+            for (let i = 0; i < this.option[key].length; i++) {
+              const obj = this.option[key][i]
+              for (const k in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                  if (typeof this.option[key][i][k] === 'object') {
+                    if (typeof this.myOpt[key][i][k] === 'undefined') {
+                      this.myOpt[key][i][k] = obj[k]
+                    } else {
+                      Object.assign(this.myOpt[key][i][k], obj[k])
+                    }
+                  } else {
+                    this.myOpt[key][i][k] = obj[k]
+                  }
+                }
+              }
+            }
+          } else if (Object.prototype.hasOwnProperty.call(this.myOpt, key)) {
+            Object.assign(this.myOpt[key], this.option[key])
+          } else {
+            this.myOpt[key] = this.option[key]
+          }
+        }
+      }
+
       await this.$nextTick()
       this.loading = false
       await this.$nextTick()
@@ -121,9 +113,12 @@
     },
     methods: {
       initChart () {
+        this.dataSource.forEach((item, i) => {
+          Object.assign(this.myOpt.series[0].data[i], item)
+        })
         // 初始化图表，设置配置项
         this.myCharts = this.$charts.init(document.getElementById(this.id))
-        this.myCharts.setOption(this.option, true)
+        this.myCharts.setOption(this.myOpt, true)
         window.addEventListener('resize', _.debounce(() => {
           this.myCharts.resize()
         }, 100))

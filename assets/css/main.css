@@ -2164,6 +2164,11 @@ html, body {
   font-family: 'iconfont';
   /* Project id 3197878 */
   src: url("//at.alicdn.com/t/font_3197878_wpc8dd28m5j.woff2?t=1647169934336") format("woff2"), url("//at.alicdn.com/t/font_3197878_wpc8dd28m5j.woff?t=1647169934336") format("woff"), url("//at.alicdn.com/t/font_3197878_wpc8dd28m5j.ttf?t=1647169934336") format("truetype"); }
+ul, ol, li {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
@@ -2255,5 +2260,65 @@ html, body {
     background-color: #fea55b;
     border-color: #fea55b;
     color: #fff; }
+
+.u-line-1 {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; }
+
+.u-line-2 {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; }
+
+.u-line-3 {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; }
+
+.u-line-4 {
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; }
+
+.u-line-5 {
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; }
+
+.u-line-6 {
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; }
 
 /*# sourceMappingURL=main.css.map */

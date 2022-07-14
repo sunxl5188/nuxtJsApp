@@ -10,6 +10,12 @@
   url('//at.alicdn.com/t/font_3197878_wpc8dd28m5j.ttf?t=1647169934336') format('truetype');
 }
 
+ul, ol, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
@@ -115,5 +121,18 @@
 
   &-warning {
     @include btn_background_hover($warning);
+  }
+}
+
+@for $i from 1 through 6 {
+  .u-line-#{$i} {
+    -webkit-line-clamp: $i;
+    line-clamp: $i;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
   }
 }

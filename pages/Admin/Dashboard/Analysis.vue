@@ -95,17 +95,71 @@
 
     <MyTabs :tabs-list="tabsList">
       <div slot="tabBarExtra">
-
+        <div>
+          <a-button type="link" size="small">今日</a-button>
+          <a-button type="link" size="small">本周</a-button>
+          <a-button type="link" size="small">本月</a-button>
+          <a-button type="link" size="small">本年</a-button>
+          <a-range-picker :style="{width: '256px'}"></a-range-picker>
+        </div>
       </div>
-      <a-row :gutter="20">
-        <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
-          <HistogramChart></HistogramChart>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
-          <RankList title="门店销售额排行榜" :list="rankList"></RankList>
-        </a-col>
-      </a-row>
+      <div slot="tabs1">
+        <a-row :gutter="20">
+          <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
+            <div style="height:340px;">
+              <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
+            </div>
+          </a-col>
+          <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
+            <div style="height:340px;">
+              <RankList title="门店销售额排行榜" :list="rankList"></RankList>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+      <div slot="tabs2">
+        <a-row :gutter="20">
+          <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
+            <div style="height:340px;">
+              <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
+            </div>
+          </a-col>
+          <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
+            <div style="height:340px;">
+              <RankList title="线上销售额排行榜" :list="lineList"></RankList>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
     </MyTabs>
+
+    <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
+    <a-row :gutter="20">
+      <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
+        <MyCard title="热门搜索">
+          <a-row :gutter="[20,20]">
+            <a-col :span="12">
+
+            </a-col>
+            <a-col :span="12">
+
+            </a-col>
+          </a-row>
+        </MyCard>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
+        <MyCard title="销售额占比">
+          <div slot="extra">
+            <a-button-group>
+              <a-button type="default">全渠道</a-button>
+              <a-button type="default">线上</a-button>
+              <a-button type="default">门店</a-button>
+            </a-button-group>
+          </div>
+          <PieChart :option="picOpt"></PieChart>
+        </MyCard>
+      </a-col>
+    </a-row>
   </div>
 </template>
 
@@ -116,10 +170,11 @@
   import HistogramChart from '~/components/chart/Histogram'
   import MyTabs from '~/components/MyTabs'
   import RankList from '~/components/RankList'
+  import PieChart from '~/components/chart/PieChart'
 
   export default {
     name: 'AnalysisComponent',
-    components: { RankList, MyTabs, HistogramChart, LineChart, MyCard, countTo },
+    components: { PieChart, RankList, MyTabs, HistogramChart, LineChart, MyCard, countTo },
     meta: { title: '分析页' },
     data () {
       return {
@@ -192,7 +247,35 @@
           { title: '桃源村六号店', value: 734.56 },
           { title: '桃源村七号店', value: 634.56 },
           { title: '桃源村八号店', value: 534.56 }
-        ]
+        ],
+        lineList: [
+          { title: '天淘超市一号店', value: 12324.56 },
+          { title: '淘气旗舰店店', value: 11334.56 },
+          { title: '北京东三号店', value: 10344.56 },
+          { title: '江苏四号店', value: 9344.56 },
+          { title: '福建省厦门五号店', value: 8354.56 },
+          { title: '三明市宁化淮土六号店', value: 7344.56 },
+          { title: '孙坑村七号店', value: 6344.56 },
+          { title: '御天屋八号店', value: 5354.56 }
+        ],
+        tabsOpt: {
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '5%'
+          }
+        },
+        picOpt: {
+          legend: { show: false },
+          series: [
+            {
+              radius: ['40%', '70%'],
+              selectedMode: 'single',
+              data: []
+            }
+          ]
+        }
       }
     }
   }

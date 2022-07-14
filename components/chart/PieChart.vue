@@ -50,7 +50,20 @@
               type: 'pie',
               radius: ['0%', '50%'],
               center: ['50%', '50%'],
+              selectedMode: 'single',
+              label: {
+                show: true,
+                position: 'outside', // inside center
+                formatter: ({ name, value }) => {
+                  return `${name}\n ${value}`
+                }
+              },
               emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '14',
+                  fontWeight: 'bold'
+                },
                 itemStyle: {
                   shadowBlur: 10,
                   shadowOffsetX: 0,

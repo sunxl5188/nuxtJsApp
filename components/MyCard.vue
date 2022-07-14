@@ -10,7 +10,7 @@
       :active-tab-key="value"
       @tabChange="key => $emit('input', key)"
     >
-      <span v-if="extra" slot="extra"><slot name="extra"/></span>
+      <span v-if="title!==''" slot="extra"><slot name="extra"/></span>
       <span slot="default"><slot name="default"/></span>
       <span slot="cover"><slot name="cover"/></span>
       <template v-if="actions" slot="actions">
@@ -38,10 +38,6 @@
       title: {
         type: String,
         default: ''
-      },
-      extra: {
-        type: Boolean,
-        default: false
       },
       actions: {
         type: Boolean,

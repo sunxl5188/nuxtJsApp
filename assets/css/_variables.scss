@@ -1,2 +1,6 @@
 @import "../bootstrap/functions";
 @import "../bootstrap/variables";
+
+@mixin font-en{
+  font-family: Georgia, 'SFMono-Regular', Consolas, Arial, sans-serif, 'Liberation Mono', Menlo, Courier, monospace;
+}

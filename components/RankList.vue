@@ -1,11 +1,11 @@
 <template>
   <div class="rank">
-    <h4>{{title}}</h4>
+    <h5>{{title}}</h5>
     <ul>
       <li v-for="(item, i) in list" :key="i" class="d-flex justify-content-between align-items-center">
         <span :class="{active:i<3}">{{i+1}}</span>
-        <span class="flex-grow-1 pl-2">{{item.title}}</span>
-        <span>{{item.value}}</span>
+        <span class="flex-grow-1 pl-2 u-line-1">{{item.title}}</span>
+        <span class="text-black-50">{{item.value}}</span>
       </li>
     </ul>
   </div>
@@ -33,12 +33,12 @@
   .rank {
     & > ul {
       & > li {
-        height: 38px;
-        line-height: 38px;
+        line-height: 20px;
+        padding: 9px 0;
 
         & > span {
           &:first-of-type {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            @include font-en();
             font-size: 12px;
             width: 20px;
             height: 20px;
@@ -52,6 +52,9 @@
               background: $dark;
               color: $white;
             }
+          }
+          &:last-of-type{
+            @include font-en();
           }
         }
       }

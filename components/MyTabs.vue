@@ -1,9 +1,11 @@
 <template>
   <MyCard>
-    <a-tabs default-active-key="0" type="line" :hide-add="true">
-      <template slot="tabBarExtraContent"><slot name="tabBarExtra"></slot></template>
-      <a-tab-pane v-for="(item, index) in tabsList" :key="item.label + index" :tab="item.label">
-        <slot></slot>
+    <a-tabs :default-active-key="defaultActiveKey" type="line" :hide-add="true">
+      <template slot="tabBarExtraContent">
+        <slot name="tabBarExtra"></slot>
+      </template>
+      <a-tab-pane v-for="(item, index) in tabsList" :key="index" :tab="item.label">
+        <slot :name="'tabs'+(index+1)"></slot>
       </a-tab-pane>
     </a-tabs>
   </MyCard>
@@ -22,14 +24,12 @@
         default () {
           return []
         }
+      },
+      defaultActiveKey: {
+        type: Number,
+        default: 0
       }
-    },
-    data () {
-      return {}
-    },
-    watch: {},
-    mounted () {},
-    methods: {}
+    }
   }
 </script>
 

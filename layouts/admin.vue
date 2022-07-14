@@ -99,7 +99,7 @@
 
 <script>
   import locale from 'ant-design-vue/lib/locale-provider/zh_CN'
-  import { getPrefix } from '@/assets/js/utils'
+  import { getPrefix, syncVuex } from '@/assets/js/utils'
   import MyBreadcrumb from '~/components/MyBreadcrumb'
 
   const PREFIX = getPrefix()
@@ -189,13 +189,7 @@
       }
     },
     async mounted () {
-      // vuex~同步登录信息start
-      this.$vuex('vuex_token', this.$getStorage('token'))
-      this.$vuex('vuex_user', this.$getStorage('user'))
-      if (this.$getStorage('vuex_menu') !== '') {
-        this.$vuexAdmin('vuex_menu', this.$getStorage('vuex_menu'))
-      }
-      // vuex~同步登录信息end
+      syncVuex(this, 'admin')
 
       await this.$nextTick()
       this.loading = false
@@ -259,8 +253,8 @@
         })
       },
       actionOut () {
-        this.$store.dispatch('asySignOut')
-        this.$store.commit('admin/aClear')
+        this.$store.commit('signOut')
+        this.$store.commit('admin/clearData')
         this.$nextTick(() => {
           this.$router.push('/login')
         })

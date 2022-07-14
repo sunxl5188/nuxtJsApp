@@ -94,15 +94,18 @@
     </a-row>
 
     <MyTabs :tabs-list="tabsList">
-      <div slot="tabBarExtra">12222</div>
+      <div slot="tabBarExtra">
+
+      </div>
       <a-row :gutter="20">
         <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
           <HistogramChart></HistogramChart>
         </a-col>
-        <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">2222222222</a-col>
+        <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
+          <RankList title="门店销售额排行榜" :list="rankList"></RankList>
+        </a-col>
       </a-row>
     </MyTabs>
-    <HistogramChart></HistogramChart>
   </div>
 </template>
 
@@ -112,10 +115,11 @@
   import LineChart from '~/components/chart/LineChart'
   import HistogramChart from '~/components/chart/Histogram'
   import MyTabs from '~/components/MyTabs'
+  import RankList from '~/components/RankList'
 
   export default {
     name: 'AnalysisComponent',
-    components: { MyTabs, HistogramChart, LineChart, MyCard, countTo },
+    components: { RankList, MyTabs, HistogramChart, LineChart, MyCard, countTo },
     meta: { title: '分析页' },
     data () {
       return {
@@ -157,8 +161,11 @@
             }
           ]
         },
-        histDataSource: [{ name: '', value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] }],
+        histDataSource: [
+          { value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] }
+        ],
         histOption: {
+          legend: { show: false },
           grid: {
             left: '0',
             right: '0',
@@ -172,10 +179,20 @@
             axisLabel: { show: false },
             axisTick: { show: false },
             splitLine: { show: false }
-          },
+          }
         },
         tabsList: [{ label: '销售额', value: 1 }, { label: '访问量', value: 2 }],
-        tabKey: 1
+        tabKey: 1,
+        rankList: [
+          { title: '桃源村一号店', value: 1234.56 },
+          { title: '桃源村二号店', value: 1134.56 },
+          { title: '桃源村三号店', value: 1034.56 },
+          { title: '桃源村四号店', value: 934.56 },
+          { title: '桃源村五号店', value: 834.56 },
+          { title: '桃源村六号店', value: 734.56 },
+          { title: '桃源村七号店', value: 634.56 },
+          { title: '桃源村八号店', value: 534.56 }
+        ]
       }
     }
   }

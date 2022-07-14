@@ -24,10 +24,10 @@ const mutations = {
   },
   signOut (state) {
     const lifeData = `${PREFIX}lifeData`
-    this.$cookies.remove(hasLogin)
     state.vuex_token = ''
     state.vuex_user = ''
     localStorage.removeItem(lifeData)
+    this.$cookies.remove(hasLogin)
   },
   $uStore (state, payload) {
     // 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
@@ -51,14 +51,7 @@ const mutations = {
   }
 }
 
-const actions = {
-  asySignIn ({ commit }, data) {
-    commit('signIn', data)
-  },
-  asySignOut ({ commit }) {
-    commit('signOut')
-  }
-}
+const actions = {}
 
 const getters = {}
 

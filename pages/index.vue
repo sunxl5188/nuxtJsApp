@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <nuxt-link to="/article/1">新闻</nuxt-link>
+    <nuxt-link to="login">登录</nuxt-link>
     <nuxt-link to="admin">进入后台</nuxt-link>
   </div>
 </template>

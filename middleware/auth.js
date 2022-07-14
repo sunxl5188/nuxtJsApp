@@ -1,6 +1,6 @@
 import { getCookiesInServer, getPrefix } from '@/assets/js/utils'
 
-export default function ({ route, req, res, redirect, app }) {
+export default function ({ route, req, res, redirect, app, store }) {
   const isClient = process.client
   const isServer = process.server
   const cookieName = getPrefix() + 'hasLogin'

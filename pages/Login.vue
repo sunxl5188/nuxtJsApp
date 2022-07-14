@@ -63,6 +63,9 @@
 </template>
 
 <script>
+  import { getPrefix } from '@/assets/js/utils'
+  const PREFIX = getPrefix()
+  const hasLogin = `${PREFIX}hasLogin`
   export default {
     name: 'LogIn',
     data () {
@@ -85,6 +88,14 @@
         }
       }
     },
+    mounted () {
+      if (!+this.$cookies.get(hasLogin)) {
+        this.$store.commit('signOut')
+        this.$store.commit('admin/clearData')
+      } else {
+        this.$router.push('/admin')
+      }
+    },
     methods: {
       submitSave () {
         this.loading = true
@@ -92,7 +103,7 @@
           if (valid) {
             this.$api.login.signIn(this.myform).then(res => {
               if (res.status === 1) {
-                this.$store.dispatch('asySignIn', res.data)
+                this.$store.commit('signIn', res.data)
                 this.$nextTick(() => {
                   this.$router.push('/admin')
                 })

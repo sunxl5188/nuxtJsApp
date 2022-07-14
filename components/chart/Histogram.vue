@@ -40,6 +40,9 @@
               return params
             }
           },
+          legend: {
+            show: false
+          },
           color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
           grid: {
             left: '3%',
@@ -74,49 +77,19 @@
                   itemStyle: {
                     borderRadius: [4, 4, 0, 0]
                   }
-                },
-                {
-                  name: '',
-                  value: '',
-                  itemStyle: {
-                    borderRadius: [4, 4, 0, 0]
-                  }
-                },
-                {
-                  name: '',
-                  value: '',
-                  itemStyle: {
-                    borderRadius: [4, 4, 0, 0]
-                  }
-                },
-                {
-                  name: '',
-                  value: '',
-                  itemStyle: {
-                    borderRadius: [4, 4, 0, 0]
-                  }
-                },
-                {
-                  name: '',
-                  value: '',
-                  itemStyle: {
-                    borderRadius: [4, 4, 0, 0]
-                  }
-                },
-                {
-                  name: '',
-                  value: '',
-                  itemStyle: {
-                    borderRadius: [4, 4, 0, 0]
-                  }
-                },
-                {
-                  name: '',
-                  value: '',
-                  itemStyle: {
-                    borderRadius: [4, 4, 0, 0]
-                  }
-                },
+                }
+              ]
+            },
+            {
+              type: 'bar',
+              barMaxWidth: '40%',
+              barMinWidth: '10%',
+              barMinHeight: 0,
+              showBackground: true,
+              backgroundStyle: {
+                color: 'rgba(198,198,198,0.1)'
+              },
+              data: [
                 {
                   name: '',
                   value: '',
@@ -172,18 +145,12 @@
     },
     methods: {
       async initChart () {
-        const { series, legendData } = await this.createData()
-        const option = {
-          legend: {
-            data: legendData
-          },
-          series
-        }
-        const opt = Object.assign({}, this.myOpt, option)
+        const { series } = await this.createData()
+        Object.assign(this.myOpt, { series })
         // 初始化图表，设置配置项
         this.myCharts = this.$charts.init(document.getElementById(this.id))
         // console.log(opt)
-        this.myCharts.setOption(opt, true)
+        this.myCharts.setOption(this.myOpt, true)
         window.addEventListener('resize', _.debounce(() => {
           this.myCharts.resize()
         }, 100))
@@ -191,17 +158,15 @@
       createData () {
         return new Promise((resolve, reject) => {
           const series = []
-          const legendData = []
           for (let i = 0; i < this.dataSource.length; i++) {
-            this.generateData(this.dataSource[i].value, this.myOpt.series[i].data).then(res => {
+            this.generateData(this.dataSource[i].value, this.myOpt.series[i].data[0]).then(res => {
               series.push(Object.assign({}, this.myOpt.series[i], {
                 name: this.dataSource[i].name,
                 data: res,
               }))
             })
-            legendData.push(this.dataSource[i].name)
           }
-          resolve({ series, legendData })
+          resolve({ series })
         })
       },
       async refreshData () {
@@ -212,10 +177,11 @@
         this.myCharts.setOption(option, true)
       },
       generateData (data, dataStyle) {
+        const arr = []
         return new Promise((resolve) => {
-          const arr = []
-          data.forEach((item, i) => {
-            arr.push(Object.assign({}, dataStyle[i], { value: item }))
+          data.forEach((item) => {
+            dataStyle.value = item
+            arr.push(Object.assign({}, dataStyle))
           })
           resolve(arr)
         })

@@ -94,3 +94,16 @@ export function guid (len = 32, radix = null) {
   }
   return uuid.join('')
 }
+
+export function syncVuex ($this, type) {
+  // vuex~同步登录信息start
+  $this.$vuex('vuex_token', $this.$getStorage('token'))
+  $this.$vuex('vuex_user', $this.$getStorage('user'))
+  if ($this.$getStorage('vuex_menu') !== '') {
+    $this.$vuexAdmin('vuex_menu', $this.$getStorage('vuex_menu'))
+  }
+  // vuex~同步登录信息end
+  if (type === 'admin' && $this.vuex_menu.selectedKeys.length > 0) {
+    $this.$router.push($this.vuex_menu.selectedKeys[0])
+  }
+}

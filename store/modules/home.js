@@ -7,7 +7,7 @@ export default {
   state,
   getters: {},
   mutations: {
-    hClear (state) {
+    clearData (state) {
       state.homeToken = ''
     },
     $hStore (state, payload) {

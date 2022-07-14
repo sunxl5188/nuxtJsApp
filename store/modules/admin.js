@@ -13,7 +13,7 @@ export default {
   state,
   getters: {},
   mutations: {
-    aClear (state) {
+    clearData (state) {
       state.vuex_menu = {
         collapsed: false,
         selectedKeys: [],

@@ -57,9 +57,7 @@
               type: 'line',
               stack: 'Total',
               label: {},
-              lineStyle: {
-                width: 1
-              },
+              lineStyle: { width: 1},
               showSymbol: true,
               symbol: 'emptyCircle', // emptyCircle 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
               emphasis: {
@@ -83,7 +81,7 @@
           tooltip: {
             trigger: 'axis',
             axisPointer: {
-              type: 'shadow'
+              type: 'line' // 'line' 直线指示器 'shadow' 阴影指示器 'none' 无指示器  'cross' 十字准星指示器
             },
             valueFormatter: (params) => {
               return params

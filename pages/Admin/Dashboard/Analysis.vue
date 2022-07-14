@@ -1,165 +1,174 @@
 <template>
   <div>
-    <a-row :gutter="20">
-      <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
-        <MyCard>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>总销售额</div>
-            <a-tooltip placement="top" title="提示文字">
-              <a-icon type="exclamation-circle"/>
-            </a-tooltip>
-          </div>
-          <div class="font-30 line-40 u-m-t-10">
-            <countTo :start-val='0' :end-val='85326' prefix="￥"></countTo>
-          </div>
-          <div class="card-chart">
-            <div class="d-flex justify-content-start align-items-center">
-              <span>同周比 12%</span>
-              <a-icon type="caret-up" class="text-danger mr-2"/>
-              <span>日环比 11%</span>
-              <a-icon type="caret-down" class="text-success"/>
+    <MyLoading :loading="loading"></MyLoading>
+    <div v-if="!loading">
+      <a-row :gutter="20">
+        <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
+          <MyCard>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>总销售额</div>
+              <a-tooltip placement="top" title="提示文字">
+                <a-icon type="exclamation-circle"/>
+              </a-tooltip>
             </div>
-          </div>
-          <div class="border-top pt-2">日均销售额 ￥234.56</div>
-        </MyCard>
-      </a-col>
-      <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
-        <MyCard>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>访问量</div>
-            <a-tooltip placement="top" title="提示文字">
-              <a-icon type="exclamation-circle"/>
-            </a-tooltip>
-          </div>
-          <div class="font-30 line-40 u-m-t-10">
-            <countTo :start-val='0' :end-val='189345' prefix="￥"></countTo>
-          </div>
-          <div class="card-chart">
-            <LineChart :data-source="lineDataSource" :option="lineOption" height="90"></LineChart>
-          </div>
-          <div class="border-top pt-2">日均访问量 123,4</div>
-        </MyCard>
-      </a-col>
-      <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
-        <MyCard>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>支付笔数</div>
-            <a-tooltip placement="top" title="提示文字">
-              <a-icon type="exclamation-circle"/>
-            </a-tooltip>
-          </div>
-          <div class="font-30 line-40 u-m-t-10">
-            <countTo :start-val='0' :end-val='89835' prefix="￥"></countTo>
-          </div>
-          <div class="card-chart">
-            <HistogramChart :data-source="histDataSource" :option="histOption" height="90"></HistogramChart>
-          </div>
-          <div class="border-top pt-2">转化率 60%</div>
-        </MyCard>
-      </a-col>
-      <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
-        <MyCard>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>运营活动效果</div>
-            <a-tooltip placement="top" title="提示文字">
-              <a-icon type="exclamation-circle"/>
-            </a-tooltip>
-          </div>
-          <div class="font-30 line-40 u-m-t-10">
-            <countTo :start-val='0' :end-val='78' suffix="%"></countTo>
-          </div>
-          <div class="card-chart">
-            <a-progress
-              :percent="70"
-              type="line"
-              :show-info="false"
-              status="active"
-              :stroke-width="10"
-              :stroke-color="{
+            <div class="font-30 line-40 u-m-t-10">
+              <countTo :start-val='0' :end-val='85326' prefix="￥"></countTo>
+            </div>
+            <div class="card-chart">
+              <div class="d-flex justify-content-start align-items-center">
+                <span>同周比 12%</span>
+                <a-icon type="caret-up" class="text-danger mr-2"/>
+                <span>日环比 11%</span>
+                <a-icon type="caret-down" class="text-success"/>
+              </div>
+            </div>
+            <div class="border-top pt-2">日均销售额 ￥234.56</div>
+          </MyCard>
+        </a-col>
+        <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
+          <MyCard>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>访问量</div>
+              <a-tooltip placement="top" title="提示文字">
+                <a-icon type="exclamation-circle"/>
+              </a-tooltip>
+            </div>
+            <div class="font-30 line-40 u-m-t-10">
+              <countTo :start-val='0' :end-val='189345' prefix="￥"></countTo>
+            </div>
+            <div class="card-chart">
+              <LineChart :data-source="lineDataSource" :option="lineOption" height="90"></LineChart>
+            </div>
+            <div class="border-top pt-2">日均访问量 123,4</div>
+          </MyCard>
+        </a-col>
+        <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
+          <MyCard>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>支付笔数</div>
+              <a-tooltip placement="top" title="提示文字">
+                <a-icon type="exclamation-circle"/>
+              </a-tooltip>
+            </div>
+            <div class="font-30 line-40 u-m-t-10">
+              <countTo :start-val='0' :end-val='89835' prefix="￥"></countTo>
+            </div>
+            <div class="card-chart">
+              <HistogramChart :data-source="histDataSource" :option="histOption" height="90"></HistogramChart>
+            </div>
+            <div class="border-top pt-2">转化率 60%</div>
+          </MyCard>
+        </a-col>
+        <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
+          <MyCard>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>运营活动效果</div>
+              <a-tooltip placement="top" title="提示文字">
+                <a-icon type="exclamation-circle"/>
+              </a-tooltip>
+            </div>
+            <div class="font-30 line-40 u-m-t-10">
+              <countTo :start-val='0' :end-val='78' suffix="%"></countTo>
+            </div>
+            <div class="card-chart">
+              <a-progress
+                :percent="70"
+                type="line"
+                :show-info="false"
+                status="active"
+                :stroke-width="10"
+                :stroke-color="{
                   '0%': '#108ee9',
                   '100%': '#87d068'
                 }"
-            />
-          </div>
-          <div class="border-top pt-2">
-            <div class="d-flex justify-content-start align-items-center">
-              <span>同周比 12%</span>
-              <a-icon type="caret-up" class="text-danger mr-2"/>
-              <span>日环比 11%</span>
-              <a-icon type="caret-down" class="text-success"/>
+              />
             </div>
-          </div>
-        </MyCard>
-      </a-col>
-    </a-row>
+            <div class="border-top pt-2">
+              <div class="d-flex justify-content-start align-items-center">
+                <span>同周比 12%</span>
+                <a-icon type="caret-up" class="text-danger mr-2"/>
+                <span>日环比 11%</span>
+                <a-icon type="caret-down" class="text-success"/>
+              </div>
+            </div>
+          </MyCard>
+        </a-col>
+      </a-row>
 
-    <MyTabs :tabs-list="tabsList">
-      <div slot="tabBarExtra">
-        <div>
-          <a-button type="link" size="small">今日</a-button>
-          <a-button type="link" size="small">本周</a-button>
-          <a-button type="link" size="small">本月</a-button>
-          <a-button type="link" size="small">本年</a-button>
-          <a-range-picker :style="{width: '256px'}"></a-range-picker>
+      <MyTabs :tabs-list="tabsList">
+        <div slot="tabBarExtra">
+          <div>
+            <a-button type="link" size="small">今日</a-button>
+            <a-button type="link" size="small">本周</a-button>
+            <a-button type="link" size="small">本月</a-button>
+            <a-button type="link" size="small">本年</a-button>
+            <a-range-picker :style="{width: '256px'}"></a-range-picker>
+          </div>
         </div>
-      </div>
-      <div slot="tabs1">
-        <a-row :gutter="20">
-          <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
-            <div style="height:340px;">
-              <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
-            </div>
-          </a-col>
-          <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
-            <div style="height:340px;">
-              <RankList title="门店销售额排行榜" :list="rankList"></RankList>
-            </div>
-          </a-col>
-        </a-row>
-      </div>
-      <div slot="tabs2">
-        <a-row :gutter="20">
-          <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
-            <div style="height:340px;">
-              <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
-            </div>
-          </a-col>
-          <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
-            <div style="height:340px;">
-              <RankList title="线上销售额排行榜" :list="lineList"></RankList>
-            </div>
-          </a-col>
-        </a-row>
-      </div>
-    </MyTabs>
-
-    <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
-    <a-row :gutter="20">
-      <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
-        <MyCard title="热门搜索">
-          <a-row :gutter="[20,20]">
-            <a-col :span="12">
-
+        <div slot="tabs1">
+          <a-row :gutter="20">
+            <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
+              <div style="height:340px;">
+                <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
+              </div>
             </a-col>
-            <a-col :span="12">
-
+            <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
+              <div style="height:340px;">
+                <RankList title="门店销售额排行榜" :list="rankList"></RankList>
+              </div>
             </a-col>
           </a-row>
-        </MyCard>
-      </a-col>
-      <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
-        <MyCard title="销售额占比">
-          <div slot="extra">
-            <a-button-group>
-              <a-button type="default">全渠道</a-button>
-              <a-button type="default">线上</a-button>
-              <a-button type="default">门店</a-button>
-            </a-button-group>
-          </div>
-          <PieChart :option="picOpt"></PieChart>
-        </MyCard>
-      </a-col>
-    </a-row>
+        </div>
+        <div slot="tabs2">
+          <a-row :gutter="20">
+            <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
+              <div style="height:340px;">
+                <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
+              </div>
+            </a-col>
+            <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
+              <div style="height:340px;">
+                <RankList title="线上销售额排行榜" :list="lineList"></RankList>
+              </div>
+            </a-col>
+          </a-row>
+        </div>
+      </MyTabs>
+
+      <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
+      <a-row :gutter="20">
+        <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
+          <MyCard title="热门搜索">
+            <a-row :gutter="[20,20]">
+              <a-col :span="12">
+                <div></div>
+                <div style="height:60px;">
+                  <LineChart :data-source="lineDataSource" :option="lineOption" height="60"></LineChart>
+                </div>
+              </a-col>
+              <a-col :span="12">
+                <div></div>
+                <div style="height:60px;">
+                  <LineChart :data-source="lineDataSource" :option="lineOption3" height="60"></LineChart>
+                </div>
+              </a-col>
+            </a-row>
+          </MyCard>
+        </a-col>
+        <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
+          <MyCard title="销售额占比">
+            <div slot="extra">
+              <a-button-group>
+                <a-button type="default">全渠道</a-button>
+                <a-button type="default">线上</a-button>
+                <a-button type="default">门店</a-button>
+              </a-button-group>
+            </div>
+            <PieChart :option="picOpt"></PieChart>
+          </MyCard>
+        </a-col>
+      </a-row>
+    </div>
   </div>
 </template>
 
@@ -178,6 +187,7 @@
     meta: { title: '分析页' },
     data () {
       return {
+        loading: true,
         lineDataSource: [{ name: '', value: [150, 23, 224, 2, 135, 10, 260] }],
         lineOption: {
           grid: {
@@ -216,6 +226,7 @@
             }
           ]
         },
+        lineOption3: {},
         histDataSource: [
           { value: [34000, 25000, 11000, 9000, 7000, 6000, 4800, 7500] }
         ],
@@ -277,6 +288,36 @@
           ]
         }
       }
+    },
+    mounted () {
+      const opt = this.$lodash.cloneDeep(this.lineOption)
+      this.lineOption3 = Object.assign({}, opt, {
+        color: ['#326d2f'],
+        series: [
+          {
+            lineStyle: {width: 0},
+            showSymbol: false,
+            areaStyle: {
+              opacity: 0.8,
+              color: new this.$charts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#a4f89f'
+                },
+                {
+                  offset: 1,
+                  color: '#307c0c'
+                }
+              ])
+            }
+          }
+        ]
+      })
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.loading = false
+        }, 3000)
+      })
     }
   }
 </script>

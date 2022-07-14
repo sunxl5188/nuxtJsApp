@@ -1,6 +1,6 @@
 <template>
-  <div v-show="visible" class="text-center pt-3 pb-3">
-    <a-spin :spinning="visible" :delay="delay" :tip="showText ? tip : ''"></a-spin>
+  <div v-if="loading" class="p-3 d-flex justify-content-center">
+    <a-spin :spinning="loading" :delay="delay" :tip="tip"></a-spin>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
   export default {
     name: 'MyLoading',
     props: {
-      visible: {
+      loading: {
         type: Boolean,
         default () {
           return false
@@ -21,12 +21,6 @@
       tip: {
         type: String,
         default: '数据加载中...'
-      },
-      showText: {
-        type: Boolean,
-        default () {
-          return false
-        }
       }
     }
   }

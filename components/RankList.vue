@@ -1,6 +1,6 @@
 <template>
   <div class="rank">
-    <h5>{{title}}</h5>
+    <h5 class="u-line-1">{{title}}</h5>
     <ul>
       <li v-for="(item, i) in list" :key="i" class="d-flex justify-content-between align-items-center">
         <span :class="{active:i<3}">{{i+1}}</span>

@@ -36,7 +36,6 @@ export default {
     failedColor: 'red',
     height: '3px'
   },
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     // '@/plugins/element-ui',
@@ -45,6 +44,7 @@ export default {
     { src: '@/plugins/cookies', mode: 'client' },
     { src: '@/plugins/storage', mode: 'client' },
     { src: '@/plugins/components', mode: 'client' },
+    { src: '@/plugins/directive/load', mode: 'client' },
     { src: '@/plugins/lodash', mode: 'client' },
     { src: '@/plugins/BaiduMap', mode: 'client' },
     { src: '@/plugins/mixins', mode: 'client' },
@@ -102,9 +102,9 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    analyze: false, // 分析并可视化构建后的打包文件
+    // analyze: false, // 分析并可视化构建后的打包文件
     extractCSS: true, // 使用 Vue 服务器端渲染指南启用常见 CSS 提取
-    transpile: [/ant-design-vue/],
+    // transpile: [/ant-design-vue/],
     vendor: ['axios'], // 为防止重复打包
     styleResources: {
       scss: '~/assets/css/_variables.scss'
@@ -119,26 +119,19 @@ export default {
             style: 'css' // 如果需要使用 less 方式去按需加载的话，则需要改为 true ，并且添加下面loaders 配置
           },
           'ant-design-vue'
-        ],
-        [
-          'component',
-          {
-            'libraryName': 'element-ui',
-            'styleLibraryName': 'theme-chalk'
-          }
         ]
       ]
     },
     // 此处是 style 为 true 时所需添加的配置
-    loaders: {
-      less: {
-        modifyVars: {
-          'primary-color': '#1DA57A',
-          'link-color': '#1DA57A',
-          'border-radius-base': '2px',
-        }
-      }
-    }
+    // loaders: {
+    //   less: {
+    //     modifyVars: {
+    //       'primary-color': '#1DA57A',
+    //       'link-color': '#1DA57A',
+    //       'border-radius-base': '2px',
+    //     }
+    //   }
+    // }
   },
   router: {
     // 在每页渲染前运行 middleware/unknownRoute.js 中间件的逻辑

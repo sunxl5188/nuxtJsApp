@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <MyLoading :loading="loading"></MyLoading>
+  <div v-load="loading">
     <div v-if="!loading">
       <a-row :gutter="20">
         <a-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" :xxl="6">
@@ -137,25 +136,54 @@
 
       <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
       <a-row :gutter="20">
-        <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
+        <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
           <MyCard title="热门搜索">
             <a-row :gutter="[20,20]">
               <a-col :span="12">
-                <div></div>
+                <div>
+                  <div class="text-black-50">搜索用户数</div>
+                  <div>
+                    <span class="font-24">
+                      <count-to :start-val="895000" :end-val="895625" suffix="次"></count-to>
+                    </span>
+                    <span class="ml-3">同周比 12%</span>
+                    <a-icon type="caret-up" class="text-danger"/>
+                  </div>
+                </div>
                 <div style="height:60px;">
                   <LineChart :data-source="lineDataSource" :option="lineOption" height="60"></LineChart>
                 </div>
               </a-col>
               <a-col :span="12">
-                <div></div>
+                <div>
+                  <div class="text-black-50">人均搜索次数</div>
+                  <div>
+                    <span class="font-24">
+                      <count-to :start-val="0" :end-val="5" suffix="次"></count-to>
+                    </span>
+                    <span class="ml-3">同周比 1.5%</span>
+                    <a-icon type="caret-up" class="text-danger"/>
+                  </div>
+                </div>
                 <div style="height:60px;">
                   <LineChart :data-source="lineDataSource" :option="lineOption3" height="60"></LineChart>
                 </div>
               </a-col>
             </a-row>
+            <MyTable
+              :data-source="searchData"
+              :columns="columns"
+              :pagination="pagination"
+              size="small"
+            >
+              <template #rang="{row}">
+                {{row}} %
+                <a-icon type="caret-up" class="text-danger"/>
+              </template>
+            </MyTable>
           </MyCard>
         </a-col>
-        <a-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :xxl="12">
+        <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
           <MyCard title="销售额占比">
             <div slot="extra">
               <a-button-group>
@@ -180,10 +208,22 @@
   import MyTabs from '~/components/MyTabs'
   import RankList from '~/components/RankList'
   import PieChart from '~/components/chart/PieChart'
+  import MyTable from '~/components/MyTable'
+
+  const searchData = []
+  for (let i = 0; i < 50; i++) {
+    searchData.push({
+      index: i + 1,
+      keyword: '关键词-' + i,
+      count: Math.floor(Math.random() * 1000),
+      range: Math.floor(Math.random() * 100),
+      status: Math.floor((Math.random() * 10) % 2)
+    })
+  }
 
   export default {
     name: 'AnalysisComponent',
-    components: { PieChart, RankList, MyTabs, HistogramChart, LineChart, MyCard, countTo },
+    components: { MyTable, PieChart, RankList, MyTabs, HistogramChart, LineChart, MyCard, countTo },
     meta: { title: '分析页' },
     data () {
       return {
@@ -286,6 +326,40 @@
               data: []
             }
           ]
+        },
+        searchData,
+        columns: [
+          {
+            title: '排名',
+            dataIndex: 'index',
+            key: 'index',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: '搜索关键词',
+            dataIndex: 'keyword',
+            key: 'keyword'
+          },
+          {
+            title: '用户数据',
+            dataIndex: 'count',
+            key: 'count',
+            align: 'center',
+            sorter: (a, b) => a.count - b.count,
+            sortDirections: ['ascend', 'descend']
+          },
+          {
+            title: '周涨幅',
+            dataIndex: 'range',
+            key: 'range',
+            width: 140,
+            align: 'center',
+            scopedSlots: { customRender: 'rang' }
+          }
+        ],
+        pagination: {
+          pageSize: 6
         }
       }
     },
@@ -295,7 +369,7 @@
         color: ['#326d2f'],
         series: [
           {
-            lineStyle: {width: 0},
+            lineStyle: { width: 0 },
             showSymbol: false,
             areaStyle: {
               opacity: 0.8,
@@ -316,9 +390,10 @@
       this.$nextTick(() => {
         setTimeout(() => {
           this.loading = false
-        }, 3000)
+        }, 1000)
       })
-    }
+    },
+    methods: {}
   }
 </script>
 

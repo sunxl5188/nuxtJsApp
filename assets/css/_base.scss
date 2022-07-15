@@ -12,6 +12,10 @@ html, body {
   min-width: 576px;
 }
 
+.family-number{
+  @include font-en();
+}
+
 @for $i from 1 through 51 {
   $fontSize: 9 + $i;
   .font-#{$fontSize} {

@@ -52,8 +52,9 @@
     },
     computed: {
       slotsArr () {
-        const arr = this.$lodash.filter(this.columns, o => Object.prototype.toString.call(o.scopedSlots) === '[object Object]')
-        return arr || []
+        // const arr = this.$lodash.filter(this.columns, o => Object.prototype.toString.call(o.scopedSlots) === '[object Object]')
+        // console.log(arr)
+        return []
       }
     },
     watch: {},

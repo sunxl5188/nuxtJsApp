@@ -38,8 +38,8 @@ export default {
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // '@/plugins/element-ui',
-    { src: '@/plugins/antd-ui', mode: 'client' },
+    '@/plugins/antd-ui',
+    // { src: '@/plugins/antd-ui', mode: 'server' },
     { src: '@/plugins/axios', mode: 'client' },
     { src: '@/plugins/cookies', mode: 'client' },
     { src: '@/plugins/storage', mode: 'client' },
@@ -122,6 +122,9 @@ export default {
         ]
       ]
     },
+    transpile: [
+      "ant-design-vue"
+    ]
     // 此处是 style 为 true 时所需添加的配置
     // loaders: {
     //   less: {

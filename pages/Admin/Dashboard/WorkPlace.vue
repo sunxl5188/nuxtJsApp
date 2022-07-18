@@ -28,7 +28,7 @@
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
         <MyCard title="产品指数">
-          <RadarChart :data-source="dataSource" :radar="radar" height="275"/>
+          <RadarChart :data-source="dataSource" :option="option" height="275"/>
         </MyCard>
         <MyCard title="团队">
           <a-row>
@@ -133,23 +133,28 @@
         ],
         dataSource: [
           {
-            value: [42, 90, 88, 65, 50, 100],
+            value: [42, 90, 88, 65, 50, 70],
             name: '已分配预算'
           },
           {
-            value: [99, 80, 78, 65, 80, 95],
+            value: [5, 45, 78, 65, 80, 15],
             name: '实际支出'
           }
         ],
-        radar: {
-          indicator: [
-            { name: '销售', max: 100 },
-            { name: '管理', max: 100 },
-            { name: '信息技术', max: 100 },
-            { name: '客服', max: 100, color: '#f00' },
-            { name: '研发', max: 100 },
-            { name: '市场', max: 100, color: '#f60' }
-          ]
+        option: {
+          radar: {
+            indicator: [
+              { name: '销售', max: 100 },
+              { name: '管理', max: 100 },
+              { name: '信息技术', max: 100 },
+              { name: '客服', max: 100, color: '#f00' },
+              { name: '研发', max: 100 },
+              { name: '市场', max: 100, color: '#f60' }
+            ]
+          },
+          series: [{
+            areaStyle: { opacity: 0.2 }
+          }]
         },
         tabList: [
           {
@@ -167,8 +172,7 @@
     mounted () {
 
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 

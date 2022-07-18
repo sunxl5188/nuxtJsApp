@@ -106,6 +106,10 @@
         }
       }
 
+      this.dataSource.forEach((item, i) => {
+        Object.assign(this.myOpt.series[0].data[i], item)
+      })
+
       await this.$nextTick()
       this.loading = false
       await this.$nextTick()
@@ -113,9 +117,6 @@
     },
     methods: {
       initChart () {
-        this.dataSource.forEach((item, i) => {
-          Object.assign(this.myOpt.series[0].data[i], item)
-        })
         // 初始化图表，设置配置项
         this.myCharts = this.$charts.init(document.getElementById(this.id))
         this.myCharts.setOption(this.myOpt, true)

@@ -1,3 +1,5 @@
+// const { resolve } = require('path')
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -122,9 +124,10 @@ export default {
         ]
       ]
     },
-    transpile: [
-      "ant-design-vue"
-    ]
+    transpile: [/ant-design-vue/],
+    extend (config, ctx) {
+      // config.resolve.alias['@ant-design/icons/lib/dist$'] = resolve(__dirname, './plugins/icons.js') // 引入需要的
+    }
     // 此处是 style 为 true 时所需添加的配置
     // loaders: {
     //   less: {
@@ -142,10 +145,10 @@ export default {
     routeNameSplitter: '-',
     extendRoutes (routes, resolve) {
       routes.push({
-          name: 'error',
-          path: '*',
-          component: resolve(__dirname, 'pages/error/404.vue')
-        })
+        name: 'error',
+        path: '*',
+        component: resolve(__dirname, 'pages/error/404.vue')
+      })
     }
   }
 }

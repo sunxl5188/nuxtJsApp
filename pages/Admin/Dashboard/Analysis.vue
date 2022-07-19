@@ -144,7 +144,7 @@
                   <div class="text-black-50">搜索用户数</div>
                   <div>
                     <span class="font-24">
-                      <count-to :start-val="895000" :end-val="895625" suffix="次"></count-to>
+                      <count-to :start-val="8000" :end-val="8956" suffix="次"></count-to>
                     </span>
                     <span class="ml-3">同周比 12%</span>
                     <a-icon type="caret-up" class="text-danger"/>
@@ -359,7 +359,7 @@
           }
         ],
         pagination: {
-          pageSize: 6
+          pageSize: 5
         }
       }
     },
@@ -388,9 +388,7 @@
         ]
       })
       this.$nextTick(() => {
-        setTimeout(() => {
-          this.loading = false
-        }, 1000)
+        this.loading = false
       })
     },
     methods: {}

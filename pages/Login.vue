@@ -65,6 +65,76 @@
 
   const PREFIX = getPrefix()
   const hasLogin = `${PREFIX}hasLogin`
+  const menuList = [
+    {
+      title: '仪表板',
+      path: 'Dashboard',
+      icon: 'dashboard',
+      children: [
+        {
+          title: '工作台',
+          path: 'WorkPlace',
+        },
+        {
+          title: '分析页',
+          path: 'Analysis',
+        }
+      ]
+    },
+    {
+      title: '表单页',
+      path: 'Form',
+      icon: 'form',
+      children: [
+        {
+          title: '基础表单',
+          path: 'BaseForm',
+        },
+        {
+          title: '分步表单',
+          path: 'StepForm',
+        },
+        {
+          title: '高级表单',
+          path: 'AdvancedForm',
+        }
+      ]
+    },
+    {
+      title: '列表页',
+      path: 'List',
+      icon: 'table',
+      children: [
+        {
+          title: '查询表格',
+          path: 'QueryList'
+        },
+        {
+          title: '标准列表',
+          path: 'StandardList'
+        },
+        {
+          title: '卡片列表',
+          path: 'CardList'
+        },
+        {
+          title: '详细页',
+          path: 'Detail',
+          children: [
+            {
+              title: '基础详情页',
+              path: 'BasicDetail'
+            },
+            {
+              title: '高级详情页',
+              path: 'AdvancedDetail'
+            }
+          ]
+        }
+      ]
+    }
+  ]
+
   export default {
     name: 'LogIn',
     data () {
@@ -103,6 +173,7 @@
             this.$api.login.signIn(this.myform).then(res => {
               if (res.status === 1) {
                 this.$store.commit('signIn', res.data)
+                this.$vuexAdmin('vuex_menu.list', menuList)
                 this.$nextTick(() => {
                   this.$router.push('/admin')
                 })

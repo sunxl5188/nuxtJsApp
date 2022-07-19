@@ -18,7 +18,7 @@
         @select="onMenuSelect"
       >
         <a-sub-menu
-          v-for="(subMenu, index) in menuList"
+          v-for="(subMenu, index) in vuexMenu.list"
           :key="`sub${index}`"
         >
             <span slot="title">
@@ -55,75 +55,6 @@
     name: 'AdminMenu',
     data () {
       return {
-        menuList: [
-          {
-            title: '仪表板',
-            path: 'Dashboard',
-            icon: 'dashboard',
-            children: [
-              {
-                title: '工作台',
-                path: 'WorkPlace',
-              },
-              {
-                title: '分析页',
-                path: 'Analysis',
-              }
-            ]
-          },
-          {
-            title: '表单页',
-            path: 'Form',
-            icon: 'form',
-            children: [
-              {
-                title: '基础表单',
-                path: 'BaseForm',
-              },
-              {
-                title: '分步表单',
-                path: 'StepForm',
-              },
-              {
-                title: '高级表单',
-                path: 'AdvancedForm',
-              }
-            ]
-          },
-          {
-            title: '列表页',
-            path: 'List',
-            icon: 'table',
-            children: [
-              {
-                title: '查询表格',
-                path: 'QueryList'
-              },
-              {
-                title: '标准列表',
-                path: 'StandardList'
-              },
-              {
-                title: '卡片列表',
-                path: 'CardList'
-              },
-              {
-                title: '详细页',
-                path: 'Detail',
-                children: [
-                  {
-                    title: '基础详情页',
-                    path: 'BasicDetail'
-                  },
-                  {
-                    title: '高级详情页',
-                    path: 'AdvancedDetail'
-                  }
-                ]
-              }
-            ]
-          }
-        ],
         vuexMenu: {
           collapsed: false,
           selectedKeys: [],

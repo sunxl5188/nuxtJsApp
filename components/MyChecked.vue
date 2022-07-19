@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display: inline-block">
     <div v-if="showAll" class="clearfix border-bottom">
       <a-checkbox :indeterminate="indeterminate" :checked="checkAll" @change="onCheckAllChange">
         全选

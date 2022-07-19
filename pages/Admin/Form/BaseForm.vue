@@ -5,13 +5,16 @@
     <MyBaseForm
       :item-list="itemList"
       :rules="rules"
-    />
+      @onSubmit="onSubmit"
+    >
+    </MyBaseForm>
   </MyCard>
 </template>
 
 <script>
   import MyCard from '~/components/MyCard'
   import MyBaseForm from '~/components/MyBaseForm'
+
   const options = [
     {
       label: '产品一',
@@ -55,7 +58,7 @@
   const validator = (rule, value, callback) => {
     const len = value.length
     if (len === 0) {
-      callback(new Error('请输入'))
+      callback(new Error('请选择'))
     } else if (len < 2) {
       callback(new Error('至少选择两项'))
     } else {
@@ -65,14 +68,15 @@
   export default {
     name: 'BaseForm',
     components: { MyCard, MyBaseForm },
-    meta: {title: '基础表单'},
+    meta: { title: '基础表单' },
     data () {
       return {
         itemList: [
           {
             label: '用户姓名',
             name: 'username',
-            placeholder: '请输入用户姓名！！！'
+            placeholder: '请输入用户姓名！！！',
+            question: '请输入用户姓名，用户姓名是用来在网站上展示的名称'
           },
           {
             label: '产品类型',
@@ -145,9 +149,10 @@
             placeholder: '请输入密码！'
           },
           {
-            label: '自定义输入',
+            label: '自定义',
             name: 'custom',
             type: 'custom',
+            rules: { required: true, message: '请输入自定义内容' },
             placeholder: '请输入自定义内容'
           }
         ],
@@ -169,6 +174,9 @@
           radios: [
             { required: true, message: '请选择单选项' }
           ],
+          target_a: [
+            { required: true, message: '请输入-------------' }
+          ],
           checks: [
             { validator }
           ]
@@ -179,6 +187,9 @@
     mounted () {
     },
     methods: {
+      onSubmit (data) {
+        console.log('需要提交的数据', data)
+      }
     }
   }
 </script>

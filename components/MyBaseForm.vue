@@ -15,101 +15,107 @@
                     :label="item.label"
                     :prop="item.name"
             >
-                <!--文本输入框-->
-                <template v-if="item.type === undefined || item.type === 'text'">
-                    <a-input
-                            v-model="myform[item.name]"
-                            :placeholder="item.placeholder || `请输入${item.label}`"
-                            allow-clear
-                            autocomplete="off"
-                            class="w-90"
-                    />
-                </template>
-                <!--密码输入框-->
-                <template v-if="item.type === 'password'">
-                    <a-input
-                            v-model="myform[item.name]" type="password"
-                            :placeholder="item.placeholder || `请输入${item.label}`"
-                            autocomplete="off"
-                            class="w-90"
-                    />
-                </template>
-                <!--选择框-->
-                <template v-if="item.type==='select'">
+                <!--文本框||文本域-->
+                <a-input
+                        v-if="item.type === undefined || item.type === 'text'|| item.type==='textarea'"
+                        v-model="myform[item.name]"
+                        :type="item.type || 'text'"
+                        :placeholder="item.placeholder || `请输入${item.label}`"
+                        :allow-clear="item.type!=='textarea'"
+                        autocomplete="off"
+                        :auto-size="{ minRows: 3, maxRows: 6 }"
+                >
+                    <!--带标签的 input，设置前置标签-->
                     <a-select
-                            v-model="myform[item.name]"
-                            show-search
-                            allow-clear
-                            option-filter-prop="children"
-                            :filter-option="filterOption"
-                            :mode="item.multiple||'default'"
-                            class="w-90"
-                    >
-                        <a-select-option v-for="items of item.option" :key="items.value" :value="items.value">
-                            {{items.label}}
-                        </a-select-option>
-                    </a-select>
-                </template>
-                <!--文本域-->
-                <template v-if="item.type==='textarea'">
-                    <a-input
-                            v-model="myform[item.name]"
-                            type="textarea"
-                            :placeholder="item.placeholder || `请输入${item.label}`"
-                            :auto-size="{ minRows: 3, maxRows: 6 }"
-                            class="w-90"
+                            v-if="item.addonBefore"
+                            slot="addonBefore"
+                            v-decorator="[item.addonBefore.name, { initialValue: item.addonBefore.option[0].value }]"
+                            :options="item.addonBefore.option"
                     />
-                </template>
+                    <!--带标签的 input，设置后置标签-->
+                    <a-select
+                            v-if="item.addonAfter"
+                            slot="addonAfter"
+                            v-decorator="[item.addonAfter.name, { initialValue: item.addonAfter.option[0].value }]"
+                            :options="item.addonAfter.option"
+                    />
+                    <!--带有前缀图标的 input-->
+                    <template v-if="item.prefix" #prefix>
+                        <slot :name="item.name+'_prefix'">
+                            <a-icon type="user" />
+                        </slot>
+                    </template>
+                    <!--带有后缀图标的 input-->
+                    <template v-if="item.suffix" #suffix>
+                        <slot :name="item.name+'_suffix'">
+                            <a-tooltip v-if="item.suffix" slot="suffix" placement="top" :title="item.suffix" arrow-point-at-center>
+                                <a-icon type="question-circle" />
+                            </a-tooltip>
+                        </slot>
+                    </template>
+                </a-input>
+
+                <!--密码框-->
+                <a-input-password
+                        v-if="item.type === 'password'"
+                        v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
+                        :placeholder="item.placeholder || ''"
+                        allow-clear
+                />
+                <!--选择框-->
+                <a-select
+                        v-if="item.type==='select'"
+                        v-model="myform[item.name]"
+                        show-search
+                        allow-clear
+                        option-filter-prop="children"
+                        :filter-option="filterOption"
+                        :mode="item.multiple||'default'"
+                >
+                    <a-select-option v-for="items of item.option" :key="items.value" :value="items.value">
+                        {{items.label}}
+                    </a-select-option>
+                </a-select>
                 <!--日期选择-->
-                <template v-if="item.type === 'date'">
-                    <a-date-picker
-                            v-model="myform[item.name]"
-                            :value-format="item.format || 'yyyy-MM-DD'"
-                            :format="item.format || 'yyyy-MM-DD'"
-                            :placeholder="item.placeholder || `请输入${item.label}`"
-                            :input-read-only="true"
-                            :disabled-date="item.disabledDate === undefined ? () => false : item.disabledDate"
-                            :show-time="item.showTime||false"
-                    />
-                </template>
-                <template v-if="item.type==='range'">
-                    <a-range-picker
-                            v-model="myform[item.name]"
-                            :value-format="item.valueFormat || 'yyyy-MM-DD'"
-                            :show-time="item.showTime || false"
-                            :disabled-time="item.disabledTime === undefined ? () => false : item.disabledTime"
-                    />
-                </template>
+                <a-date-picker
+                        v-if="item.type === 'date'"
+                        v-model="myform[item.name]"
+                        :value-format="item.format || 'yyyy-MM-DD'"
+                        :format="item.format || 'yyyy-MM-DD'"
+                        :placeholder="item.placeholder || `请输入${item.label}`"
+                        :input-read-only="true"
+                        :disabled-date="item.disabledDate === undefined ? () => false : item.disabledDate"
+                        :show-time="item.showTime||false"
+                />
+                <a-range-picker
+                        v-if="item.type==='range'"
+                        v-model="myform[item.name]"
+                        :value-format="item.valueFormat || 'yyyy-MM-DD'"
+                        :show-time="item.showTime || false"
+                        :disabled-time="item.disabledTime === undefined ? () => false : item.disabledTime"
+                />
                 <!--数字输入框-->
-                <template v-if="item.type==='number'">
-                    <a-input-number
-                            v-model="myform[item.name]"
-                            :min="item.min"
-                            :max="item.max"
-                            :step="item.step || 1"
-                            :formatter="item.formatter === undefined ? value => value : item.formatter"
-                            :parser="item.parser === undefined ? value => value : item.parser"
-                    />
-                </template>
+                <a-input-number
+                        v-if="item.type==='number'"
+                        v-model="myform[item.name]"
+                        :min="item.min"
+                        :max="item.max"
+                        :step="item.step || 1"
+                        :formatter="item.formatter === undefined ? value => value : item.formatter"
+                        :parser="item.parser === undefined ? value => value : item.parser"
+                />
                 <!--单选项-->
-                <template v-if="item.type==='radio'">
-                    <a-radio-group
-                            v-model="myform[item.name]"
-                            :options="item.option"
-                    />
-                </template>
+                <a-radio-group
+                        v-if="item.type==='radio'"
+                        v-model="myform[item.name]"
+                        :options="item.option"
+                />
                 <!--多选项-->
-                <template v-if="item.type==='checkbox'">
-                    <a-checkbox-group
-                            v-model="myform[item.name]"
-                            :options="item.option"
-                    />
-                </template>
-                <slot :name="item.name+'_question'" :row="item.question">
-                    <a-tooltip v-if="item.question" placement="top" :title="item.question" arrow-point-at-center>
-                        <a-icon type="question-circle" class="u-m-l-5 text-muted" style="cursor:pointer;"/>
-                    </a-tooltip>
-                </slot>
+                <a-checkbox-group
+                        v-if="item.type==='checkbox'"
+                        v-model="myform[item.name]"
+                        :options="item.option"
+                />
             </a-form-model-item>
 
             <!--自定义输入框-->
@@ -150,69 +156,58 @@
                         :wrapper-col="{span:wrapperCol}"
                         :class="{labelHidden: items.label === ''}"
                 >
-                    <!--文本输入框-->
-                    <template v-if="items.type === undefined || items.type === 'text'">
-                        <a-input
-                                v-model="myform[items.name]"
-                                :placeholder="items.placeholder || `请输入${items.label}`"
-                                autocomplete="off"
-                        />
-                    </template>
-                    <!--选择框-->
-                    <template v-if="items.type==='select'">
-                        <a-select
-                                v-model="myform[items.name]"
-                                show-search
-                                option-filter-prop="children"
-                                :filter-option="filterOption"
-                                :mode="items.multiple||'default'"
-                        >
-                            <a-select-option v-for="it of items.option" :key="it.value" :value="it.value">
-                                {{it.label}}
-                            </a-select-option>
-                        </a-select>
-                    </template>
-                    <!--文本域-->
-                    <template v-if="items.type==='textarea'">
-                        <a-input
-                                v-model="myform[items.name]"
-                                type="textarea"
-                                :placeholder="items.placeholder || `请输入${items.label}`"
-                                :auto-size="{ minRows: 3, maxRows: 6 }"
-                        />
-                    </template>
-                    <!--日期选择-->
-                    <template v-if="items.type === 'date'">
-                        <a-date-picker
-                                v-model="myform[items.name]"
-                                :value-format="items.format || 'yyyy-MM-DD'"
-                                :format="items.format || 'yyyy-MM-DD'"
-                                :placeholder="items.placeholder || `请输入${items.label}`"
-                                :input-read-only="true"
-                                :disabled-date="items.disabledDate === undefined ? () => false : items.disabledDate"
-                                :show-time="items.showTime||false"
-                        />
-                    </template>
-                    <template v-if="items.type==='range'">
-                        <a-range-picker
-                                v-model="myform[items.name]"
-                                :value-format="items.valueFormat || 'yyyy-MM-DD'"
-                                :show-time="items.showTime || false"
-                                :disabled-time="items.disabledTime === undefined ? () => false : items.disabledTime"
-                        />
-                    </template>
-                    <!--数字输入框-->
-                    <template v-if="items.type==='number'">
-                        <a-input-number
-                                v-model="myform[items.name]"
-                                :min="items.min"
-                                :max="items.max"
-                                :step="items.step || 1"
-                                :formatter="items.formatter === undefined ? value => value : items.formatter"
-                                :parser="items.parser === undefined ? value => value : items.parser"
-                        />
-                    </template>
+                    <!--文本框 || 文本域-->
+                    <a-input
+                            v-if="items.type === undefined || items.type === 'text' || items.type==='textarea'"
+                            v-model="myform[items.name]"
+                            :type="item.type || 'text'"
+                            :placeholder="items.placeholder || `请输入${items.label}`"
+                            autocomplete="off"
+                            :auto-size="{ minRows: 3, maxRows: 6 }"
+                    />
 
+                    <!--选择框-->
+                    <a-select
+                            v-if="items.type==='select'"
+                            v-model="myform[items.name]"
+                            show-search
+                            option-filter-prop="children"
+                            :filter-option="filterOption"
+                            :mode="items.multiple||'default'"
+                    >
+                        <a-select-option v-for="it of items.option" :key="it.value" :value="it.value">
+                            {{it.label}}
+                        </a-select-option>
+                    </a-select>
+                    <!--日期选择-->
+                    <a-date-picker
+                            v-if="items.type === 'date'"
+                            v-model="myform[items.name]"
+                            :value-format="items.format || 'yyyy-MM-DD'"
+                            :format="items.format || 'yyyy-MM-DD'"
+                            :placeholder="items.placeholder || `请输入${items.label}`"
+                            :input-read-only="true"
+                            :disabled-date="items.disabledDate === undefined ? () => false : items.disabledDate"
+                            :show-time="items.showTime||false"
+                    />
+                    <a-range-picker
+                            v-if="items.type==='range'"
+                            v-model="myform[items.name]"
+                            :value-format="items.valueFormat || 'yyyy-MM-DD'"
+                            :show-time="items.showTime || false"
+                            :disabled-time="items.disabledTime === undefined ? () => false : items.disabledTime"
+                    />
+
+                    <!--数字输入框-->
+                    <a-input-number
+                            v-if="items.type==='number'"
+                            v-model="myform[items.name]"
+                            :min="items.min"
+                            :max="items.max"
+                            :step="items.step || 1"
+                            :formatter="items.formatter === undefined ? value => value : items.formatter"
+                            :parser="items.parser === undefined ? value => value : items.parser"
+                    />
                 </a-form-model-item>
             </template>
         </template>

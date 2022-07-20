@@ -3,6 +3,7 @@
         <MySteps :step-list="stepList" class="steps"></MySteps>
         <!--**********************************************************-->
         <MyForm :item-list="itemList" @onSubmit="onSubmit">
+
         </MyForm>
     </MyCard>
 </template>
@@ -30,11 +31,42 @@
       value: 5
     }
   ]
+  const branch = [
+    {
+      label: '数字人民币',
+      value: 1
+    }, {
+      label: '网银',
+      value: 2
+    }, {
+      label: '支付宝',
+      value: 3
+    }, {
+      label: '微信',
+      value: 4
+    }
+  ]
+  const emailAddress = [
+    {
+      label: '@163.com',
+      value: '@163.com'
+    },
+    {
+      label: '@qq.com',
+      value: '@qq.com'
+    },
+    {
+      label: '@126.com',
+      value: '@126.com'
+    },
+    {
+      label: '@sina.com',
+      value: '@sina.com'
+    }
+  ]
   const validator = (rule, value, callback) => {
     const len = value.length
-    if (len === 0) {
-      callback(new Error('请选择'))
-    } else if (len < 2) {
+    if (len !== 0 && len < 2) {
       callback(new Error('至少选择两项'))
     } else {
       callback()
@@ -71,9 +103,36 @@
             }]
           },
           {
+            type: 'password',
+            label: '登录密码',
+            name: 'password',
+            placeholder: '请输入登录密码',
+            rules: [{
+              required: true,
+              message: '登录密码不能为空!'
+            }]
+          },
+          {
             label: '详细地址',
             name: 'address',
             placeholder: '请输入详细地址',
+            addonBefore: {
+              name: 'address_before',
+              option: branch
+            },
+            rules: [{
+              required: true,
+              message: '详细地址不能为空!'
+            }]
+          },
+          {
+            label: '邮箱地址',
+            name: 'email',
+            placeholder: '请输入邮箱地址',
+            addonAfter: {
+              name: 'email_after',
+              option: emailAddress
+            },
             rules: [{
               required: true,
               message: '详细地址不能为空!'
@@ -134,7 +193,10 @@
               { label: '足球', value: 2 },
               { label: '高尔夫', value: 3 }
             ],
-            rules: [{validator}]
+            rules: [{
+              required: true,
+              message: '多选项不能为容'
+            }, { validator }]
           }
         ]
       }

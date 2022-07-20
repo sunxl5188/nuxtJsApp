@@ -1,5 +1,6 @@
 <template>
     <a-form
+            v-if="!loading"
             :form="form"
             :label-col="{ span: labelCol }"
             :wrapper-col="{ span: wrapperCol }"
@@ -11,9 +12,47 @@
                 :label="item.label"
                 :extra="item.extra||''"
         >
-            <!--文本框-->
+            <!--文本框||文本域-->
             <a-input
-                    v-if="item.type===undefined || item.type==='text'"
+                    v-if="item.type===undefined || item.type==='text' || item.type==='textarea'"
+                    v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
+                    :type="item.type || 'text'"
+                    :placeholder="item.placeholder || ''"
+                    :allow-clear="item.type!=='textarea'"
+                    :auto-size="{ minRows: 3, maxRows: 6 }"
+            >
+                <!--带标签的 input，设置前置标签-->
+                <a-select
+                        v-if="item.addonBefore"
+                        slot="addonBefore"
+                        v-decorator="[item.addonBefore.name, { initialValue: item.addonBefore.option[0].value }]"
+                        :options="item.addonBefore.option"
+                />
+                <!--带标签的 input，设置后置标签-->
+                <a-select
+                        v-if="item.addonAfter"
+                        slot="addonAfter"
+                        v-decorator="[item.addonAfter.name, { initialValue: item.addonAfter.option[0].value }]"
+                        :options="item.addonAfter.option"
+                />
+                <!--带有前缀图标的 input-->
+                <template v-if="item.prefix" #prefix>
+                    <slot :name="item.name+'_prefix'">
+                        <a-icon type="user" />
+                    </slot>
+                </template>
+                <!--带有后缀图标的 input-->
+                <template v-if="item.suffix" #suffix>
+                    <slot :name="item.name+'_suffix'">
+                        <a-tooltip v-if="item.suffix" slot="suffix" placement="top" :title="item.suffix" arrow-point-at-center>
+                            <a-icon type="question-circle" />
+                        </a-tooltip>
+                    </slot>
+                </template>
+            </a-input>
+            <!--密码框-->
+            <a-input-password
+                    v-if="item.type === 'password'"
                     v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
                     :placeholder="item.placeholder || ''"
                     allow-clear
@@ -54,16 +93,6 @@
                     :show-time="item.showTime || false"
                     :disabled-time="item.disabledTime === undefined ? () => false : item.disabledTime"
             />
-            <!--文本域-->
-            <a-input
-                    v-if="item.type==='textarea'"
-                    v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
-                    type="textarea"
-                    :placeholder="item.placeholder || `请输入${item.label}`"
-                    :auto-size="{ minRows: 3, maxRows: 6 }"
-                    class="w-90"
-            />
-
             <!--数字输入框-->
             <a-input-number
                     v-if="item.type==='number'"
@@ -117,16 +146,24 @@
     },
     data () {
       return {
+        loading: true,
         form: this.$form.createForm(this)
       }
     },
-    computed: {},
-    watch: {},
-    mounted () {},
+    mounted () {
+      this.$nextTick(() => {
+        this.loading = false
+      })
+    },
     methods: {
       handleSubmit () {
         this.form.validateFields((err, values) => {
           if (!err) {
+            for (const i in values) {
+              if (Object.prototype.toString.call(values[i]) === '[object Array]') {
+                values[i] = JSON.stringify(values[i])
+              }
+            }
             this.$emit('onSubmit', values)
           } else {
             console.log(err)

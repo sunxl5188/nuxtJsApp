@@ -76,7 +76,7 @@
             label: '用户姓名',
             name: 'username',
             placeholder: '请输入用户姓名！！！',
-            question: '请输入用户姓名，用户姓名是用来在网站上展示的名称'
+            question: '提示说明，可以用插槽'
           },
           {
             label: '产品类型',
@@ -135,7 +135,7 @@
           {
             label: '多选项',
             name: 'checks',
-            type: 'checked',
+            type: 'checkbox',
             option: [
               { label: '蓝球', value: 1 },
               { label: '足球', value: 2 },

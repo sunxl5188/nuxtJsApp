@@ -115,6 +115,8 @@
     -moz-transition: all 0.3s ease 0s;
     -ms-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+    flex-shrink: 0;
+    flex-grow: 0;
   }
 
   ::v-deep .ant-layout-sider {

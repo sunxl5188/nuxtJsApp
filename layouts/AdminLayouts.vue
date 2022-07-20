@@ -89,8 +89,6 @@
 
 <style scoped lang="scss">
   #layoutScroll {
-    width: 100vh;
-    height: 100vh;
     overflow: hidden;
     flex: 1;
   }

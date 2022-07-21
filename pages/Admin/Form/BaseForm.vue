@@ -127,9 +127,9 @@
               { label: '单选三', value: 3 }
             ],
             children: [
-              { label: '产品列表', name: 'target_a', type: 'text', rel: [1] },
-              { label: '', name: 'target_b', type: 'select', option, rel: [2] },
-              { label: '', name: 'target_c', type: 'date', rel: [3] }
+              { label: '产品列表', name: 'target_a', type: 'text', parent: 1 },
+              { label: '', name: 'target_b', type: 'select', option, parent: 2 },
+              { label: '', name: 'target_c', type: 'date', parent: 3 }
             ]
           },
           {

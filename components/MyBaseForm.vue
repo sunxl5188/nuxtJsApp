@@ -148,7 +148,7 @@
             <template v-if="item.children">
                 <a-form-model-item
                         v-for="items in item.children"
-                        v-show="items.rel.includes(myform[item.name])"
+                        v-show="items.parent === myform[item.name]"
                         :key="items.name"
                         :label="items.label||'没有名称'"
                         :prop="items.name"
@@ -160,7 +160,7 @@
                     <a-input
                             v-if="items.type === undefined || items.type === 'text' || items.type==='textarea'"
                             v-model="myform[items.name]"
-                            :type="item.type || 'text'"
+                            :type="items.type || 'text'"
                             :placeholder="items.placeholder || `请输入${items.label}`"
                             autocomplete="off"
                             :auto-size="{ minRows: 3, maxRows: 6 }"

@@ -36,7 +36,7 @@
               <countTo :start-val='0' :end-val='189345' prefix="￥"></countTo>
             </div>
             <div class="card-chart">
-              <LineChart :data-source="lineDataSource" :option="lineOption" height="90"></LineChart>
+              <ChartLineChart :data-source="lineDataSource" :option="lineOption" height="90"></ChartLineChart>
             </div>
             <div class="border-top pt-2">日均访问量 123,4</div>
           </MyCard>
@@ -53,7 +53,7 @@
               <countTo :start-val='0' :end-val='89835' prefix="￥"></countTo>
             </div>
             <div class="card-chart">
-              <HistogramChart :data-source="histDataSource" :option="histOption" height="90"></HistogramChart>
+              <ChartHistogram :data-source="histDataSource" :option="histOption" height="90"></ChartHistogram>
             </div>
             <div class="border-top pt-2">转化率 60%</div>
           </MyCard>
@@ -108,7 +108,7 @@
           <a-row :gutter="20">
             <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
               <div style="height:340px;">
-                <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
+                <ChartHistogram :height="340" :option="tabsOpt"></ChartHistogram>
               </div>
             </a-col>
             <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
@@ -122,7 +122,7 @@
           <a-row :gutter="20">
             <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" :xxl="18">
               <div style="height:340px;">
-                <HistogramChart :height="340" :option="tabsOpt"></HistogramChart>
+                <ChartHistogram :height="340" :option="tabsOpt"></ChartHistogram>
               </div>
             </a-col>
             <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" :xxl="6">
@@ -151,7 +151,7 @@
                   </div>
                 </div>
                 <div style="height:60px;">
-                  <LineChart :data-source="lineDataSource" :option="lineOption" height="60"></LineChart>
+                  <ChartLineChart :data-source="lineDataSource" :option="lineOption" height="60"></ChartLineChart>
                 </div>
               </a-col>
               <a-col :span="12">
@@ -166,7 +166,7 @@
                   </div>
                 </div>
                 <div style="height:60px;">
-                  <LineChart :data-source="lineDataSource" :option="lineOption3" height="60"></LineChart>
+                  <ChartLineChart :data-source="lineDataSource" :option="lineOption3" height="60"></ChartLineChart>
                 </div>
               </a-col>
             </a-row>
@@ -192,7 +192,7 @@
                 <a-button type="default">门店</a-button>
               </a-button-group>
             </div>
-            <PieChart :option="picOpt"></PieChart>
+            <ChartPieChart :option="picOpt"></ChartPieChart>
           </MyCard>
         </a-col>
       </a-row>
@@ -202,13 +202,6 @@
 
 <script>
   import countTo from 'vue-count-to'
-  import MyCard from '~/components/MyCard'
-  import LineChart from '~/components/chart/LineChart'
-  import HistogramChart from '~/components/chart/Histogram'
-  import MyTabs from '~/components/MyTabs'
-  import RankList from '~/components/RankList'
-  import PieChart from '~/components/chart/PieChart'
-  import MyTable from '~/components/MyTable'
 
   const searchData = []
   for (let i = 0; i < 50; i++) {
@@ -223,7 +216,7 @@
 
   export default {
     name: 'AnalysisComponent',
-    components: { MyTable, PieChart, RankList, MyTabs, HistogramChart, LineChart, MyCard, countTo },
+    components: { countTo },
     meta: { title: '分析页' },
     data () {
       return {
@@ -246,22 +239,11 @@
           },
           series: [
             {
-              lineStyle: {
-                width: 0
-              },
+              lineStyle: {width: 0},
               showSymbol: false,
               areaStyle: {
                 opacity: 0.8,
-                color: new this.$charts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: 'rgb(84, 112, 198)'
-                  },
-                  {
-                    offset: 1,
-                    color: 'rgb(115, 148, 252)'
-                  }
-                ])
+                color: ''
               }
             }
           ]
@@ -364,6 +346,10 @@
       }
     },
     mounted () {
+      this.lineOption.series[0].areaStyle.color = new this.$charts.graphic.LinearGradient(0, 0, 0, 1, [
+        {offset: 0,color: 'rgb(84, 112, 198)'},
+        {offset: 1,color: 'rgb(115, 148, 252)'}
+      ])
       const opt = this.$lodash.cloneDeep(this.lineOption)
       this.lineOption3 = Object.assign({}, opt, {
         color: ['#326d2f'],

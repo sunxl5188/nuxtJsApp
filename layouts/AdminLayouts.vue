@@ -1,20 +1,20 @@
 <template>
-  <a-config-provider :locale="locale">
-    <a-layout style="min-height: 100vh">
-      <!--菜单-->
-      <AdminMenu />
-      <div id="layoutScroll">
-        <a-layout>
-          <!--头部-->
-          <AdminHeader />
-          <!--内容-->
-          <a-layout-content class="p-3">
-            <Nuxt/>
-          </a-layout-content>
+    <a-config-provider :locale="locale">
+        <a-layout style="height: 100vh">
+            <!--菜单-->
+            <AdminMenu/>
+            <a-layout>
+                <div class="layoutScroll" style="height:100vh;overflow:hidden !important;">
+                    <!--头部-->
+                    <AdminHeader/>
+                    <!--内容-->
+                    <a-layout-content class="p-3">
+                        <Nuxt/>
+                    </a-layout-content>
+                </div>
+            </a-layout>
         </a-layout>
-      </div>
-    </a-layout>
-  </a-config-provider>
+    </a-config-provider>
 </template>
 
 <script>
@@ -63,34 +63,23 @@
       window.addEventListener('click', this.upSignInState, false)
       window.addEventListener('mousemove', this.upSignInState, false)
 
-      _.delay(() => {
+      this.$nextTick(() => {
         // http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html
-        $('.ant-layout-sider-children').mCustomScrollbar({
-          theme: 'minimal',
-          scrollInertia: 0,
-          axis: 'y'
-        })
-
-        $('#layoutScroll').mCustomScrollbar({
+        $('.layoutScroll').mCustomScrollbar({
           theme: 'minimal-dark',
-          scrollInertia: 0
+          scrollInertia: 300,
+          axis:'y'
         })
-
-      }, 500)
+      })
 
     },
     beforeDestroy () {
       window.removeEventListener('click', this.upSignInState, false)
       window.removeEventListener('mousemove', this.upSignInState, false)
-    },
-    methods: { }
+    }
   }
 </script>
 
 <style scoped lang="scss">
-  #layoutScroll {
-    overflow: hidden;
-    flex: 1;
-  }
 
 </style>

@@ -192,8 +192,8 @@
 </script>
 <style scoped lang="scss">
   .login {
-    min-width: 1200px;
-    min-height: 100%;
+    min-width: 1000px;
+    min-height: 100vh;
 
     & .ant-layout-header {
       background-color: #ffffff;

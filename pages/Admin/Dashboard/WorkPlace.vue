@@ -28,14 +28,14 @@
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
         <MyCard title="产品指数">
-          <RadarChart :data-source="dataSource" :option="option" height="275"/>
+          <ChartRadarChart :data-source="dataSource" :option="option" height="275"/>
         </MyCard>
         <MyCard title="团队">
           <a-row>
             <a-col v-for="(item, index) in teams" :key="index" :span="12" class="u-p-t-12 u-p-b-12">
-              <nuxt-link to="/">
-                <a-avatar size="small" :src="item.avatar"/>
-                <span class="member">{{item.name}}</span>
+              <nuxt-link to="/" class="d-flex justify-content-start align-items-center">
+                <a-avatar size="small" :src="item.avatar" class="flex-grow-0 flex-shrink-0" />
+                <span class="u-line-1 u-m-l-5">{{item.name}}</span>
               </nuxt-link>
             </a-col>
           </a-row>
@@ -46,13 +46,9 @@
 </template>
 
 <script>
-  import MyCard from '~/components/MyCard'
-  import MyList from '~/components/MyList'
-  import RadarChart from '~/components/chart/RadarChart'
 
   export default {
     name: 'WorkPlace',
-    components: { RadarChart, MyList, MyCard },
     meta: { title: '工作台' },
     data () {
       return {

@@ -10,6 +10,14 @@
   url('//at.alicdn.com/t/font_3197878_wpc8dd28m5j.ttf?t=1647169934336') format('truetype');
 }
 
+html, body {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 1rem;
+  min-width: 576px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
 ul, ol, li {
   margin: 0;
   padding: 0;

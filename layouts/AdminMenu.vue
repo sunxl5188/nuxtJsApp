@@ -1,5 +1,5 @@
 <template>
-  <div :style="vuexMenu.collapsed ? 'width:80px' : 'width:200px'" class="layoutSider">
+  <div :style="vuexMenu.collapsed ? 'width:80px' : 'width:200px'" class="layout-side">
     <a-layout-sider :collapsed="vuexMenu.collapsed">
       <div class="logo">
         <nuxt-link to="/admin" class="d-flex justify-content-center align-items-center">
@@ -73,6 +73,14 @@
     },
     mounted () {
       Object.assign(this.vuexMenu, this.vuex_menu)
+      this.$nextTick(() => {
+        // http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html
+        $('.ant-layout-sider-children').mCustomScrollbar({
+          theme: 'minimal',
+          scrollInertia: 300,
+          axis: 'y'
+        })
+      })
     },
     methods: {
       onMenuSelect ({ selectedKeys }) {
@@ -109,7 +117,7 @@
     }
   }
 
-  .layoutSider {
+  .layout-side {
     height: 100vh;
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;

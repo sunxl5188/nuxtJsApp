@@ -1,12 +1,17 @@
 <template>
-  <div class="container">
-    <nuxt-link to="/article/1">新闻</nuxt-link>
-    <nuxt-link to="login">登录</nuxt-link>
-    <nuxt-link to="admin">进入后台</nuxt-link>
+    <div class="container">
+        <nuxt-link to="/article/1">新闻</nuxt-link>
+        <nuxt-link to="login">登录</nuxt-link>
+        <nuxt-link to="admin">进入后台</nuxt-link>
 
+        <TableForm
+                :columns="columns"
+                :data-source="dataSource"
+        >
 
+        </TableForm>
 
-  </div>
+    </div>
 </template>
 
 <script>
@@ -48,9 +53,7 @@
             title: '用户数据',
             dataIndex: 'count',
             key: 'count',
-            align: 'center',
-            sorter: (a, b) => a.count - b.count,
-            sortDirections: ['ascend', 'descend']
+            align: 'center'
           },
           {
             title: '周涨幅',
@@ -60,7 +63,8 @@
             align: 'center',
             scopedSlots: { customRender: 'rang' }
           }
-        ]
+        ],
+        dataSource: []
       }
     },
     fetch (content) {},

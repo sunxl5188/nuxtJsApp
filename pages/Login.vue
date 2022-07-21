@@ -87,6 +87,10 @@
       icon: 'form',
       children: [
         {
+          title: 'Form表单',
+          path: 'OneForm',
+        },
+        {
           title: '基础表单',
           path: 'BaseForm',
         },

@@ -18,7 +18,6 @@
     "bootstrap": "^4.6.1",
     "core-js": "^3.19.3",
     "echarts": "^5.3.3",
-    "element-ui": "^2.15.6",
     "jquery": "^3.5.0",
     "lodash": "^4.17.21",
     "malihu-custom-scrollbar-plugin": "^3.1.5",

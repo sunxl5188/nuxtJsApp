@@ -64,11 +64,6 @@
         }
       }
     },
-    data () {
-      return {}
-    },
-    computed: {},
-    mounted () {},
     methods: {
       getStatus (type) {
         let str = ''

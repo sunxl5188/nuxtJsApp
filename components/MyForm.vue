@@ -15,37 +15,46 @@
             <!--文本框||文本域-->
             <a-input
                     v-if="item.type===undefined || item.type==='text' || item.type==='textarea'"
-                    v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
+                    v-decorator="[item.name, { initialValue: dataSource[item.name] || '', rules: item.rules }]"
                     :type="item.type || 'text'"
                     :placeholder="item.placeholder || ''"
                     :allow-clear="item.type!=='textarea'"
                     :auto-size="{ minRows: 3, maxRows: 6 }"
             >
                 <!--带标签的 input，设置前置标签-->
-                <a-select
-                        v-if="item.addonBefore"
-                        slot="addonBefore"
-                        v-decorator="[item.addonBefore.name, { initialValue: item.addonBefore.option[0].value }]"
-                        :options="item.addonBefore.option"
-                />
+
+                <span v-if="item.addonBefore" slot="addonBefore">
+                    <slot :name="item.name+'_addonBefore'">
+                        <a-select
+                                v-if="item.addonBefore.option"
+                                v-decorator="[item.addonBefore.name, { initialValue: item.addonBefore.option[0].value }]"
+                                :dropdown-match-select-width="false"
+                                :options="item.addonBefore.option"
+                        />
+                    </slot>
+                </span>
+
                 <!--带标签的 input，设置后置标签-->
                 <a-select
                         v-if="item.addonAfter"
                         slot="addonAfter"
                         v-decorator="[item.addonAfter.name, { initialValue: item.addonAfter.option[0].value }]"
+                        :dropdown-match-select-width="false"
                         :options="item.addonAfter.option"
                 />
                 <!--带有前缀图标的 input-->
                 <template v-if="item.prefix" #prefix>
                     <slot :name="item.name+'_prefix'">
-                        <a-icon type="user" />
+                        <a-icon type="user"/>
                     </slot>
                 </template>
                 <!--带有后缀图标的 input-->
                 <template v-if="item.suffix" #suffix>
                     <slot :name="item.name+'_suffix'">
-                        <a-tooltip v-if="item.suffix" slot="suffix" placement="top" :title="item.suffix" arrow-point-at-center>
-                            <a-icon type="question-circle" />
+                        <a-tooltip
+                                v-if="item.suffix" slot="suffix" placement="top" :title="item.suffix"
+                                arrow-point-at-center>
+                            <a-icon type="question-circle"/>
                         </a-tooltip>
                     </slot>
                 </template>
@@ -60,7 +69,11 @@
             <!--选择项-->
             <a-select
                     v-if="item.type==='select'"
-                    v-decorator="[item.name, { initialValue: item.mode === undefined || item.mode === 'default' ? undefined : [], rules: item.rules }]"
+                    v-decorator="[item.name,
+                    {
+                      initialValue: dataSource[item.name] || (item.mode === undefined || item.mode === 'default' ? undefined : []),
+                      rules: item.rules
+                    }]"
                     :placeholder="item.placeholder || ''"
                     allow-clear
                     :mode="item.mode || 'default'"
@@ -78,7 +91,7 @@
             <!--日历 date-->
             <a-date-picker
                     v-if="item.type === 'date'"
-                    v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
+                    v-decorator="[item.name, { initialValue: dataSource[item.name] || '', rules: item.rules }]"
                     :value-format="item.format || 'yyyy-MM-DD'"
                     :format="item.format || 'yyyy-MM-DD'"
                     :placeholder="item.placeholder || ''"
@@ -88,7 +101,7 @@
             />
             <a-range-picker
                     v-if="item.type==='range'"
-                    v-decorator="[item.name, { initialValue: [], rules: item.rules }]"
+                    v-decorator="[item.name, { initialValue: dataSource[item.name] || [], rules: item.rules }]"
                     :value-format="item.valueFormat || 'yyyy-MM-DD'"
                     :show-time="item.showTime || false"
                     :disabled-time="item.disabledTime === undefined ? () => false : item.disabledTime"
@@ -96,7 +109,7 @@
             <!--数字输入框-->
             <a-input-number
                     v-if="item.type==='number'"
-                    v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
+                    v-decorator="[item.name, { initialValue: dataSource[item.name] || '', rules: item.rules }]"
                     :min="item.min"
                     :max="item.max"
                     :step="item.step || 1"
@@ -106,21 +119,23 @@
             <!--单选项-->
             <a-radio-group
                     v-if="item.type==='radio'"
-                    v-decorator="[item.name, { initialValue: '', rules: item.rules }]"
+                    v-decorator="[item.name, { initialValue: dataSource[item.name] || '', rules: item.rules }]"
                     :options="item.option"
             />
             <!--多选项-->
             <a-checkbox-group
                     v-if="item.type==='checkbox'"
-                    v-decorator="[item.name, { initialValue: [], rules: item.rules }]"
+                    v-decorator="[item.name, { initialValue: dataSource[item.name] || [], rules: item.rules }]"
                     :options="item.option"
             />
 
         </a-form-item>
         <!--提交按钮-->
         <a-form-item :wrapper-col="{ span: wrapperCol, offset: labelCol }">
-            <a-button type="primary" html-type="submit">保存</a-button>
-            <a-button type="default" class="ml-5">重置</a-button>
+            <slot name="submitBtn">
+                <a-button type="primary" html-type="submit">{{submitText}}</a-button>
+                <a-button v-if="resetShow" type="default" class="ml-5" @click="handleReset">{{resetText}}</a-button>
+            </slot>
         </a-form-item>
     </a-form>
 </template>
@@ -135,13 +150,31 @@
       },
       wrapperCol: {
         type: Number,
-        default: 12
+        default: 19
       },
       itemList: {
         type: Array,
         default () {
           return []
         }
+      },
+      dataSource: {
+        type: Object,
+        default () {
+          return {}
+        }
+      },
+      submitText: {
+        type: String,
+        default: '保存'
+      },
+      resetText: {
+        type: String,
+        default: '重置'
+      },
+      resetShow: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -169,6 +202,9 @@
             console.log(err)
           }
         })
+      },
+      handleReset () {
+        this.form.resetFields()
       },
       filterOption (input, option) {
         return (

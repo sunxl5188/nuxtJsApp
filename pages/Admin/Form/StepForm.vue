@@ -1,36 +1,58 @@
 <template>
     <MyCard title="分步表单">
-        <MySteps :step-list="stepList" class="steps"></MySteps>
-        <!--**********************************************************-->
-        <MyForm :item-list="itemList" @onSubmit="onSubmit">
+        <MySteps :current="current" :step-list="stepList" class="steps"></MySteps>
+        <div class="u-p-t-50 u-p-b-50"></div>
 
-        </MyForm>
+        <!--**********************************************************-->
+
+        <div class="form-box u-p-b-32">
+            <MyForm
+                    v-if="current===0"
+                    :item-list="itemList"
+                    :data-source="dataSource"
+                    submit-text="下一步"
+                    @onSubmit="onSubmit">
+                <span slot="money_prefix">￥</span>
+            </MyForm>
+            <div v-if="current===1">
+                <a-alert
+                        message="确认转账后，资金将直接打入对方账户，无法退回。"
+                        type="warning"
+                        show-icon
+                        closable
+                        class="u-m-b-25"
+                />
+                <a-form :label-col="{span:5}" :wrapper-col="{ span: 19 }">
+                    <a-form-item label="付款账户">
+                        {{form.username}}
+                    </a-form-item>
+                    <a-form-item label="收款账户">
+                        {{form.collection}}
+                    </a-form-item>
+                    <a-form-item label="收款人姓名">
+                        {{form.collectionName}}
+                    </a-form-item>
+                    <a-form-item label="转账金额">
+                        {{form.money}}
+                    </a-form-item>
+                    <a-form-item :wrapper-col="{span:19, offset:5}">
+                        <a-button :loading="payload" type="primary" @click="onConfirm">确定</a-button>
+                        <a-button type="default" class="ml-5" @click="current=0">上一步</a-button>
+                    </a-form-item>
+                </a-form>
+            </div>
+            <div v-if="current===2">
+                <MyResult state="success" title="支付成功"/>
+                <div class="text-center">
+                    <a-button type="primary" @click="onFinish">再转一笔</a-button>
+                    <a-button class="ml-5" @click="$router.push('/Admin')">查看账单</a-button>
+                </div>
+            </div>
+        </div>
     </MyCard>
 </template>
 
 <script>
-  const option = [
-    {
-      label: '互联网',
-      value: 1
-    },
-    {
-      label: '实体经营',
-      value: 2
-    },
-    {
-      label: '个体户',
-      value: 3
-    },
-    {
-      label: '政府机构',
-      value: 4
-    },
-    {
-      label: '教育机构',
-      value: 5
-    }
-  ]
   const branch = [
     {
       label: '数字人民币',
@@ -46,32 +68,6 @@
       value: 4
     }
   ]
-  const emailAddress = [
-    {
-      label: '@163.com',
-      value: '@163.com'
-    },
-    {
-      label: '@qq.com',
-      value: '@qq.com'
-    },
-    {
-      label: '@126.com',
-      value: '@126.com'
-    },
-    {
-      label: '@sina.com',
-      value: '@sina.com'
-    }
-  ]
-  const validator = (rule, value, callback) => {
-    const len = value.length
-    if (len !== 0 && len < 2) {
-      callback(new Error('至少选择两项'))
-    } else {
-      callback()
-    }
-  }
 
   export default {
     name: 'StepForm',
@@ -88,122 +84,82 @@
             title: '确认转账信息'
           },
           {
-            title: '完成',
-            status: 'finish'
+            title: '完成'
           }
         ],
         itemList: [
           {
-            label: '用户呢称',
+            label: '付款账户',
             name: 'username',
-            placeholder: '请输入用户呢称',
+            placeholder: '请输入付款账户',
             rules: [{
               required: true,
-              message: '用户呢称不能为空!'
+              message: '付款账户不能为空!'
             }]
           },
           {
-            type: 'password',
-            label: '登录密码',
-            name: 'password',
-            placeholder: '请输入登录密码',
+            label: '收款账户',
+            name: 'collection',
+            placeholder: '请输入收款账户',
             rules: [{
               required: true,
-              message: '登录密码不能为空!'
-            }]
-          },
-          {
-            label: '详细地址',
-            name: 'address',
-            placeholder: '请输入详细地址',
+              message: '收款账户不能为空!'
+            }],
             addonBefore: {
-              name: 'address_before',
+              name: 'payment_after',
               option: branch
-            },
+            }
+          },
+          {
+            label: '收款人姓名',
+            name: 'collectionName',
+            placeholder: '请输入收款人姓名',
             rules: [{
               required: true,
-              message: '详细地址不能为空!'
+              message: '收款人姓名不能为空!'
             }]
           },
           {
-            label: '邮箱地址',
-            name: 'email',
-            placeholder: '请输入邮箱地址',
-            addonAfter: {
-              name: 'email_after',
-              option: emailAddress
-            },
+            label: '转账金额',
+            name: 'money',
+            placeholder: '请输入金额',
+            prefix: true,
             rules: [{
               required: true,
-              message: '详细地址不能为空!'
+              message: '转账金额不能为空!'
+            }, {
+              pattern: /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/,
+              message: '请输入数字类型的金额'
             }]
-          },
-          {
-            type: 'select',
-            label: '产品分类',
-            name: 'classId',
-            placeholder: '请选择产品分类',
-            option
-          },
-          {
-            label: '日期选择',
-            name: 'times',
-            placeholder: '请选择日期选择!!!',
-            type: 'date'
-          },
-          {
-            label: '日期范围',
-            name: 'rangeTime',
-            placeholder: '请选择日期范围!!!',
-            type: 'range'
-          },
-          {
-            label: '备注',
-            name: 'remarks',
-            type: 'textarea',
-            placeholder: '请输入备注信息！'
-          },
-          {
-            label: '权重',
-            name: 'weights',
-            type: 'number',
-            min: 1,
-            max: 100
-          },
-          {
-            label: '单选',
-            name: 'radios',
-            type: 'radio',
-            option: [
-              { label: '单选一', value: 1 },
-              { label: '单选二', value: 2 },
-              { label: '单选三', value: 3 }
-            ],
-            rules: [{
-              required: true,
-              message: '单选项不能为容'
-            }]
-          },
-          {
-            label: '多选项',
-            name: 'checks',
-            type: 'checkbox',
-            option: [
-              { label: '蓝球', value: 1 },
-              { label: '足球', value: 2 },
-              { label: '高尔夫', value: 3 }
-            ],
-            rules: [{
-              required: true,
-              message: '多选项不能为容'
-            }, { validator }]
           }
-        ]
+        ],
+        dataSource: {
+          username: 'ant-design@alipay.com',
+          collection: 'you@example.com',
+          collectionName: 'Alex',
+          money: 5000
+        },
+        payload: false,
+        form: {}
       }
     },
+    mounted () {},
     methods: {
       onSubmit (data) {
-        console.log(data)
+        this.current = 1
+        this.form = data
+      },
+      onConfirm () {
+        this.payload = true
+        this.$lodash.delay(() => {
+          this.payload = false
+          this.current = 2
+          this.stepList[2].status = 'finish'
+        }, 1500)
+      },
+      onFinish () {
+        this.current = 0
+        delete this.stepList[2].status
       }
     }
   }
@@ -213,5 +169,10 @@
     .steps {
         width: 500px;
         margin: 16px auto;
+    }
+
+    .form-box {
+        width: 500px;
+        margin: 0 auto;
     }
 </style>

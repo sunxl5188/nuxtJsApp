@@ -35,13 +35,16 @@
                 </span>
 
                 <!--带标签的 input，设置后置标签-->
-                <a-select
-                        v-if="item.addonAfter"
-                        slot="addonAfter"
-                        v-decorator="[item.addonAfter.name, { initialValue: item.addonAfter.option[0].value }]"
-                        :dropdown-match-select-width="false"
-                        :options="item.addonAfter.option"
-                />
+                <span v-if="item.addonAfter" slot="addonAfter">
+                    <slot :name="item.name+'_addonAfter'">
+                    <a-select
+                            v-if="item.addonAfter.option"
+                            v-decorator="[item.addonAfter.name, { initialValue: item.addonAfter.option[0].value }]"
+                            :dropdown-match-select-width="false"
+                            :options="item.addonAfter.option"
+                    />
+                    </slot>
+                </span>
                 <!--带有前缀图标的 input-->
                 <template v-if="item.prefix" #prefix>
                     <slot :name="item.name+'_prefix'">
@@ -110,8 +113,8 @@
             <a-input-number
                     v-if="item.type==='number'"
                     v-decorator="[item.name, { initialValue: dataSource[item.name] || '', rules: item.rules }]"
-                    :min="item.min"
-                    :max="item.max"
+                    :min="item.min || 0"
+                    :max="item.max || 'Infinity'"
                     :step="item.step || 1"
                     :formatter="item.formatter === undefined ? value => value : item.formatter"
                     :parser="item.parser === undefined ? value => value : item.parser"

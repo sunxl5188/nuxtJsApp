@@ -206,10 +206,11 @@
   const searchData = []
   for (let i = 0; i < 50; i++) {
     searchData.push({
-      index: i + 1,
+      id: i + 1,
+      ranking: Math.floor(Math.random() * 100 + 1),
       keyword: '关键词-' + i,
       count: Math.floor(Math.random() * 1000),
-      range: Math.floor(Math.random() * 100),
+      range: Math.floor(Math.random() * 1000),
       status: Math.floor((Math.random() * 10) % 2)
     })
   }
@@ -313,8 +314,8 @@
         columns: [
           {
             title: '排名',
-            dataIndex: 'index',
-            key: 'index',
+            dataIndex: 'ranking',
+            key: 'ranking',
             width: 60,
             align: 'center'
           },

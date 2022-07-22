@@ -1,20 +1,21 @@
 <template>
-  <div>
-    <a-table
-      :columns="columns"
-      :data-source="dataSource"
-      :row-key="lists => lists.index"
-      :size="$attrs.size"
-      :pagination="paginationConfig"
-      @change="onChange"
-    >
-      <template v-for="(item, index) in slotsArr">
+    <div>
+        <a-table
+                :loading="loading"
+                :columns="columns"
+                :data-source="dataSource"
+                :row-key="row => row.id"
+                :size="$attrs.size"
+                :pagination="paginationConfig"
+                @change="onChange"
+        >
+            <template v-for="(item, index) in slotsArr">
         <span :slot="item.scopedSlots.customRender" :key="index" slot-scope="row">
           <slot :name="item.scopedSlots.customRender" :row="row"></slot>
         </span>
-      </template>
-    </a-table>
-  </div>
+            </template>
+        </a-table>
+    </div>
 </template>
 
 <script>
@@ -44,6 +45,7 @@
     },
     data () {
       return {
+        loading: true,
         paginationConfig: {
           current: 1,
           pageSize: 15
@@ -60,11 +62,15 @@
     watch: {},
     mounted () {
       Object.assign(this.paginationConfig, this.pagination)
+
+      this.$nextTick(() => {
+        this.loading = false
+      })
     },
     methods: {
       onChange (pagination, filters, sorter, { currentDataSource }) {
         const params = { pagination, filters, sorter, currentDataSource }
-        const { current } = params. pagination
+        const { current } = params.pagination
         this.paginationConfig.current = current
         this.$emit('change', params)
       }

@@ -24,6 +24,11 @@
             >
             </TableForm>
         </MyCard>
+        <MyCard>
+            <div class="text-center">
+                <a-button type="primary" size="large">提交保存</a-button>
+            </div>
+        </MyCard>
     </div>
 </template>
 

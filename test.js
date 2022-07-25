@@ -22,5 +22,3 @@ function changeNumToHan(num)
   result = result.replace(/^一十/g, '十')
   return result
 }
-
-console.log(changeNumToHan(100))

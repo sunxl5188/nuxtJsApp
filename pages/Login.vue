@@ -132,6 +132,10 @@
             {
               title: '高级详情页',
               path: 'AdvancedDetail'
+            },
+            {
+              title: '编辑详情页',
+              path: 'EditorDetail'
             }
           ]
         }

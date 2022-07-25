@@ -3,7 +3,7 @@
         <a-table
                 :loading="loading"
                 :columns="columns"
-                :data-source="source"
+                :data-source="dataSource"
                 :row-key="row => row.id"
                 :pagination="false"
         >
@@ -63,6 +63,10 @@
 <script>
   export default {
     name: 'TableForm',
+    model: {
+      prop: 'dataSource',
+      event: 'change'
+    },
     props: {
       dataSource: {
         type: Array,
@@ -84,20 +88,10 @@
     data () {
       return {
         loading: true,
-        source: [],
         columnField: []
       }
     },
-    watch: {
-      dataSource: {
-        handler () {
-          this.setTableData()
-        },
-        deep: true
-      }
-    },
     mounted () {
-      this.setTableData()
       const columnList = this.$lodash.cloneDeep(this.columns)
       columnList.pop()
       columnList.forEach(item => {
@@ -108,54 +102,48 @@
       })
     },
     methods: {
-      setTableData () {
-        this.source = this.$lodash.cloneDeep(this.dataSource)
-        this.source.map(item => {
-          return this.$lodash.assign(item, { editState: false })
-        })
-      },
       onAddRow () {
-        this.source.push({
-          id: this.source.length + 1,
+        const newArr = [{
+          id: this.dataSource.length + 1,
           ranking: '',
           jobNumber: '',
           name: '',
           department: '',
           editState: true,
           isNew: true
-        })
+        }]
+        this.$emit('change', [...this.dataSource, ...newArr])
       },
       onEditor (id) {
-        const dataList = [...this.source]
+        const dataList = [...this.dataSource]
         const target = dataList.filter(item => item.id === id)[0]
         target.editState = true
-        this.source = dataList
+        this.$emit('change', dataList)
       },
       onDelete (id) {
-        const dataList = [...this.source]
+        const dataList = [...this.dataSource]
         this.$lodash.pullAllBy(dataList, [{ id }], 'id')
-        this.source = dataList
+        this.$emit('change', dataList)
       },
       onSaveRow (id) {
-        const dataList = [...this.source]
+        const dataList = [...this.dataSource]
         const target = dataList.filter(item => item.id === id)[0]
         target.editState = false
         delete target.isNew
-        this.source = dataList
-        this.$emit('onSubmit', this.source)
+        this.$emit('change', dataList)
       },
       onCancel (id) {
-        const dataList = [...this.source]
+        const dataList = [...this.dataSource]
         const target = dataList.filter(item => item.id === id)[0]
         target.editState = false
-        this.source = dataList
+        this.$emit('change', dataList)
       },
       handleChange (value, id, column) {
-        const newData = [...this.source]
+        const newData = [...this.dataSource]
         const target = newData.filter(item => item.id === id)[0]
         if (target) {
           target[column] = value
-          this.source = newData
+          this.$emit('change', newData)
         }
       }
     }

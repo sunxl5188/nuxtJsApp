@@ -2,7 +2,8 @@
     <div>
         <MyCard title="仓库管理">
             <MyFormRow
-                :item-list="warehouse"
+                    ref="repository"
+                    :item-list="warehouse"
             >
                 <span slot="domainName_addonBefore">https://</span>
                 <span slot="domainName_addonAfter">.github.io</span>
@@ -10,6 +11,7 @@
         </MyCard>
         <MyCard title="任务管理">
             <MyFormRow
+                    ref="task"
                     :item-list="task"
             >
                 <span slot="domainName_addonBefore">https://</span>
@@ -18,15 +20,15 @@
         </MyCard>
         <MyCard title="用户管理">
             <TableForm
+                    v-model="dataSource"
                     :columns="columns"
-                    :data-source="dataSource"
                     @onSubmit="userListChange"
             >
             </TableForm>
         </MyCard>
         <MyCard>
             <div class="text-center">
-                <a-button type="primary" size="large">提交保存</a-button>
+                <a-button type="primary" size="large" @click="submitSave">提交保存</a-button>
             </div>
         </MyCard>
     </div>
@@ -38,7 +40,7 @@
     meta: { title: '高级表单' },
     data () {
       return {
-        warehouse:[
+        warehouse: [
           {
             label: '仓库名',
             name: 'warehouseName',
@@ -65,12 +67,12 @@
             name: 'administrators',
             placeholder: '请选择仓库管理员',
             option: [
-              {label: '王同学', value: 1},
-              {label: '李同学', value: 2},
-              {label: '赵同学', value: 3},
-              {label: '陈同学', value: 4},
-              {label: '孙同学', value: 5}
-              ],
+              { label: '王同学', value: 1 },
+              { label: '李同学', value: 2 },
+              { label: '赵同学', value: 3 },
+              { label: '陈同学', value: 4 },
+              { label: '孙同学', value: 5 }
+            ],
             rules: [{
               required: true,
               message: '仓库管理员不能为空!'
@@ -82,11 +84,11 @@
             name: 'approver',
             placeholder: '请选择审批人员',
             option: [
-              {label: '王晓丽', value: 1},
-              {label: '李军', value: 2},
-              {label: '唐僧', value: 3},
-              {label: '悟空', value: 4}
-              ],
+              { label: '王晓丽', value: 1 },
+              { label: '李军', value: 2 },
+              { label: '唐僧', value: 3 },
+              { label: '悟空', value: 4 }
+            ],
             rules: [{
               required: true,
               message: '审批人员不能为空!'
@@ -108,8 +110,8 @@
             name: 'warehouseType',
             placeholder: '请选择仓库类型',
             option: [
-              {label: '公开', value: 1},
-              {label: '私密', value: 2}
+              { label: '公开', value: 1 },
+              { label: '私密', value: 2 }
             ],
             rules: [{
               required: true,
@@ -117,7 +119,7 @@
             }]
           }
         ],
-        task:[
+        task: [
           {
             label: '任务名',
             name: 'taskName',
@@ -142,10 +144,10 @@
             name: 'executor',
             placeholder: '请选择执行人员',
             option: [
-              {label: '黄小丽', value: 1},
-              {label: '李小明', value: 2},
-              {label: '赵大宝', value: 3}
-              ],
+              { label: '黄小丽', value: 1 },
+              { label: '李小明', value: 2 },
+              { label: '赵大宝', value: 3 }
+            ],
             rules: [{
               required: true,
               message: '执行人员不能为空!'
@@ -157,11 +159,11 @@
             name: 'personLiable',
             placeholder: '请选择责任人',
             option: [
-              {label: '王晓美', value: 1},
-              {label: '李军', value: 2},
-              {label: '唐僧', value: 3},
-              {label: '悟空', value: 4}
-              ],
+              { label: '王晓美', value: 1 },
+              { label: '李军', value: 2 },
+              { label: '唐僧', value: 3 },
+              { label: '悟空', value: 4 }
+            ],
             rules: [{
               required: true,
               message: '责任人不能为空!'
@@ -185,8 +187,8 @@
             name: 'taskType',
             placeholder: '请选择任务类型',
             option: [
-              {label: '定时执行', value: 1},
-              {label: '周期执行', value: 2}
+              { label: '定时执行', value: 1 },
+              { label: '周期执行', value: 2 }
             ],
             rules: [{
               required: true,
@@ -268,6 +270,37 @@
     methods: {
       userListChange (data) {
         console.log(data)
+      },
+      submitSave () {
+        const params = {}
+        let form1 = {}
+        let form2 = {}
+        this.$refs.repository.form.validateFields((err, values) => {
+          form1 = {
+            err, values
+          }
+        })
+        this.$refs.task.form.validateFields((err, values) => {
+          form2 = {
+            err, values
+          }
+        })
+
+        if (!form1.err && !form2.err) {
+          const tableData = this.$lodash.filter(this.dataSource, item => !item.editState)
+          tableData.forEach(item => {
+            delete item.isNew
+            delete item.editState
+          })
+          params.tableData = tableData
+          this.$lodash.assign(params, form1.values, form2.values)
+          for (const i in params) {
+            if (Object.prototype.toString.call(params[i]) === '[object Array]') {
+              params[i] = JSON.stringify(params[i])
+            }
+          }
+          console.log(params)
+        }
       }
     }
   }

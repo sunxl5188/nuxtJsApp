@@ -16,18 +16,19 @@
                         @onDelete="handleDelete"
                         @change="handleChange"
                 >
-                <span slot="extra-operation">
-                    <a-dropdown :trigger="['click']" placement="bottomRight">
-                      <a-menu slot="overlay">
-                        <a-menu-item key="1">菜单一</a-menu-item>
-                        <a-menu-item key="2">菜单二</a-menu-item>
-                        <a-menu-item key="3">菜单三</a-menu-item>
-                      </a-menu>
-                      <a-button size="small" type="link">
-                          更多
-                          <a-icon type="down"/>
-                      </a-button>
-                    </a-dropdown>
+                    <span slot="states">11111</span>
+                    <span slot="extra-operation">
+                        <a-dropdown :trigger="['click']" placement="bottomRight">
+                          <a-menu slot="overlay">
+                            <a-menu-item key="1">菜单一</a-menu-item>
+                            <a-menu-item key="2">菜单二</a-menu-item>
+                            <a-menu-item key="3">菜单三</a-menu-item>
+                          </a-menu>
+                          <a-button size="small" type="link">
+                              更多
+                              <a-icon type="down"/>
+                          </a-button>
+                        </a-dropdown>
                 </span>
                 </MyTable>
             </MyCard>
@@ -77,36 +78,42 @@
             id: 10,
             frequency: 20,
             desc: '女老师穿“洛丽塔”上课，学生情绪高涨，家长看到后却担心不已',
+            state: -1,
             upTime: '2022-07-25 14:35:00'
           },
           {
             id: 208,
             frequency: 22,
             desc: '换剧不换妆、换汤不换药，杨紫还要在古偶剧里被蹉跎多久',
+            state: -1,
             upTime: '2022-07-26 14:35:00'
           },
           {
             id: 308,
             frequency: 202,
             desc: 'Vue项目实战-尚品汇--detail页面开发(七)_winterjoycc',
+            state: 1,
             upTime: '2022-07-27 14:35:00'
           },
           {
             id: 318,
             frequency: 212,
             desc: '难怪宝玉后悔娶宝钗，反而出家当和尚，看宝钗这个毛病谁受得',
+            state: 2,
             upTime: '2022-07-28 14:35:00'
           },
           {
             id: 319,
             frequency: 213,
             desc: '女子在石缝中发现野生西瓜，5天后带工具切开意外惊喜，现场吃瓜',
+            state: 1,
             upTime: '2022-07-29 14:35:00'
           },
           {
             id: 320,
             frequency: 210,
             desc: '丑脖子究竟多拉垮？5位女星明明都有张美人脸',
+            state: 1,
             upTime: '2022-07-29 11:35:00'
           }
         ],
@@ -115,7 +122,8 @@
             title: '编号',
             dataIndex: 'id',
             key: 'id',
-            sorter: true
+            sorter: (a, b) => a.id - b.id,
+            sortDirections: ['ascend', 'descend']
           },
           {
             title: '调用次数',
@@ -128,6 +136,30 @@
             title: '描述',
             dataIndex: 'desc',
             key: 'desc'
+          },
+          {
+            title: '状态',
+            dataIndex: 'state',
+            key: 'state',
+            align: 'center',
+            filters: [
+              {
+                text: '已发布',
+                value: 1,
+              },
+              {
+                text: '预发布',
+                value: -1,
+              },
+              {
+                text: '已封存',
+                value: 2,
+              }
+            ],
+            onFilter: (value, record) => {
+              return record.state === value
+            },
+            scopedSlots: { customRender: 'states' }
           },
           {
             title: '更新时间',
@@ -146,11 +178,16 @@
     },
     methods: {
       onSearch (data) {
-        console.log(data)
+        console.log('搜索打印字段', data)
       },
       handleChange (e) {
-        const { sorter } = e
-        console.log(sorter.field, sorter.order)
+        const { filters, sorter } = e
+        if (Object.keys(filters).length > 0) {
+          console.log(`远程筛选对象=>${JSON.stringify(filters)}`)
+        }
+        if (Object.keys(sorter).length > 0) {
+          console.log(`远程排序字段=>${sorter.field}`, `远程排序值=>${sorter.order || ''}`)
+        }
       },
       handleSeeDetail (id) {
         this.$router.push('/admin/List/Detail/BasicDetail?id=' + id)

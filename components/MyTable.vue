@@ -76,8 +76,7 @@
     mounted () {
       Object.assign(this.paginationConfig, this.pagination)
 
-      // 全并操作字段
-
+      // 合并操作字段
       if (this.showOperation) {
         let assignData = {}
         const action = [{
@@ -100,6 +99,7 @@
       this.$nextTick(() => {
         this.loading = false
       })
+
     },
     methods: {
       onSelectChange (selectedRowKeys) {
@@ -128,18 +128,18 @@
 </script>
 
 <style scoped lang="scss">
-    .operation {
-        & button {
-            padding: 0;
-            margin-right: 8px;
+.operation {
+    & button {
+        padding: 0;
+        margin-right: 8px;
 
-            &:last-child {
-                margin-right: 0;
-            }
-        }
-
-        &::v-deep button {
-            padding: 0;
+        &:last-child {
+            margin-right: 0;
         }
     }
+
+    &::v-deep button {
+        padding: 0;
+    }
+}
 </style>

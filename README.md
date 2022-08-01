@@ -1,68 +1,41 @@
-# nuxtjs
+<h1 align="center">NuxtJs Antd Admin</h1>
 
-## Build Setup
+<div align="center">
+  
+[Ant Design Pro](https://github.com/ant-design/ant-design-pro) 的 Vue 实现版本  
+开箱即用的中后台前端/设计解决方案
+![image](./assets/images/preview.png)  
+  
+![image](./assets/images/preview-nine.png)
+![image](./assets/images/preview-nine2.png)
+![image](./assets/images/preview-nine3.png)
+![image](./assets/images/preview-nine4.png)
+</div>
 
+- 预览地址：https://github.com/sunxl5188/nuxtJsApp.git
+- 使用文档：开发中
+- 常见问题：开发中
+- 国内镜像：https://github.com/sunxl5188/nuxtJsApp.git
+
+## 浏览器支持
+现代浏览器及 IE10
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
+| --- | --- | --- | --- | --- |
+| IE10, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+
+## 使用
+### clone
 ```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+$ git clone https://github.com/sunxl5188/nuxtJsApp.git
 ```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+### yarn
+```bash
+$ yarn install
+$ yarn serve
+```
+### or npm
+```
+$ npm install
+$ npm run dev
+```

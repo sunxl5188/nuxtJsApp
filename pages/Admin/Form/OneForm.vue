@@ -1,8 +1,8 @@
 <template>
     <MyCard title="Form表单">
-        <MyForm :item-list="itemList" @onSubmit="onSubmit">
-            <span slot="address_addonBefore">https://</span>
-        </MyForm>
+      <MyForm :item-list="itemList" :wrapper-col="12" @onSubmit="onSubmit">
+        <span slot="address_addonBefore">https://</span>
+      </MyForm>
     </MyCard>
 </template>
 

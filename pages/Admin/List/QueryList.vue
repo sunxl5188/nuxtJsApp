@@ -1,23 +1,25 @@
 <template>
-    <div>
-        <MyLoading :loading="loading"/>
-        <div v-if="!loading">
-            <MyCard>
-                <SearchFilter :item-list="itemList" @onSearch="onSearch"/>
-            </MyCard>
-            <MyCard title="查询表格">
-                <MyTable
-                        :columns="columns"
-                        :data-source="dataSource"
-                        show-operation
-                        show-selection
-                        @onSeeDetail="handleSeeDetail"
-                        @onEditDetail="handleEditDetail"
-                        @onDelete="handleDelete"
-                        @change="handleChange"
-                >
-                    <span slot="states">11111</span>
-                    <span slot="extra-operation">
+  <div>
+    <MyLoading :loading="loading"/>
+    <div v-if="!loading">
+      <MyCard>
+        <SearchFilter :item-list="itemList" @onSearch="onSearch"/>
+      </MyCard>
+      <MyCard title="查询表格">
+        <MyTable
+          :columns="columns"
+          :data-source="dataSource"
+          show-operation
+          show-selection
+          @onSeeDetail="handleSeeDetail"
+          @onEditDetail="handleEditDetail"
+          @onDelete="handleDelete"
+          @change="handleChange"
+        >
+          <span slot="status" slot-scope="{row}" :class="row.record.state === 1 ? 'text-success' : row.record.state === 2 ? 'text-danger' : ''">
+            {{setStatus(row.record.state)}}
+          </span>
+          <span slot="extra-operation">
                         <a-dropdown :trigger="['click']" placement="bottomRight">
                           <a-menu slot="overlay">
                             <a-menu-item key="1">菜单一</a-menu-item>
@@ -30,10 +32,10 @@
                           </a-button>
                         </a-dropdown>
                 </span>
-                </MyTable>
-            </MyCard>
-        </div>
+        </MyTable>
+      </MyCard>
     </div>
+  </div>
 </template>
 
 <script>
@@ -144,22 +146,22 @@
             align: 'center',
             filters: [
               {
-                text: '已发布',
+                text: '开启',
                 value: 1,
               },
               {
-                text: '预发布',
+                text: '初始',
                 value: -1,
               },
               {
-                text: '已封存',
+                text: '关闭',
                 value: 2,
               }
             ],
             onFilter: (value, record) => {
               return record.state === value
             },
-            scopedSlots: { customRender: 'states' }
+            scopedSlots: { customRender: 'status' }
           },
           {
             title: '更新时间',
@@ -199,6 +201,9 @@
         const data = [...this.dataSource]
         this.$lodash.remove(data, o => o.id === id)
         this.dataSource = data
+      },
+      setStatus (type) {
+        return type === -1 ? '初始' : type === 1 ? '开启' : '关闭'
       }
     }
   }

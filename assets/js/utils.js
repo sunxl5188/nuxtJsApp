@@ -99,6 +99,8 @@ export function syncVuex ($this, type) {
   // vuex~同步登录信息start
   $this.$vuex('vuex_token', $this.$getStorage('token'))
   $this.$vuex('vuex_user', $this.$getStorage('user'))
+  $this.$vuexAdmin('searchFold', $this.$getStorage('searchFold'))
+
   if ($this.$getStorage('vuex_menu') !== '') {
     $this.$vuexAdmin('vuex_menu', $this.$getStorage('vuex_menu'))
   }

@@ -1,31 +1,38 @@
 <template>
-    <div>
-        <a-table
-                :loading="loading"
-                :row-selection="showSelection ? {
+  <div>
+    <a-table
+      :loading="loading"
+      :row-selection="showSelection ? {
                   selectedRowKeys: selectedRowKeys,
                   onChange: (row) => selectedRowKeys = row
                 } : null"
-                :columns="columnData"
-                :data-source="dataSource"
-                :row-key="row => row.id"
-                :size="$attrs.size"
-                :pagination="paginationConfig"
-                @change="handleChange"
-        >
-            <!--操作按钮插槽-->
-            <div slot="operation" slot-scope="text, record, index" class="operation">
-                <slot name="operation" :row="{text, record, index}">
-                    <a-button type="link" size="small" @click="handleSeeDetail(record)">详情</a-button>
-                    <a-button type="link" size="small" @click="handleEditDetail(record)">编辑</a-button>
-                    <a-popconfirm title="您确定删除此任务吗?" @confirm="handleDelete(record)">
-                        <a-button type="link" size="small">删除</a-button>
-                    </a-popconfirm>
-                    <slot name="extra-operation"></slot>
-                </slot>
-            </div>
-        </a-table>
-    </div>
+      :columns="columnData"
+      :data-source="dataSource"
+      :row-key="row => row.id"
+      :size="$attrs.size"
+      :pagination="paginationConfig"
+      @change="handleChange"
+    >
+      <!--插槽-->
+      <template v-for="item in slotArr">
+        <div :slot="item" :key="item" slot-scope="text, record, index">
+          <slot :name="item" :row="{text, record, index}" />
+        </div>
+      </template>
+
+      <!--操作按钮插槽-->
+      <div slot="operation" slot-scope="text, record, index" class="operation">
+        <slot name="operation" :row="{text, record, index}">
+          <a-button type="link" size="small" @click="handleSeeDetail(record)">详情</a-button>
+          <a-button type="link" size="small" @click="handleEditDetail(record)">编辑</a-button>
+          <a-popconfirm title="您确定删除此任务吗?" @confirm="handleDelete(record)">
+            <a-button type="link" size="small">删除</a-button>
+          </a-popconfirm>
+          <slot name="extra-operation"></slot>
+        </slot>
+      </div>
+    </a-table>
+  </div>
 </template>
 
 <script>
@@ -65,12 +72,13 @@
     data () {
       return {
         loading: true,
-        columnData: [],
-        selectedRowKeys: [],
-        paginationConfig: {
+        columnData: [], // 列描述数据对象
+        selectedRowKeys: [], // 列选中数据
+        paginationConfig: { // 分页配置
           current: 1,
           pageSize: 15
-        }
+        },
+        slotArr: [] // 插槽名
       }
     },
     mounted () {
@@ -95,6 +103,13 @@
       } else {
         this.columnData = this.columns
       }
+
+      // 筛选出插槽名
+      this.columns.forEach(item => {
+        if (item.scopedSlots && item.scopedSlots.customRender !== 'operation') {
+          this.slotArr.push(item.scopedSlots.customRender)
+        }
+      })
 
       this.$nextTick(() => {
         this.loading = false
@@ -128,18 +143,18 @@
 </script>
 
 <style scoped lang="scss">
-.operation {
+  .operation {
     & button {
-        padding: 0;
-        margin-right: 8px;
+      padding: 0;
+      margin-right: 8px;
 
-        &:last-child {
-            margin-right: 0;
-        }
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &::v-deep button {
-        padding: 0;
+      padding: 0;
     }
-}
+  }
 </style>

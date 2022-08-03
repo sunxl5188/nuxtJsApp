@@ -27,7 +27,7 @@
 ## 使用
 ### clone
 ```bash
-$ git clone https://github.com/sunxl5188/nuxtJsApp.git
+$ git clone https://github.com/sunxl5188/nuxtjs-antd-admin.git
 ```
 ### yarn
 ```bash

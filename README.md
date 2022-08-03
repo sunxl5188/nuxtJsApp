@@ -12,10 +12,10 @@
 ![image](./assets/images/preview-nine4.png)
 </div>
 
-- 预览地址：https://github.com/sunxl5188/nuxtJsApp.git
+- 预览地址：https://github.com/sunxl5188/nuxtjs-antd-admin.git
 - 使用文档：开发中
 - 常见问题：开发中
-- 国内镜像：https://github.com/sunxl5188/nuxtJsApp.git
+- 国内镜像：https://github.com/sunxl5188/nuxtjs-antd-admin.git
 
 ## 浏览器支持
 现代浏览器及 IE10

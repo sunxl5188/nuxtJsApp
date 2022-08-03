@@ -16,12 +16,12 @@
             />
             <img
               alt="404"
-              class="pic-error-child"
+              class="pic-error-child mid"
               src="@/assets/images/cloud.png"
             />
             <img
               alt="404"
-              class="pic-error-child"
+              class="pic-error-child right"
               src="@/assets/images/cloud.png"
             />
           </div>

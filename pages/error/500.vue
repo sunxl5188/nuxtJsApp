@@ -1,10 +1,14 @@
 <template>
-  <div class="error-container text-center">
-    <div class="mb-50"><img src="@/assets/images/500.png" alt="500"></div>
-    <a-space align="center" direction="horizontal" size="large">
-      <a-button type="default" @click="$router.back()">{{jumpTime}}s 返回上一页</a-button>
-      <a-button type="primary" @click="$router.push('/')">返回首页</a-button>
-    </a-space>
+  <div class="error-container">
+    <div class="error-content text-center">
+      <div>
+        <img src="@/assets/images/500.png" alt="500">
+      </div>
+      <a-space align="center" direction="horizontal" size="large" class="u-m-t-50">
+        <a-button type="default" @click="$router.back()">{{jumpTime}}s 返回上一页</a-button>
+        <a-button type="primary" @click="$router.push('/')">返回首页</a-button>
+      </a-space>
+    </div>
   </div>
 </template>
 

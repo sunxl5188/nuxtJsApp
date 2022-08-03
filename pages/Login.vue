@@ -18,7 +18,7 @@
             layout="horizontal"
             :model="myform"
             :rules="rules"
-            class="pt-50"
+            class="u-p-t-50"
             @submit.prevent="submitSave"
           >
             <a-form-model-item prop="username">

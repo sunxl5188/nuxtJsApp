@@ -6,6 +6,20 @@
         <SearchFilter :item-list="itemList" @onSearch="onSearch"/>
       </MyCard>
       <MyCard title="查询表格">
+        <div slot="extra">
+          <a-space align="center" direction="horizontal">
+            <a-button type="primary">新建</a-button>
+            <a-button type="default">批量删除</a-button>
+            <a-dropdown-button>
+              更多操作
+              <a-icon slot="icon" type="down" />
+              <a-menu slot="overlay">
+                <a-menu-item key="1">审核</a-menu-item>
+                <a-menu-item key="2">删除</a-menu-item>
+              </a-menu>
+            </a-dropdown-button>
+          </a-space>
+        </div>
         <MyTable
           :columns="columns"
           :data-source="dataSource"

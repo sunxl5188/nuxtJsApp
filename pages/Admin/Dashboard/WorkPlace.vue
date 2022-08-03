@@ -27,14 +27,22 @@
         </MyCard>
       </a-col>
       <a-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" :xxl="8">
+        <MyCard title="快速开始/便捷导航">
+          <div class="d-flex justify-content-start flex-wrap text-center">
+            <a v-for="item in [1,2,3,4,5,6,7,8,9,10]" :key="item" class="w-25 u-m-b-15 text-secondary">
+              操作{{changeNumToHan(item)}}
+            </a>
+            <span class="w-25 u-m-b-15"><a-button size="small" icon="plus">添加</a-button></span>
+          </div>
+        </MyCard>
         <MyCard title="产品指数">
-          <ChartRadarChart :data-source="dataSource" :option="option" height="275"/>
+          <ChartRadarChart :data-source="dataSource" :option="option" height="370"/>
         </MyCard>
         <MyCard title="团队">
           <a-row>
             <a-col v-for="(item, index) in teams" :key="index" :span="12" class="u-p-t-12 u-p-b-12">
-              <nuxt-link to="/" class="d-flex justify-content-start align-items-center">
-                <a-avatar size="small" :src="item.avatar" class="flex-grow-0 flex-shrink-0" />
+              <nuxt-link to="/" class="d-flex justify-content-start align-items-center text-secondary">
+                <a-avatar size="small" :src="item.avatar" class="flex-grow-0 flex-shrink-0"/>
                 <span class="u-line-1 u-m-l-5">{{item.name}}</span>
               </nuxt-link>
             </a-col>
@@ -46,6 +54,7 @@
 </template>
 
 <script>
+  import { changeNumToHan } from '@/assets/js/utils'
 
   export default {
     name: 'WorkPlace',
@@ -168,10 +177,12 @@
     mounted () {
 
     },
-    methods: {}
+    methods: {
+      changeNumToHan
+    }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

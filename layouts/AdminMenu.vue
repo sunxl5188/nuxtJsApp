@@ -1,10 +1,10 @@
 <template>
-  <div :style="vuexMenu.collapsed ? 'width:80px' : 'width:200px'" class="layout-side">
-    <a-layout-sider :collapsed="vuexMenu.collapsed">
+  <div :style="vuexMenu.collapsed ? 'width:80px' : 'width:260px'" class="layout-side">
+    <a-layout-sider width="260" :collapsed="vuexMenu.collapsed">
       <div class="logo">
         <nuxt-link to="/admin" class="d-flex justify-content-center align-items-center">
           <img src="@/assets/images/logo.png" alt="">
-          <h1 v-if="!vuexMenu.collapsed" class="m-2">Ant Design</h1>
+          <h1 v-if="!vuexMenu.collapsed" class="m-2">NuxtJs Ant Design</h1>
         </nuxt-link>
       </div>
       <a-menu

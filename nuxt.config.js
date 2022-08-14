@@ -22,12 +22,18 @@ export default {
       { src: '/js/jquery.js' },
       { src: '/js/popper.min.js' },
       { src: '/js/bootstrap.min.js' },
-      { src: '/js/mCustomScrollbar/jquery.mCustomScrollbar.js' }
+      { src: '/js/mCustomScrollbar/jquery.mCustomScrollbar.js' },
+      { src: '/js/jquery.appear.js' },
+      { src: '/js/jquery.easing.js' },
+      { src: '/js/jquery.rotate.js' },
+      { src: '/js/modernizr.js' },
+      { src: '/js/jquery.animation.effect.js' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    { src: '~/assets/css/animate.css', lang: 'css' },
     { src: '~/assets/bootstrap/bootstrap.scss', lang: 'scss' },
     { src: '~/assets/css/main.scss', lang: 'scss' },
     { src: '~/static/js/mCustomScrollbar/jquery.mCustomScrollbar.css', lang: 'css' }

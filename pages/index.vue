@@ -2,12 +2,13 @@
     <div>
       <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        <button
+class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
                 aria-controls="collapsibleNavId"
                 aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <div id="collapsibleNavId" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
               <nuxt-link to="/" class="nav-link">首页</nuxt-link>
@@ -26,13 +27,18 @@
         <img src="@/assets/images/ecc9a4ca55d7eea12cc0bf0a19653352.jpeg" alt="">
         <img src="@/assets/images/d032ae10c349c543057b24bdbbf0d317.jpeg" alt="">
       </div>
+
+      <div class="text-center">
+        <VerificationCode></VerificationCode>
+      </div>
     </div>
 </template>
 
 <script>
+
   export default {
     name: 'IndexPage',
-    components: {},
+    components: { },
     asyncData ({ query }) {
       return query
     },

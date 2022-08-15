@@ -33,6 +33,7 @@ class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-targe
       </div>
       <a-button type="default" @click="visible=true">Modal</a-button>
       <MyModal v-model="visible">Modal内容</MyModal>
+      <ScrollBar></ScrollBar>
     </div>
 </template>
 
@@ -52,7 +53,9 @@ class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-targe
     },
     fetch (content) {},
     computed: {},
-    mounted () { },
+    mounted () {
+
+      },
     methods: { }
   }
 </script>

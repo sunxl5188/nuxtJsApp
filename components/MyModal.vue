@@ -1,23 +1,50 @@
 <template>
-  <a-modal
-    :title="title"
-    :visible="visible"
-    :width="width"
-    :confirm-loading="confirmLoading"
-    :ok-text="okText"
-    :cancel-text="cancelText"
-    @ok="handleOk"
-    @cancel="handleCancel"
-  >
-    <slot>
-      {{content}}
-    </slot>
-  </a-modal>
+  <div>
+    <a-modal
+      v-if="footer"
+      :title="title"
+      :visible="visible"
+      :width="width"
+      :confirm-loading="confirmLoading"
+      :ok-text="okText"
+      :cancel-text="cancelText"
+      :mask-closable="maskClosable"
+      :centered="centered"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <slot>
+        {{content}}
+      </slot>
+    </a-modal>
+    <a-modal
+      v-else
+      :title="title"
+      :visible="visible"
+      :width="width"
+      :confirm-loading="confirmLoading"
+      :ok-text="okText"
+      :cancel-text="cancelText"
+      :mask-closable="maskClosable"
+      :centered="centered"
+      :footer="null"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <slot>
+        {{content}}
+      </slot>
+    </a-modal>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'MyModal',
+    model: {
+      prop: 'visible',
+      event: 'change'
+    },
     props: {
       visible: {
         type: Boolean,
@@ -46,6 +73,18 @@
       confirmLoading: {
         type: Boolean,
         default: false
+      },
+      maskClosable: {
+        type: Boolean,
+        default: true
+      },
+      centered: {
+        type: Boolean,
+        default: false
+      },
+      footer: {
+        type: Boolean,
+        default: true
       }
     },
     data () {
@@ -53,10 +92,12 @@
       }
     },
     methods: {
-      handleOk (e) {
-        this.$emit('confirm', e)
+      handleOk () {
+        this.$emit('change', false)
+        this.$emit('confirm')
       },
       handleCancel () {
+        this.$emit('change', false)
         this.$emit('cancel')
       }
     }

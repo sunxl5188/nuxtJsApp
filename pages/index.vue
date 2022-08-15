@@ -31,6 +31,8 @@ class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-targe
       <div class="text-center">
         <VerificationCode></VerificationCode>
       </div>
+      <a-button type="default" @click="visible=true">Modal</a-button>
+      <MyModal v-model="visible">Modal内容</MyModal>
     </div>
 </template>
 
@@ -44,13 +46,13 @@ class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-targe
     },
     data () {
       return {
-        current: []
+        current: [],
+        visible: false
       }
     },
     fetch (content) {},
     computed: {},
-    mounted () {
-    },
+    mounted () { },
     methods: { }
   }
 </script>
